@@ -1,8 +1,8 @@
 import { useTheme } from '@emotion/react';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { GlobalContext } from '../lib/GlobalContext';
+import { GlobalContext } from '../lib/GlobalContext.mjs';
 import { createTheme } from '@mui/material';
-import UiInfo from '../lib/UiInfo';
+import UiInfo from '../lib/UiInfo.mjs';
 import { useEffect } from 'react';
 
 /*

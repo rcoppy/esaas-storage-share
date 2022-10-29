@@ -1,6 +1,6 @@
 import './App.css';
 import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from './widgets/AppBar';
+import AppBar from './widgets/AppBar.js';
 import Container from '@mui/material/Container';
 import {
   HashRouter as Router,
@@ -11,20 +11,20 @@ import {
 
 import * as React from 'react';
 
-import { GlobalContext } from './lib/GlobalContext';
-import MediaQueryHelper from './utils/MediaQueryHelper';
+import { GlobalContext } from './lib/GlobalContext.mjs';
+import MediaQueryHelper from './utils/MediaQueryHelper.js';
 import { createTheme, ThemeProvider } from '@mui/material';
-import UiInfo from './lib/UiInfo';
-import Home from './views/Home';
-import LessorProfile from './views/LessorProfile';
-import Messages from './views/Messages';
-import MessageThread from './views/MessageThread';
-import MyProfile from './views/MyProfile';
-import Onboarding from './views/Onboarding';
-import RenterProfile from './views/RenterProfile';
-import UserProfileModel from './lib/UserProfileModel';
-import ListingGallery from './views/ListingGallery';
-import Listing from './views/Listing';
+import UiInfo from './lib/UiInfo.mjs';
+import Home from './views/Home.js';
+import LessorProfile from './views/LessorProfile.js';
+import Messages from './views/Messages.js';
+import MessageThread from './views/MessageThread.js';
+import MyProfile from './views/MyProfile.js';
+import Onboarding from './views/Onboarding.js';
+import RenterProfile from './views/RenterProfile.js';
+import UserProfileModel from './lib/UserProfileModel.mjs';
+import ListingGallery from './views/ListingGallery.js';
+import Listing from './views/Listing.js';
 
 class App extends React.Component {
 
