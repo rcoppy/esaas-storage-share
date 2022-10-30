@@ -4,6 +4,7 @@ import { GlobalContext } from '../lib/GlobalContext.mjs';
 import { createTheme } from '@mui/material';
 import UiInfo from '../lib/UiInfo.mjs';
 import { useEffect } from 'react';
+import React from 'react';
 
 /*
 

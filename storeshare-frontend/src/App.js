@@ -65,7 +65,7 @@ class App extends React.Component {
         <CssBaseline />
         <div className="App">
           <GlobalContext.Provider value={this.state}>
-            <Router>
+            {/* <Router> */}
               <AppBar />
               <MediaQueryHelper uiInfo={this.state.uiInfo} updateUiInfo={this.state.updateUiInfo} />
               <Container maxWidth={this.state.uiInfo.containerWidth} sx={{ mt: 1, overflowX: 'hidden' }}>
@@ -81,7 +81,7 @@ class App extends React.Component {
                   <Route path="/welcome" element={<Onboarding />} />
                 </Routes>
               </Container>
-            </Router>
+            {/* </Router> */}
           </GlobalContext.Provider>
         </div>
       </>
