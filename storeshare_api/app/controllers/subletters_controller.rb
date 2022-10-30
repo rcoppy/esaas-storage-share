@@ -41,6 +41,14 @@ class SublettersController < ApplicationController
     redirect_to subletters_path
   end
 
+  def all_listings
+    @listings = Listing.all
+  end
+
+  def my_listings
+    @listings = Listing.where(subletter_id: current_user.id)
+  end
+
   private
 
   def subletter_params
