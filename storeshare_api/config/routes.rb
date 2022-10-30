@@ -10,11 +10,19 @@ Rails.application.routes.draw do
   resources :renters
   resources :listings
 
+  resources :subletters do
+    resources :listings
+  end
+
+  resources :renters do
+    resources :listings
+  end
+
   root 'listings#index'
 
-  get 'subletters/:id/all_listings', to: 'listings#index'
+  # get 'subletters/:id/all_listings', to: 'listings#index'
   get 'subletters/:id/my_listings', to: 'listings#my_listings'
-  get 'subletters/:user_id/my_listings/:id', to: 'listings#show'
+  # get 'subletters/:user_id/my_listings/:id', to: 'listings#show'
 
-  get 'renters/:id/all_listings', to: 'listings#index'
+  # get 'renters/:id/all_listings', to: 'listings#index'
 end

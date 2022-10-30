@@ -44,7 +44,7 @@ class ListingsController < ApplicationController
   end
 
   def my_listings
-    @listings = Listing.where(subletter_id: current_user.id)
+    @listings = Listing.where(user_id: params[:id])
   end
 
   private

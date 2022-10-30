@@ -12,17 +12,18 @@
 
 ActiveRecord::Schema[7.0].define(version: 2022_10_30_131629) do
   create_table "listings", force: :cascade do |t|
-    t.integer "subletter_id", null: false
+    t.integer "user_id"
     t.string "title"
     t.string "description"
+    t.decimal "price"
     t.string "address"
     t.string "city"
     t.string "state"
-    t.string "zip"
+    t.string "zip_code"
     t.string "square_feet"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["subletter_id"], name: "index_listings_on_subletter_id"
+    t.index ["user_id"], name: "index_listings_on_user_id"
   end
 
   create_table "renters", force: :cascade do |t|
@@ -46,9 +47,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_30_131629) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "listings", "subletters"
+  add_foreign_key "listings", "users"
 end
