@@ -6,11 +6,15 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  resources :subletters
+  resources :renters
+  resources :listings
+
   root 'listings#index'
 
-  get 'subletters/:id/all_listings', to: 'listings#index', as: 'all_listings'
-  get 'subletters/:id/my_listings', to: 'listings#my_listings', as: 'my_listings'
+  get 'subletters/:id/all_listings', to: 'listings#index'
+  get 'subletters/:id/my_listings', to: 'listings#my_listings'
   get 'subletters/:user_id/my_listings/:id', to: 'listings#show'
 
-  get 'renters/:id/all_listings', to: 'listings#index', as: 'all_listings'
+  get 'renters/:id/all_listings', to: 'listings#index'
 end
