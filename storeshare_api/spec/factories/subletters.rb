@@ -2,7 +2,6 @@
 
 FactoryBot.define do
   factory :subletter do
-    email { Faker::Internet.email }
-    password { 'mypassword' }
+    user
   end
 end
