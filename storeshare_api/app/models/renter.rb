@@ -1,4 +1,5 @@
 # frozen_string_literal: true
 
-class Renter < User
+class Renter < ApplicationRecord
+  belongs_to :user
 end

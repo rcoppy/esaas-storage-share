@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get 'subletters/:id/my_listings', to: 'subletters#my_listings'
   # get 'subletters/:user_id/my_listings/:id', to: 'listings#show'
 
+  get 'renters/:id/all_listings', to: 'renters#all_listings'
   # get 'renters/:id/all_listings', to: 'listings#index'
 
   resources :conversations do  #might be not suitable for API

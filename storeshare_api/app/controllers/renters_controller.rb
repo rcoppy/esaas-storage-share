@@ -41,6 +41,10 @@ class RentersController < ApplicationController
     redirect_to renters_path
   end
 
+  def all_listings
+    @listings = Listing.all
+  end
+
   private
 
   def renter_params
