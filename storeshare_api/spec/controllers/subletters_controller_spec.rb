@@ -4,7 +4,8 @@ require 'rails_helper'
 require_relative '../support/devise'
 
 RSpec.describe SublettersController, type: :controller do
-  let!(:subletter) { FactoryBot.create(:subletter) }
+  let!(:user) { FactoryBot.create(:user) }
+  let!(:subletter) { FactoryBot.create(:subletter, user:) }
 
   describe 'get all listings' do
     login_user
@@ -20,7 +21,7 @@ RSpec.describe SublettersController, type: :controller do
       # # binding.pry
       # listing.save!
 
-      listing = FactoryBot.create(:listing, user: subletter)
+      listing = FactoryBot.create(:listing, subletter:)
 
       get :all_listings, params: { id: subletter.id }
       expect(response).to have_http_status(:success)
@@ -41,7 +42,7 @@ RSpec.describe SublettersController, type: :controller do
       # listing.user = subletter
       # listing.save!
 
-      listing = FactoryBot.create(:listing, user: subletter)
+      listing = FactoryBot.create(:listing, subletter:)
 
       get :my_listings, params: { id: subletter.id }
       expect(response).to have_http_status(:success)
