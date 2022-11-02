@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require_relative '../support/devise'
 
-RSpec.describe RentersController, type: :request do
-  renter = FactoryBot.create(:user)
+RSpec.describe RentersController, type: :controller do
+  renter = FactoryBot.create(:renter)
+  subletter = FactoryBot.create(:subletter)
 
   describe 'get all listings' do
+    login_user
+
     it 'returns all listings' do
       listing = Listing.new(
         address: '',
@@ -13,10 +17,10 @@ RSpec.describe RentersController, type: :request do
         description: ''
       )
 
-      listing.user = renter
+      listing.subletter = subletter
       listing.save!
 
-      get "/renters/#{renter.id}/listings"
+      get :all_listings, params: { id: renter.id }
       expect(response).to have_http_status(:success)
       expect(assigns(:listings)).to eq([listing])
     end
