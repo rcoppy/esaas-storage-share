@@ -1,5 +1,9 @@
 # README
 
+to test: 
+check config/database.yml to change the username and password fields for your local postgres user
+run `rails s` on your terminal and open `localhost:3000` on your browser
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
