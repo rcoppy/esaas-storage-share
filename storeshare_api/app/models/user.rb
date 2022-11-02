@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   # self.abstract_class = true
+  has_many :listings, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

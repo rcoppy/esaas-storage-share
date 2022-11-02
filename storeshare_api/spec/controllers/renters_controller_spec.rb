@@ -17,7 +17,7 @@ RSpec.describe RentersController, type: :controller do
         description: ''
       )
 
-      listing.subletter = subletter
+      listing.user = subletter
       listing.save!
 
       get :all_listings, params: { id: renter.id }

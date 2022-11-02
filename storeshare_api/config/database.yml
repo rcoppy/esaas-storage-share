@@ -44,5 +44,5 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: storshare_api_test
+  database: storeshare_api_test
   pool: 5

@@ -5,14 +5,14 @@ require 'rails_helper'
 RSpec.describe Listing, type: :model do
   describe 'validations' do
     it 'is invalid without a subletter_id' do
-      listing = Listing.new(subletter_id: nil)
+      listing = Listing.new(user_id: nil)
       expect(listing).to_not be_valid
     end
   end
 
   describe 'associations' do
     it 'belongs to a subletter' do
-      assc = described_class.reflect_on_association(:subletter)
+      assc = described_class.reflect_on_association(:user)
       expect(assc.macro).to eq :belongs_to
     end
   end
