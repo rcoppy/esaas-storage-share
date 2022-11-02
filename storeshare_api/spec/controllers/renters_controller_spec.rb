@@ -11,14 +11,16 @@ RSpec.describe RentersController, type: :controller do
     login_user
 
     it 'returns all listings' do
-      listing = Listing.new(
-        address: '',
-        price: '',
-        description: ''
-      )
+      # listing = Listing.new(
+      #   address: '',
+      #   price: '',
+      #   description: ''
+      # )
 
-      listing.user = subletter
-      listing.save!
+      # listing.user = subletter
+      # listing.save!
+
+      listing = FactoryBot.create(:listing, user: subletter)
 
       get :all_listings, params: { id: renter.id }
       expect(response).to have_http_status(:success)
