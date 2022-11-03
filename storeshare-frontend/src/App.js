@@ -20,11 +20,12 @@ import LessorProfile from './views/LessorProfile.js';
 import Messages from './views/Messages.js';
 import MessageThread from './views/MessageThread.js';
 import MyProfile from './views/MyProfile.js';
-import Onboarding from './views/Onboarding.js';
+import Welcome from './views/onboarding/Welcome';
 import RenterProfile from './views/RenterProfile.js';
 import UserProfileModel from './lib/UserProfileModel.mjs';
 import ListingGallery from './views/ListingGallery.js';
 import Listing from './views/Listing.js';
+import TokenContext from './lib/TokenContext';
 
 class App extends React.Component {
 
@@ -43,6 +44,19 @@ class App extends React.Component {
       }));
     };
 
+    this.updateShouldHideAppBar = (flag) => {
+      this.setState(state => ({
+        shouldHideAppBar: flag,
+      })); 
+    }
+
+    this.tokenContextLoginCallback = (data) => {
+      const names = data.name.split(" ");
+      const profile = new UserProfileModel({firstName: names[0], lastName: names[1], email: data.email}); 
+
+      this.updateMyProfile(profile); 
+    }
+
     this.state = {
       uiInfo: new UiInfo(),
       updateUiInfo: this.updateUiInfo,
@@ -50,7 +64,12 @@ class App extends React.Component {
       myProfile: new UserProfileModel(),
       updateMyProfile: this.updateMyProfile,
 
+      tokenContext: new TokenContext(this.tokenContextLoginCallback, null),
+
       store: {},
+
+      shouldHideAppBar: true, 
+      updateShouldHideAppBar: this.updateShouldHideAppBar, 
     };
 
     function getRandomInt(max) {
@@ -66,7 +85,7 @@ class App extends React.Component {
         <div className="App">
           <GlobalContext.Provider value={this.state}>
             {/* <Router> */}
-              <AppBar />
+              {!this.state.shouldHideAppBar && <AppBar />}
               <MediaQueryHelper uiInfo={this.state.uiInfo} updateUiInfo={this.state.updateUiInfo} />
               <Container maxWidth={this.state.uiInfo.containerWidth} sx={{ mt: 1, overflowX: 'hidden' }}>
                 <Routes>
@@ -78,7 +97,7 @@ class App extends React.Component {
                   <Route path="/messages/:id" element={<MessageThread />} />
                   <Route path="/listings" element={<ListingGallery />} />
                   <Route path="/listings/:id" element={<Listing />} />
-                  <Route path="/welcome" element={<Onboarding />} />
+                  <Route path="/welcome" element={<Welcome />} />
                 </Routes>
               </Container>
             {/* </Router> */}
