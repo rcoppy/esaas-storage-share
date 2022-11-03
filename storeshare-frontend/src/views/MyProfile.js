@@ -9,7 +9,8 @@ function MyProfile() {
             <GlobalContext.Consumer>
                 {({ myProfile }) => <>
                     <Container maxWidth="md" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <Typography variant="p">{myProfile.firstName}, this is your profile page.</Typography>
+                        <Typography variant="h4">Hi, {myProfile.firstName} {myProfile.lastName}</Typography>
+                        <Typography variant="p">Your email: {myProfile.contactInfo.email}</Typography>
                     </Container>
                 </>}
             </GlobalContext.Consumer>
