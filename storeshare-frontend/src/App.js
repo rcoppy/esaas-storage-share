@@ -20,7 +20,7 @@ import LessorProfile from './views/LessorProfile.js';
 import Messages from './views/Messages.js';
 import MessageThread from './views/MessageThread.js';
 import MyProfile from './views/MyProfile.js';
-import Onboarding from './views/Onboarding.js';
+import Welcome from './views/onboarding/Welcome';
 import RenterProfile from './views/RenterProfile.js';
 import UserProfileModel from './lib/UserProfileModel.mjs';
 import ListingGallery from './views/ListingGallery.js';
@@ -78,7 +78,7 @@ class App extends React.Component {
                   <Route path="/messages/:id" element={<MessageThread />} />
                   <Route path="/listings" element={<ListingGallery />} />
                   <Route path="/listings/:id" element={<Listing />} />
-                  <Route path="/welcome" element={<Onboarding />} />
+                  <Route path="/welcome" element={<Welcome />} />
                 </Routes>
               </Container>
             {/* </Router> */}
