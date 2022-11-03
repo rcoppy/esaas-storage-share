@@ -2,8 +2,10 @@ import { login, logout } from "../utils/ApiCaller";
 
 export default class TokenContext {
 
-    constructor(bearer=null) {
+    constructor(loginCallback=(data)=>{}, bearer=null) {
         this.bearer = bearer; 
+        this.signInMetaData = {};
+        this.loginCallback = loginCallback; 
     }
 
     getIsLoggedIn() {
@@ -11,9 +13,13 @@ export default class TokenContext {
     }
 
     doLogin(email, password, successCallback = () => {}) {
-        login(email, password, (token) => {
+        login(email, password, (token, body) => {
             this.bearer = token;
+            this.signInMetaData = body; 
             successCallback();
+            this.loginCallback(this.signInMetaData); 
+            console.log(this.bearer);
+            console.log(this.signInMetaData);
         }); 
     }
 

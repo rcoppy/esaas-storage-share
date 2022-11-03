@@ -24,13 +24,13 @@ export function logout() {
     clearAuthData();
 }
 
-export function login(email, password, successCallback = (setter) => { }) {
-    fetchBearerToken(email, password, () =>
-        successCallback(getAuthData().token)
+export function login(email, password, successCallback = (tokenSetter, bodySetter) => { }) {
+    fetchBearerToken(email, password, (body) =>
+        successCallback(getAuthData().token, body)
     );
 }
 
-export function fetchBearerToken(email, password, successCallback = () => { }, host = defaultHost) {
+export function fetchBearerToken(email, password, successCallback = (body) => { }, host = defaultHost) {
     axios.post(host + '/users/sign_in', {
         user: {
             email: email,
@@ -45,18 +45,19 @@ export function fetchBearerToken(email, password, successCallback = () => { }, h
             console.log(response);
 
             saveAuthData(response.headers.authorization, null);
-            successCallback();
+            successCallback(response.data);
         })
         .catch(function (error) {
             console.log(error);
         });
 }
 
-export function registerAccount(email, password, successCallback = () => { }, host = defaultHost) {
+export function registerAccount(email, password, name, successCallback = () => { }, host = defaultHost) {
     axios.post(host + '/users', {
         user: {
             email: email,
-            password: password
+            password: password, 
+            name: name
         }
     }, {
         headers: {

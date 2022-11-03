@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Container, Divider, Typography, TextField, FormControl, InputLabel, Stack } from '@mui/material';
+import { Button, Container, Divider, Typography, TextField, FormControl, InputLabel, Stack, Switch } from '@mui/material';
 import { GlobalContext } from '../../lib/GlobalContext.mjs';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { fetchBearerToken, registerAccount } from '../../utils/ApiCaller';
@@ -12,13 +12,20 @@ const callSignIn = (tokenContext, email, password, updateShouldHideAppBar, navig
     });
 };
 
+const callSignUp = (tokenContext, email, password, name, updateShouldHideAppBar, navigate) => {
+    registerAccount(email, password, name, () => {
+        callSignIn(tokenContext, email, password, updateShouldHideAppBar, navigate);
+    });
+}
 
 function Welcome() {
     const navigate = useNavigate();  
 
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [name, setName] = React.useState(''); 
 
+    const [registerMode, setRegisterMode] = React.useState(false); 
 
     return (
         <>
@@ -29,6 +36,15 @@ function Welcome() {
 
                         <FormControl>
                             <Stack spacing={1} direction="column">
+                                
+                                {registerMode && <TextField
+                                    id="name-input"
+                                    aria-label="name field"
+                                    label="Your name"
+                                    defaultValue=""
+                                    onChange={(event) => setName(event.target.value)}
+                                />}
+                                
                                 <TextField
                                     id="email-input"
                                     aria-label="email field"
@@ -47,13 +63,22 @@ function Welcome() {
                                 />
 
                                 <Button variant="contained" onClick={() =>
-                                    callSignIn(tokenContext, email, password, updateShouldHideAppBar, navigate)}
+                                    !registerMode ? 
+                                        callSignIn(tokenContext, email, password, updateShouldHideAppBar, navigate) : 
+                                        callSignUp(tokenContext, email, password, name, updateShouldHideAppBar, navigate)}
                                 >
-                                    Login
+                                    {registerMode ? "Sign up" : "Login"}
                                 </Button>
+
+                                <Typography variant="p">Need to register? <Switch aria-label="toggle register mode" onChange={() => setRegisterMode(!registerMode)} /></Typography>
+                                
 
                             </Stack>
                         </FormControl>
+
+                        
+
+                        
 
 
                     </Container>

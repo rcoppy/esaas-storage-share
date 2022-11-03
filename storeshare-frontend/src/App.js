@@ -50,6 +50,13 @@ class App extends React.Component {
       })); 
     }
 
+    this.tokenContextLoginCallback = (data) => {
+      const names = data.name.split(" ");
+      const profile = new UserProfileModel({firstName: names[0], lastName: names[1], email: data.email}); 
+
+      this.updateMyProfile(profile); 
+    }
+
     this.state = {
       uiInfo: new UiInfo(),
       updateUiInfo: this.updateUiInfo,
@@ -57,7 +64,7 @@ class App extends React.Component {
       myProfile: new UserProfileModel(),
       updateMyProfile: this.updateMyProfile,
 
-      tokenContext: new TokenContext(),
+      tokenContext: new TokenContext(this.tokenContextLoginCallback, null),
 
       store: {},
 

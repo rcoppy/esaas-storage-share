@@ -4,6 +4,7 @@ import { GlobalContext } from '../lib/GlobalContext.mjs';
 import { Link } from 'react-router-dom';
 
 function Home() {
+
     return (
         <>
             <GlobalContext.Consumer>
