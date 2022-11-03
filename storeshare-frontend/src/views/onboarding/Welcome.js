@@ -6,7 +6,7 @@ import { fetchBearerToken, registerAccount } from '../../utils/ApiCaller';
 
 
 const callSignIn = () => {
-    registerAccount("alex@alex.com", "alexander");
+    fetchBearerToken("alex@alex.com", "alexander");
 };
 
 function Welcome() {

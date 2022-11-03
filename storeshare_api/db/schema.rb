@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_02_214436) do
   end
 
   create_table "listings", force: :cascade do |t|
-    t.bigint "subletter_id"
+    t.bigint "user_id"
     t.string "title"
     t.string "description"
     t.decimal "price"
@@ -32,21 +32,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_02_214436) do
     t.string "square_feet"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["subletter_id"], name: "index_listings_on_subletter_id"
+    t.index ["user_id"], name: "index_listings_on_user_id"
   end
 
   create_table "renters", force: :cascade do |t|
-    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_renters_on_user_id"
   end
 
   create_table "subletters", force: :cascade do |t|
-    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_subletters_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -64,7 +60,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_02_214436) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "listings", "subletters"
-  add_foreign_key "renters", "users"
-  add_foreign_key "subletters", "users"
+  add_foreign_key "listings", "users"
 end
