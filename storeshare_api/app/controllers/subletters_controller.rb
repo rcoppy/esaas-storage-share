@@ -52,6 +52,6 @@ class SublettersController < ApplicationController
   private
 
   def subletter_params
-    params.require(:subletter).permit(:email, :phone_number, :address, :name, :password)
+    params.require(:subletter).permit(:email, :phone_number, :address, :name, :password, :user_id)
   end
 end
