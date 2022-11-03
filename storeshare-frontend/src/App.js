@@ -25,6 +25,7 @@ import RenterProfile from './views/RenterProfile.js';
 import UserProfileModel from './lib/UserProfileModel.mjs';
 import ListingGallery from './views/ListingGallery.js';
 import Listing from './views/Listing.js';
+import TokenContext from './lib/TokenContext';
 
 class App extends React.Component {
 
@@ -43,6 +44,12 @@ class App extends React.Component {
       }));
     };
 
+    this.updateShouldHideAppBar = (flag) => {
+      this.setState(state => ({
+        shouldHideAppBar: flag,
+      })); 
+    }
+
     this.state = {
       uiInfo: new UiInfo(),
       updateUiInfo: this.updateUiInfo,
@@ -50,7 +57,12 @@ class App extends React.Component {
       myProfile: new UserProfileModel(),
       updateMyProfile: this.updateMyProfile,
 
+      tokenContext: new TokenContext(),
+
       store: {},
+
+      shouldHideAppBar: true, 
+      updateShouldHideAppBar: this.updateShouldHideAppBar, 
     };
 
     function getRandomInt(max) {
@@ -66,7 +78,7 @@ class App extends React.Component {
         <div className="App">
           <GlobalContext.Provider value={this.state}>
             {/* <Router> */}
-              <AppBar />
+              {!this.state.shouldHideAppBar && <AppBar />}
               <MediaQueryHelper uiInfo={this.state.uiInfo} updateUiInfo={this.state.updateUiInfo} />
               <Container maxWidth={this.state.uiInfo.containerWidth} sx={{ mt: 1, overflowX: 'hidden' }}>
                 <Routes>

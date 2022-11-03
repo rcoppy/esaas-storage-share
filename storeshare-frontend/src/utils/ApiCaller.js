@@ -2,7 +2,35 @@ import axios from 'axios';
 
 const defaultHost = 'http://localhost:8080';
 
-export function fetchBearerToken(email, password, host = defaultHost) {
+const saveAuthData = (token, expirationDate) => {
+    localStorage.setItem('token', token);
+    // TODO 
+    //     localStorage.setItem('expiration',expirationDate.toISOString());  
+}
+
+const clearAuthData = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("expiration");
+}
+
+const getAuthData = () => {
+    return {
+        token: localStorage.getItem("token"),
+        expiration: localStorage.getItem("expiration")
+    }
+}
+
+export function logout() {
+    clearAuthData();
+}
+
+export function login(email, password, successCallback = (setter) => { }) {
+    fetchBearerToken(email, password, () =>
+        successCallback(getAuthData().token)
+    );
+}
+
+export function fetchBearerToken(email, password, successCallback = () => { }, host = defaultHost) {
     axios.post(host + '/users/sign_in', {
         user: {
             email: email,
@@ -15,13 +43,16 @@ export function fetchBearerToken(email, password, host = defaultHost) {
     })
         .then(function (response) {
             console.log(response);
+
+            saveAuthData(response.headers.authorization, null);
+            successCallback();
         })
         .catch(function (error) {
             console.log(error);
         });
 }
 
-export function registerAccount(email, password, host = defaultHost) {
+export function registerAccount(email, password, successCallback = () => { }, host = defaultHost) {
     axios.post(host + '/users', {
         user: {
             email: email,
@@ -34,6 +65,9 @@ export function registerAccount(email, password, host = defaultHost) {
     })
         .then(function (response) {
             console.log(response);
+
+            saveAuthData(response.headers.authorization, null);
+            successCallback();
         })
         .catch(function (error) {
             console.log(error);
