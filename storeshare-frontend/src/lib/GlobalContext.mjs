@@ -14,6 +14,6 @@ export const GlobalContext = React.createContext({
 
     tokenContext: new TokenContext(), 
 
-    shouldHideAppBar: false,
-    updateShouldHideAppBar: () => {},
+    isLoggedIn: false,
+    updateIsLoggedIn: () => {},
 });

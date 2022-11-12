@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   # manual user route
   resources :users, :only => [:show]
 
+  post 'users/email', to: 'users#show_by_email' 
+
   # Defines the root path route ("/")
   # root "articles#index"
   resources :subletters
