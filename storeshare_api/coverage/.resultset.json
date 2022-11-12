@@ -1,7 +1,7 @@
 {
   "RSpec": {
     "coverage": {
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/support/controller_macros.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/spec/support/controller_macros.rb": {
         "lines": [
           null,
           null,
@@ -23,7 +23,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/config/environment.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/config/environment.rb": {
         "lines": [
           null,
           1,
@@ -32,7 +32,7 @@
           1
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/config/application.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/config/application.rb": {
         "lines": [
           1,
           null,
@@ -74,7 +74,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/config/boot.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/config/boot.rb": {
         "lines": [
           1,
           null,
@@ -82,7 +82,7 @@
           1
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/config/environments/test.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/config/environments/test.rb": {
         "lines": [
           1,
           null,
@@ -148,7 +148,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/config/initializers/cors.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/config/initializers/cors.rb": {
         "lines": [
           null,
           null,
@@ -182,7 +182,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/config/initializers/devise.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/config/initializers/devise.rb": {
         "lines": [
           null,
           null,
@@ -511,7 +511,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/config/initializers/filter_parameter_logging.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/config/initializers/filter_parameter_logging.rb": {
         "lines": [
           null,
           null,
@@ -523,7 +523,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/config/initializers/inflections.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/config/initializers/inflections.rb": {
         "lines": [
           null,
           null,
@@ -543,7 +543,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/factories/listings.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/spec/factories/listings.rb": {
         "lines": [
           1,
           1,
@@ -561,7 +561,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/factories/renters.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/spec/factories/renters.rb": {
         "lines": [
           null,
           null,
@@ -572,7 +572,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/factories/subletters.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/spec/factories/subletters.rb": {
         "lines": [
           null,
           null,
@@ -583,7 +583,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/factories/users.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/spec/factories/users.rb": {
         "lines": [
           null,
           null,
@@ -597,13 +597,19 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/config/routes.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/config/routes.rb": {
         "lines": [
           null,
           null,
           1,
           1,
           null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
           null,
           null,
           null,
@@ -629,7 +635,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/models/user.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/app/models/user.rb": {
         "lines": [
           null,
           null,
@@ -655,29 +661,15 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/models/application_record.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/app/models/application_record.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/models/jwt_denylist.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/app/models/jwt_denylist.rb": {
         "lines": [
-          1,
-          1,
-          null,
-          1,
-          null
-        ]
-      },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/support/devise.rb": {
-        "lines": [
-          null,
-          null,
-          1,
-          null,
-          1,
           1,
           1,
           null,
@@ -685,7 +677,21 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/controllers/listings_controller.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/spec/support/devise.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null
+        ]
+      },
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/app/controllers/listings_controller.rb": {
         "lines": [
           null,
           null,
@@ -744,7 +750,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/controllers/application_controller.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/app/controllers/application_controller.rb": {
         "lines": [
           null,
           null,
@@ -755,7 +761,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/controllers/renters_controller_spec.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/spec/controllers/renters_controller_spec.rb": {
         "lines": [
           null,
           null,
@@ -814,7 +820,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/controllers/renters_controller.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/app/controllers/renters_controller.rb": {
         "lines": [
           null,
           null,
@@ -871,7 +877,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/models/renter.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/app/models/renter.rb": {
         "lines": [
           null,
           null,
@@ -880,7 +886,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/models/subletter.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/app/models/subletter.rb": {
         "lines": [
           null,
           null,
@@ -891,7 +897,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/controllers/subletters_controller_spec.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/spec/controllers/subletters_controller_spec.rb": {
         "lines": [
           null,
           null,
@@ -968,7 +974,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/controllers/subletters_controller.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/app/controllers/subletters_controller.rb": {
         "lines": [
           null,
           null,
@@ -1029,7 +1035,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/models/listing_spec.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/spec/models/listing_spec.rb": {
         "lines": [
           null,
           null,
@@ -1100,7 +1106,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/models/listing.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/app/models/listing.rb": {
         "lines": [
           null,
           null,
@@ -1109,28 +1115,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/models/renter_spec.rb": {
-        "lines": [
-          1,
-          null,
-          1,
-          1,
-          1,
-          1,
-          1,
-          null,
-          null,
-          null,
-          1,
-          1,
-          1,
-          1,
-          null,
-          null,
-          null
-        ]
-      },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/models/subletter_spec.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/spec/models/renter_spec.rb": {
         "lines": [
           1,
           null,
@@ -1151,7 +1136,28 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/models/user_spec.rb": {
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/spec/models/subletter_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/spec/models/user_spec.rb": {
         "lines": [
           1,
           null,
@@ -1182,11 +1188,22 @@
           1,
           1,
           null,
+          null,
+          null
+        ]
+      },
+      "/Users/arcop/code/git/esaas-storage-share/storeshare_api/spec/requests/users_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          1,
           null,
           null
         ]
       }
     },
-    "timestamp": 1667439915
+    "timestamp": 1668288779
   }
 }
