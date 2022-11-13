@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-//const defaultHost = 'http://localhost:8080';
+const defaultHost = 'http://localhost:8080';
 
-const defaultHost = 'https://floating-plateau-15656.herokuapp.com:443'; // 'http://localhost:8080';
+// const defaultHost = 'https://floating-plateau-15656.herokuapp.com:443'; // 'http://localhost:8080';
 
 
 const saveAuthData = (token, email, expirationDate) => {

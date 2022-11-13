@@ -26,7 +26,6 @@ import UserProfileModel from './lib/UserProfileModel.mjs';
 import ListingGallery from './views/ListingGallery.js';
 import Listing from './views/Listing.js';
 import TokenContext from './lib/TokenContext';
-import { checkLoggedIn } from './utils/ApiCaller';
 
 class App extends React.Component {
 
@@ -73,14 +72,6 @@ class App extends React.Component {
       isLoggedIn: false,
       updateIsLoggedIn: this.updateIsLoggedIn,
     };
-
-    
-
-
-    // function getRandomInt(max) {
-    //   return Math.floor(Math.random() * max);
-    // }
-
   }
 
   componentDidMount() {

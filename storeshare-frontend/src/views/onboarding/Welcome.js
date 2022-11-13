@@ -61,7 +61,7 @@ function Welcome() {
 
     const callSignUp = (tokenContext, updateIsLoggedIn) => {
         registerAccount(email, password, name, () => {
-            callSignIn(tokenContext, email, password, updateIsLoggedIn, navigate);
+            callSignIn(tokenContext, updateIsLoggedIn);
         });
     }
 
