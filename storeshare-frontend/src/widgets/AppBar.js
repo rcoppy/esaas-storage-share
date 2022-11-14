@@ -30,6 +30,7 @@ import Alert from '@mui/material/Alert';
 import { GlobalContext } from '../lib/GlobalContext.mjs';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import { useTheme } from '@mui/system';
+import AvatarPhoto from '../static/placeholders/avatar.jpg'; 
 
 function AppBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -46,7 +47,7 @@ function AppBar() {
     return (
         <>
             <GlobalContext.Consumer>
-                {({ tokenContext }) => <>
+                {({ tokenContext, myProfile }) => <>
                     <MuiAppBar color="grey" position='sticky'>
                         <Container maxWidth="xl">
                             <Toolbar color={theme.palette.primary.dark} disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -71,13 +72,13 @@ function AppBar() {
                                         </IconButton>
                                     {/* </Link> */}
 
-                                    <Link to="/notifications">
+                                    {/* <Link to="/notifications">
                                         <IconButton aria-label="see notifications" component="label">
                                             <Badge badgeContent={14} color="warning">
                                                 <NotificationsIcon htmlColor={theme.palette.primary.contrastText} />
                                             </Badge>
                                         </IconButton>
-                                    </Link>
+                                    </Link> */}
 
                                     <Menu
                                         anchorEl={anchorEl}
@@ -114,15 +115,22 @@ function AppBar() {
                                         transformOrigin={{ horizontal: 'left', vertical: 'top' }}
                                         anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                                     >
-                                        <MenuItem component={Link} to="/profile/me">
+                                        {/* <MenuItem component={Link} to="/profile/me">
                                             <Avatar />Profile
+                                        </MenuItem> */}
+                                        <MenuItem component={Link} to="/listings/mine/renting">
+                                            My storage
                                         </MenuItem>
                                         <Divider />
-                                        <MenuItem>
+                                        <MenuItem component={Link} to="/listings/mine/leasing">
+                                            Manage listings
+                                        </MenuItem>
+                                        <Divider />
+                                        <MenuItem component={Link} to="/profile/me">
                                             <ListItemIcon>
                                                 <Settings fontSize="small" />
                                             </ListItemIcon>
-                                            Settings
+                                            Account
                                         </MenuItem>
                                         <MenuItem>
                                             <ListItemIcon>
@@ -146,7 +154,7 @@ function AppBar() {
                                             aria-haspopup="true"
                                             aria-expanded={open ? 'true' : undefined}
                                         >
-                                            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                                            <Avatar sx={{ width: 32, height: 32 }} alt={myProfile.firstName + " " + myProfile.lastName} src={AvatarPhoto} />
                                         </IconButton>
                                     </Tooltip>
                                 </Stack>

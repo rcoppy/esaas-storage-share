@@ -26,6 +26,8 @@ import UserProfileModel from './lib/UserProfileModel.mjs';
 import ListingGallery from './views/ListingGallery.js';
 import Listing from './views/Listing.js';
 import TokenContext from './lib/TokenContext';
+import MyRenterListings from './views/MyRenterListings';
+import MyLessorListings from './views/MyLessorListings';
 
 class App extends React.Component {
 
@@ -131,13 +133,15 @@ class App extends React.Component {
 
                 {this.state.isLoggedIn &&
                   <Routes>
-                    <Route path="/" element={<Home />} />
+                    <Route path="/" element={<ListingGallery />} />
                     <Route path="/profile/me" element={<MyProfile />} />
                     <Route path="/profile/renters/:id" element={<RenterProfile />} />
                     <Route path="/profile/lessors/:id" element={<LessorProfile />} />
                     <Route path="/messages" element={<Messages />} />
                     <Route path="/messages/:id" element={<MessageThread />} />
                     <Route path="/listings" element={<ListingGallery />} />
+                    <Route path="/listings/mine/renting" element={< MyRenterListings />} />
+                    <Route path="/listings/mine/leasing" element={< MyLessorListings />} />
                     <Route path="/listings/:id" element={<Listing />} />
                   </Routes>}
               </Container>
