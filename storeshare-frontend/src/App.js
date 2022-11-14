@@ -26,6 +26,8 @@ import UserProfileModel from './lib/UserProfileModel.mjs';
 import ListingGallery from './views/ListingGallery.js';
 import Listing from './views/Listing.js';
 import TokenContext from './lib/TokenContext';
+import MyRenterListings from './views/MyRenterListings';
+import MyLessorListings from './views/MyLessorListings';
 
 class App extends React.Component {
 
@@ -44,17 +46,17 @@ class App extends React.Component {
       }));
     };
 
-    this.updateShouldHideAppBar = (flag) => {
+    this.updateIsLoggedIn = (flag) => {
       this.setState(state => ({
-        shouldHideAppBar: flag,
-      })); 
+        isLoggedIn: flag,
+      }));
     }
 
     this.tokenContextLoginCallback = (data) => {
       const names = data.name.split(" ");
-      const profile = new UserProfileModel({firstName: names[0], lastName: names[1], email: data.email}); 
+      const profile = new UserProfileModel({ firstName: names[0], lastName: names[1], email: data.email });
 
-      this.updateMyProfile(profile); 
+      this.updateMyProfile(profile);
     }
 
     this.state = {
@@ -64,43 +66,86 @@ class App extends React.Component {
       myProfile: new UserProfileModel(),
       updateMyProfile: this.updateMyProfile,
 
-      tokenContext: new TokenContext(this.tokenContextLoginCallback, null),
+      tokenContext: new TokenContext(this.tokenContextLoginCallback,
+        () => this.updateIsLoggedIn(false)),
 
       store: {},
 
-      shouldHideAppBar: true, 
-      updateShouldHideAppBar: this.updateShouldHideAppBar, 
+      isLoggedIn: false,
+      updateIsLoggedIn: this.updateIsLoggedIn,
     };
+  }
 
-    function getRandomInt(max) {
-      return Math.floor(Math.random() * max);
-    }
-    
+  componentDidMount() {
+    this.state.tokenContext.tryAutoLogin(() => {
+      this.state.isLoggedIn = true;
+      // navigate("/"); 
+    });
   }
 
   render() {
+
+    const customTheme = createTheme({
+      palette: {
+        primary: {
+          light: '#ffff89',
+          main: '#d4e157',
+          dark: '#a0af22',
+          contrastText: '#000000',
+        },
+        secondary: {
+          main: '#e65100',
+          light: '#ff833a',
+          dark: '#ac1900',
+          contrastText: '#ffea00',
+        }
+      }
+    });
+
+    const theme = createTheme({
+      palette: {
+        primary: {
+          light: '#ffff89',
+          main: '#d4e157',
+          dark: '#a0af22',
+          contrastText: '#000000',
+        },
+        secondary: {
+          light: '#ff7961',
+          main: '#f44336',
+          dark: '#ba000d',
+          contrastText: '#000',
+        },
+      },
+    });
+
     return (
       <>
         <CssBaseline />
-        <div className="App">
+        <div className="App" style={{ minHeight: '100vh', backgroundColor: customTheme.palette.grey[200]}}>
           <GlobalContext.Provider value={this.state}>
-            {/* <Router> */}
-              {!this.state.shouldHideAppBar && <AppBar />}
+            <ThemeProvider theme={customTheme}>
+              {this.state.isLoggedIn && <AppBar />}
               <MediaQueryHelper uiInfo={this.state.uiInfo} updateUiInfo={this.state.updateUiInfo} />
               <Container maxWidth={this.state.uiInfo.containerWidth} sx={{ mt: 1, overflowX: 'hidden' }}>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/profile/me" element={<MyProfile />} />
-                  <Route path="/profile/renters/:id" element={<RenterProfile />} />
-                  <Route path="/profile/lessors/:id" element={<LessorProfile />} />
-                  <Route path="/messages" element={<Messages />} />
-                  <Route path="/messages/:id" element={<MessageThread />} />
-                  <Route path="/listings" element={<ListingGallery />} />
-                  <Route path="/listings/:id" element={<Listing />} />
-                  <Route path="/welcome" element={<Welcome />} />
-                </Routes>
+
+                {!this.state.isLoggedIn && <Welcome />}
+
+                {this.state.isLoggedIn &&
+                  <Routes>
+                    <Route path="/" element={<ListingGallery />} />
+                    <Route path="/profile/me" element={<MyProfile />} />
+                    <Route path="/profile/renters/:id" element={<RenterProfile />} />
+                    <Route path="/profile/lessors/:id" element={<LessorProfile />} />
+                    <Route path="/messages" element={<Messages />} />
+                    <Route path="/messages/:id" element={<MessageThread />} />
+                    <Route path="/listings" element={<ListingGallery />} />
+                    <Route path="/listings/mine/renting" element={< MyRenterListings />} />
+                    <Route path="/listings/mine/leasing" element={< MyLessorListings />} />
+                    <Route path="/listings/:id" element={<Listing />} />
+                  </Routes>}
               </Container>
-            {/* </Router> */}
+            </ThemeProvider>
           </GlobalContext.Provider>
         </div>
       </>
