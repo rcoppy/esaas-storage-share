@@ -82,31 +82,66 @@ class App extends React.Component {
   }
 
   render() {
+
+    const customTheme = createTheme({
+      palette: {
+        primary: {
+          light: '#ffff89',
+          main: '#d4e157',
+          dark: '#a0af22',
+          contrastText: '#000000',
+        },
+        secondary: {
+          main: '#e65100',
+          light: '#ff833a',
+          dark: '#ac1900',
+          contrastText: '#ffea00',
+        }
+      }
+    });
+
+    const theme = createTheme({
+      palette: {
+        primary: {
+          light: '#ffff89',
+          main: '#d4e157',
+          dark: '#a0af22',
+          contrastText: '#000000',
+        },
+        secondary: {
+          light: '#ff7961',
+          main: '#f44336',
+          dark: '#ba000d',
+          contrastText: '#000',
+        },
+      },
+    });
+
     return (
       <>
         <CssBaseline />
-        <div className="App">
+        <div className="App" style={{ minHeight: '100vh', backgroundColor: customTheme.palette.grey[200]}}>
           <GlobalContext.Provider value={this.state}>
-            {/* <Router> */}
-            {this.state.isLoggedIn && <AppBar />}
-            <MediaQueryHelper uiInfo={this.state.uiInfo} updateUiInfo={this.state.updateUiInfo} />
-            <Container maxWidth={this.state.uiInfo.containerWidth} sx={{ mt: 1, overflowX: 'hidden' }}>
+            <ThemeProvider theme={customTheme}>
+              {this.state.isLoggedIn && <AppBar />}
+              <MediaQueryHelper uiInfo={this.state.uiInfo} updateUiInfo={this.state.updateUiInfo} />
+              <Container maxWidth={this.state.uiInfo.containerWidth} sx={{ mt: 1, overflowX: 'hidden' }}>
 
-              {!this.state.isLoggedIn && <Welcome />}
+                {!this.state.isLoggedIn && <Welcome />}
 
-              {this.state.isLoggedIn &&
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/profile/me" element={<MyProfile />} />
-                  <Route path="/profile/renters/:id" element={<RenterProfile />} />
-                  <Route path="/profile/lessors/:id" element={<LessorProfile />} />
-                  <Route path="/messages" element={<Messages />} />
-                  <Route path="/messages/:id" element={<MessageThread />} />
-                  <Route path="/listings" element={<ListingGallery />} />
-                  <Route path="/listings/:id" element={<Listing />} />
-                </Routes>}
-            </Container>
-            {/* </Router> */}
+                {this.state.isLoggedIn &&
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/profile/me" element={<MyProfile />} />
+                    <Route path="/profile/renters/:id" element={<RenterProfile />} />
+                    <Route path="/profile/lessors/:id" element={<LessorProfile />} />
+                    <Route path="/messages" element={<Messages />} />
+                    <Route path="/messages/:id" element={<MessageThread />} />
+                    <Route path="/listings" element={<ListingGallery />} />
+                    <Route path="/listings/:id" element={<Listing />} />
+                  </Routes>}
+              </Container>
+            </ThemeProvider>
           </GlobalContext.Provider>
         </div>
       </>

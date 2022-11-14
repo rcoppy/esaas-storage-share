@@ -27,8 +27,9 @@ import PrivacyTipIcon from '@mui/icons-material/PrivacyTip';
 import BlockIcon from '@mui/icons-material/Block';
 import GroupIcon from '@mui/icons-material/Group';
 import Alert from '@mui/material/Alert';
-import {GlobalContext} from '../lib/GlobalContext.mjs';
-
+import { GlobalContext } from '../lib/GlobalContext.mjs';
+import ArchiveIcon from '@mui/icons-material/Archive';
+import { useTheme } from '@mui/system';
 
 function AppBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -40,14 +41,43 @@ function AppBar() {
         setAnchorEl(null);
     };
 
+    const theme = useTheme(); 
+
     return (
         <>
             <GlobalContext.Consumer>
                 {({ tokenContext }) => <>
-                    <MuiAppBar position='sticky'>
+                    <MuiAppBar color="grey" position='sticky'>
                         <Container maxWidth="xl">
-                            <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <Stack direction="row" spacing={1} sx={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
+                            <Toolbar color={theme.palette.primary.dark} disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <Stack aria-label="see homepage" component={Link} to="/" direction="row" spacing={1} color={theme.palette.primary.dark} sx={{ textDecoration: 'none', display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
+                                    <ArchiveIcon fontSize="large" />                                    
+                                    <Typography variant="h6" pt={0.5}>
+                                        StoreShare
+                                    </Typography>
+                                </Stack>
+
+                                <Stack direction="row" color={theme.palette.primary.contrastText} spacing={1} sx={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
+                                    {/* <Link to="/">
+                                        <IconButton aria-label="see homepage" component="label">
+                                            <HomeIcon color="primary[50]" />
+                                        </IconButton>
+                                    </Link> */}
+                                    {/* <Link to="/messages"> */}
+                                        <IconButton aria-label="see messages" component={Link} to="/messages">
+                                            <Badge badgeContent={14} color="warning">
+                                                <MailIcon htmlColor={theme.palette.primary.contrastText} />
+                                            </Badge>
+                                        </IconButton>
+                                    {/* </Link> */}
+
+                                    <Link to="/notifications">
+                                        <IconButton aria-label="see notifications" component="label">
+                                            <Badge badgeContent={14} color="warning">
+                                                <NotificationsIcon htmlColor={theme.palette.primary.contrastText} />
+                                            </Badge>
+                                        </IconButton>
+                                    </Link>
 
                                     <Menu
                                         anchorEl={anchorEl}
@@ -72,7 +102,7 @@ function AppBar() {
                                                     display: 'block',
                                                     position: 'absolute',
                                                     top: 0,
-                                                    left: 14,
+                                                    right: 23,
                                                     width: 10,
                                                     height: 10,
                                                     bgcolor: 'background.paper',
@@ -119,33 +149,6 @@ function AppBar() {
                                             <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
                                         </IconButton>
                                     </Tooltip>
-                                    <Typography variant="h6">
-                                        StoreShare
-                                    </Typography>
-                                </Stack>
-
-                                <Stack direction="row" spacing={1} sx={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
-                                    <Link to="/">
-                                        <IconButton aria-label="see homepage" component="label">
-                                            <HomeIcon color="primary[50]" />
-                                        </IconButton>
-                                    </Link>
-
-                                    <Link to="/messages">
-                                        <IconButton aria-label="see messages" component="label">
-                                            <Badge badgeContent={14} color="warning">
-                                                <MailIcon color="primary[50]" />
-                                            </Badge>
-                                        </IconButton>
-                                    </Link>
-
-                                    <Link to="/notifications">
-                                        <IconButton aria-label="see notifications" component="label">
-                                            <Badge badgeContent={14} color="warning">
-                                                <NotificationsIcon color="primary[50]" />
-                                            </Badge>
-                                        </IconButton>
-                                    </Link>
                                 </Stack>
                             </Toolbar>
                         </Container>
