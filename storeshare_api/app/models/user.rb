@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
-
-
 class User < ApplicationRecord
+  has_many :subletters, dependent: :destroy
+  has_many :listings, through: :subletters
+
+  has_many :renters, dependent: :destroy
 
   # include Devise::JWT::RevocationStrategies::Denylist
 
