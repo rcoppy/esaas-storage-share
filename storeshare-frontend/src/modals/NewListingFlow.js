@@ -33,37 +33,47 @@ const style = {
 // this.zipCode = zipCode;
 // this.squareFeet = squareFeet;
 
-function AddressForm() {
+function AddressForm({ address, setAddressField }) {
+
+    const handleAddressChange = (event, field) => {
+        setAddressField(field, event.target.value);
+    };
+
+
     return (
         <Stack component="form" sx={{ mt: 1 }} >
             <Stack sx={{ width: '100%', display: "flex", gap: 1 }}>
                 <TextField
                     label="Street address"
                     id="outlined-size-small"
-                    defaultValue=""
+                    defaultValue={address["street"]}
                     size="small"
                     sx={{ width: "100%" }}
+                    onChange={(event) => handleAddressChange(event, "street")}
                 />
                 <TextField
                     label="City"
                     id="outlined-size-small"
-                    defaultValue=""
+                    defaultValue={address["city"]}
                     size="small"
                     sx={{ width: "70%" }}
+                    onChange={(event) => handleAddressChange(event, "city")}
                 />
                 <TextField
                     label="State"
                     id="outlined-size-small"
-                    defaultValue=""
+                    defaultValue={address["state"]}
                     size="small"
                     sx={{ width: "20%" }}
+                    onChange={(event) => handleAddressChange(event, "state")}
                 />
                 <TextField
                     label="ZIP"
                     id="outlined-size-small"
-                    defaultValue=""
+                    defaultValue={address["zip"]}
                     size="small"
                     sx={{ width: "50%" }}
+                    onChange={(event) => handleAddressChange(event, "zip")}
                 />
 
             </Stack>
@@ -72,24 +82,26 @@ function AddressForm() {
     );
 }
 
-function SquareFeetForm() {
+function SquareFeetForm({ footage, setFootage, height, setHeight }) {
     return (
         <Stack component="form" sx={{ mt: 1 }} >
             <Stack sx={{ width: '100%', display: "flex", gap: 1 }}>
                 <Typography variant="p"><TextField
                     label="Square footage"
                     id="outlined-size-small"
-                    defaultValue=""
+                    defaultValue={footage}
                     size="small"
                     sx={{ width: "50%" }}
+                    onChange={(event) => setFootage(event.target.value)}
                 /> square feet</Typography>
 
                 <Typography variant="p"><TextField
                     label="Ceiling height"
                     id="outlined-size-small"
-                    defaultValue=""
+                    defaultValue={height}
                     size="small"
                     sx={{ width: "50%" }}
+                    onChange={(event) => setHeight(event.target.value)}
                 /> feet</Typography>
 
             </Stack>
@@ -98,19 +110,20 @@ function SquareFeetForm() {
     );
 }
 
-function MonthlyRateForm() {
+function MonthlyRateForm({ cost, setCost, footage }) {
     return (
         <Stack component="form" sx={{ mt: 1 }} >
             <Stack sx={{ width: '100%', display: "flex", gap: 1 }}>
                 <Typography variant="p"><TextField
                     label="Cost per square foot"
                     id="outlined-size-small"
-                    defaultValue=""
+                    defaultValue={cost}
                     size="small"
                     sx={{ width: "50%" }}
-                /> per square foot</Typography>
+                    onChange={(event) => setCost(event.target.value)}
+                /> per square foot, monthly</Typography>
 
-                <Typography variant="p">Total monthly rate: (TODO: mulitply footage by rate)</Typography>
+                <Typography variant="p">${cost * footage} for the whole space</Typography>
 
             </Stack>
 
@@ -118,7 +131,7 @@ function MonthlyRateForm() {
     );
 }
 
-function DescriptionForm() {
+function DescriptionForm({ description, setDescription }) {
     return (
         <Stack component="form" sx={{ mt: 1 }} >
             <Stack sx={{ width: '100%', display: "flex", gap: 1 }}>
@@ -128,9 +141,10 @@ function DescriptionForm() {
                     maxRows={4}
                     label="Space description"
                     id="outlined-size-small"
-                    defaultValue=""
+                    defaultValue={description}
                     size="small"
                     sx={{ width: "90%" }}
+                    onChange={(event) => setDescription(event.target.value)}
                 />
             </Stack>
 
@@ -157,7 +171,9 @@ const Switch = (props) => {
     return children.find(child => child.props.value === test);
 }
 
-const FormEntry = ({ currentPanel, handleChange, value }) => {
+const FormEntry = ({ currentPanel, handleChange, value, address, setAddressField,
+    footage, setFootage, height, setHeight, cost, setCost, description, setDescription
+}) => {
     return (<Box>
 
         <Accordion expanded={currentPanel === panel.panel1} onChange={handleChange(panel.panel1)}>
@@ -167,7 +183,7 @@ const FormEntry = ({ currentPanel, handleChange, value }) => {
                 <Typography variant="p">Where is your space located?</Typography>
             </AccordionSummary>
             <AccordionDetails>
-                <AddressForm />
+                <AddressForm address={address} setAddressField={setAddressField} />
             </AccordionDetails>
         </Accordion>
 
@@ -178,7 +194,7 @@ const FormEntry = ({ currentPanel, handleChange, value }) => {
                 <Typography variant="p">How big is your space?</Typography>
             </AccordionSummary>
             <AccordionDetails>
-                <SquareFeetForm />
+                <SquareFeetForm footage={footage} setFootage={setFootage} height={height} setHeight={setHeight} />
             </AccordionDetails>
         </Accordion>
 
@@ -189,7 +205,7 @@ const FormEntry = ({ currentPanel, handleChange, value }) => {
                 <Typography variant="p">What rate do you want to charge?</Typography>
             </AccordionSummary>
             <AccordionDetails>
-                <MonthlyRateForm />
+                <MonthlyRateForm cost={cost} setCost={setCost} footage={footage} />
             </AccordionDetails>
         </Accordion>
 
@@ -200,31 +216,32 @@ const FormEntry = ({ currentPanel, handleChange, value }) => {
                 <Typography variant="p">Briefly describe your space.</Typography>
             </AccordionSummary>
             <AccordionDetails>
-                <DescriptionForm />
+                <DescriptionForm description={description} setDescription={setDescription} />
             </AccordionDetails>
         </Accordion>
 
     </Box>);
 };
 
-const FormSummary = ({ value }) => {
+const FormSummary = ({ value, address, footage, height, cost, description }) => {
     return (<Stack>
-        <Typography variant="h6">Summary</Typography>
+        <Typography variant="h6">Does everything look right?</Typography>
 
-        <Typography variant="p">Address</Typography>
-        <Typography variant="p">Description</Typography>
-        <Typography variant="p">Price per square foot, monthly net</Typography>
 
+        <Typography variant="h6" pt={2} pb={0.5}><strong>{footage}</strong> square feet (<strong>${cost * footage}</strong> per month)</Typography>
+        <Typography variant="p" pl={3} pb={2}>{address["street"]}<br></br>{address["city"]}, {address["state"]} {address["zip"]}</Typography>
+
+        {/* <Typography variant="p">${cost} / sq. ft per month (${cost * footage} per month, total) </Typography> */}
+
+        <Typography variant="p" fontSize='0.9rem'><em>{description}</em></Typography>
     </Stack>);
 }
 
 export default function NewListingFlow({ open, handleClose }) {
 
-    const [expanded, setExpanded] = React.useState(panel.panel1);
-
     const handlePanelChange = (panel) => (event, isExpanded) => {
         // setExpanded(isExpanded ? panel : false);
-        setCurrentPanel(panel); 
+        setCurrentPanel(panel);
     };
 
     const [currentStep, setCurrentStep] = React.useState(step.ENTRY);
@@ -256,6 +273,20 @@ export default function NewListingFlow({ open, handleClose }) {
         }
     };
 
+    const [address, setAddress] = React.useState(new Map());
+
+    const setAddressField = (field, value) => {
+        const newAddress = address;
+        newAddress[field] = value;
+        setAddress(newAddress);
+    }
+
+    const [footage, setFootage] = React.useState(0);
+    const [height, setHeight] = React.useState(0);
+    const [cost, setCost] = React.useState(0);
+    const [description, setDescription] = React.useState("");
+
+
     return (
         <Modal
             open={open}
@@ -273,14 +304,28 @@ export default function NewListingFlow({ open, handleClose }) {
                 </Typography> */}
 
                 <Switch test={currentStep}>
-                    <FormEntry handleChange={handlePanelChange} currentPanel={currentPanel} value={step.ENTRY} />
-                    <FormSummary value={step.SUMMARY} />
+                    <FormEntry handleChange={handlePanelChange} currentPanel={currentPanel} value={step.ENTRY} address={address} setAddressField={setAddressField}
+                        footage={footage}
+                        height={height}
+                        cost={cost}
+                        description={description}
+                        setFootage={setFootage}
+                        setHeight={setHeight}
+                        setCost={setCost}
+                        setDescription={setDescription}
+                    />
+                    <FormSummary value={step.SUMMARY} address={address}
+                        footage={footage}
+                        height={height}
+                        cost={cost}
+                        description={description}
+                    />
                     <Typography value={step.CONFIRMATION} variant="p">You did it!</Typography>
                 </Switch>
 
                 <Stack direction="row" sx={{ display: 'flex', justifyContent: 'end', gap: 1, mt: 2 }}>
                     <Button variant="outlined" onClick={handleBack}>Back</Button>
-                    <Button variant="contained" onClick={handleNext}>Next</Button>
+                    <Button variant="contained" onClick={handleNext}>{currentStep === step.SUMMARY ? 'Create listing' : 'Next'}</Button>
                 </Stack>
 
                 {/* <p>{currentStep}</p> */}
