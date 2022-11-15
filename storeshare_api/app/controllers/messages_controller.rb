@@ -1,23 +1,25 @@
 class MessagesController < ApplicationController
   before_action do
     @conversation = Conversation.find(params[:conversation_id])
+    # binding.pry
   end
   def index
     @messages = @conversation.messages
     if @messages.length > 10
       @over_ten = true
       @messages = @messages[-10..-1]
-    end
-    if params[:m]
+    # if params[:m]
+    else
       @over_ten = false
       @messages = @conversation.messages
-    end
-    if @messages.last
-      if @messages.last.user_id != current_user.id
-        @messages.last.read = true;
-      end
-    end
+    end #params might need to change below
+
+    #TODO functionality to check if message has been read
     @message = @conversation.messages.new
+
+    render :json => @messages
+
+    # return @messages
   end
   def new
     @message = @conversation.messages.new
