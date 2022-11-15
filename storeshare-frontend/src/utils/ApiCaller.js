@@ -5,24 +5,48 @@ import axios from 'axios';
 const defaultHost = 'https://floating-plateau-15656.herokuapp.com:443'; // 'http://localhost:8080';
 
 
+
+// a really primitive psuedo-dependency injection
+class StorageMock {
+    constructor() {
+        this.store = new Map(); 
+    }
+
+    getItem(key) {
+        return this.store[key];
+    }
+
+    setItem(key, value) {
+        this.store[key] = value; 
+    }
+}
+
+let storage; 
+
+try {
+    storage = localStorage; 
+} catch {
+    storage = new StorageMock(); // prefer local storage, but use the mock if its not available
+}
+
 const saveAuthData = (token, email, expirationDate) => {
-    localStorage.setItem('token', token);
-    localStorage.setItem('email', email); 
+    storage.setItem('token', token);
+    storage.setItem('email', email); 
     // TODO 
-    //     localStorage.setItem('expiration',expirationDate.toISOString());  
+    //     storage.setItem('expiration',expirationDate.toISOString());  
 }
 
 const clearAuthData = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("email");
-    localStorage.removeItem("expiration");
+    storage.removeItem("token");
+    storage.removeItem("email");
+    storage.removeItem("expiration");
 }
 
 const getAuthData = () => {
     return {
-        token: localStorage.getItem("token"),
-        expiration: localStorage.getItem("expiration"),
-        email: localStorage.getItem("email"),
+        token: storage.getItem("token"),
+        expiration: storage.getItem("expiration"),
+        email: storage.getItem("email"),
     }
 }
 
