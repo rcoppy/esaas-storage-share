@@ -34,7 +34,7 @@ Rails.application.routes.draw do
 
   get 'renters/:id/all_listings', to: 'renters#all_listings'
 
-  resources :conversations do  #might be not suitable for API
+  resources :conversations do
     resources :messages
   end
 
