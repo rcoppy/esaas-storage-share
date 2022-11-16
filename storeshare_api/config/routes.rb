@@ -10,11 +10,7 @@ Rails.application.routes.draw do
   # manual user route
   resources :users, :only => [:show]
 
-<<<<<<< HEAD
   post 'users/email', to: 'users#show_by_email' 
-=======
-  post 'users/email', to: 'users#show_by_email'
->>>>>>> 7b30c8069e996e847d3aa3e799fd76a65f0f9b2b
 
   # Defines the root path route ("/")
   # root "articles#index"
