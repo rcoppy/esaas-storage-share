@@ -7,29 +7,44 @@ const defaultHost = 'http://localhost:8080';
 
 
 // a really primitive psuedo-dependency injection
-class StorageMock {
+class StorageWrapper {
     constructor() {
         this.store = new Map();
     }
 
     getItem(key) {
-        return this.store[key];
+        let val = null; 
+        try {
+            console.log("trying to get " + key);
+            val = window.localStorage.getItem(key); 
+            console.log("retrieved value " + val);
+        } catch {
+            val = this.store[key];
+        }
+        return val; 
     }
 
     setItem(key, value) {
-        this.store[key] = value;
+        try {
+            window.localStorage.setItem(key, value); 
+        } catch {
+            this.store[key] = value;
+        }
+    }
+
+    removeItem(key) {
+        try {
+            window.localStorage.removeItem(key); 
+        } catch {
+            this.store.delete(key);
+        }
     }
 }
 
-let storage;
+const storage = new StorageWrapper(); 
 
-try {
-    storage = localStorage;
-} catch {
-    storage = new StorageMock(); // prefer local storage, but use the mock if its not available
-}
+const saveAuthData = (token, email, expirationDate) => { 
 
-const saveAuthData = (token, email, expirationDate) => {
     storage.setItem('token', token);
     storage.setItem('email', email);
     // TODO 
@@ -37,12 +52,14 @@ const saveAuthData = (token, email, expirationDate) => {
 }
 
 const clearAuthData = () => {
+    console.log("clearing data"); 
     storage.removeItem("token");
     storage.removeItem("email");
     storage.removeItem("expiration");
 }
 
 const getAuthData = () => {
+    
     return {
         token: storage.getItem("token"),
         expiration: storage.getItem("expiration"),
@@ -88,8 +105,9 @@ export function fetchUserDataFromEmail(token, email, successCallback = (body) =>
 }
 
 export function login(email, password, successCallback = (tokenSetter, bodySetter) => { }, errorCallback = (status) => { }) {
-    fetchBearerToken(email, password, (body) =>
-        successCallback(getAuthData().token, body), errorCallback
+    fetchBearerToken(email, password, 
+        (body) => successCallback(getAuthData().token, body), 
+        errorCallback
     );
 }
 
@@ -106,7 +124,7 @@ export function fetchBearerToken(email, password, successCallback = (body) => { 
     })
         .then(function (response) {
             console.log(response);
-
+            console.log("success; raw auth token: " + response.headers.authorization);
             saveAuthData(response.headers.authorization, response.data.email, null);
             successCallback(response.data);
         })
@@ -136,6 +154,29 @@ export function registerAccount(email, password, name, successCallback = () => {
         })
         .catch(function (error) {
             console.log(error);
+        });
+}
+
+export function registerNewSubletter(token, userId, successCallback = (body) => { }, errorCallback = (error) => { }, host = defaultHost) {
+    axios.post(host + '/subletters', {
+        subletter: {
+            user_id: userId,
+        }
+    }, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token,
+        }
+    })
+        .then(function (response) {
+            console.log(response);
+
+            successCallback(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+            console.log("userId: " + userId);
+            errorCallback();
         });
 }
 

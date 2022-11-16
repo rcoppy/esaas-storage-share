@@ -266,7 +266,7 @@ export default function NewListingFlow({ open, handleClose }) {
         }
     };
 
-    const handleNext = (tokenContext) => {
+    const handleNext = (tokenContext, myProfile) => {
         if (currentStep === step.ENTRY && currentPanel < Object.keys(panel).length - 1) {
             setCurrentPanel(currentPanel + 1);
         } else if (currentStep === step.SUMMARY) {
@@ -275,10 +275,10 @@ export default function NewListingFlow({ open, handleClose }) {
                 address: address["street"],
                 price: cost,
                 description: description,
-                subletter_id: 1, // TODO: this can't be hardcoded
+                subletter_id: myProfile.subletterData.id,
                 city: address["city"],
-                state: state["state"],
-                zip_code: zip["zip"],
+                state: address["state"],
+                zip_code: address["zip"],
             })
         }
         else {
@@ -302,7 +302,7 @@ export default function NewListingFlow({ open, handleClose }) {
 
     return (
         <GlobalContext.Consumer>
-            {({ tokenContext }) => <><Modal
+            {({ tokenContext, myProfile }) => <><Modal
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
@@ -339,7 +339,7 @@ export default function NewListingFlow({ open, handleClose }) {
 
                     <Stack direction="row" sx={{ display: 'flex', justifyContent: 'end', gap: 1, mt: 2 }}>
                         <Button variant="outlined" onClick={handleBack}>Back</Button>
-                        <Button variant="contained" onClick={() => handleNext(tokenContext)}>{currentStep === step.SUMMARY ? 'Create listing' : 'Next'}</Button>
+                        <Button variant="contained" onClick={() => handleNext(tokenContext, myProfile)}>{currentStep === step.SUMMARY ? 'Create listing' : 'Next'}</Button>
                     </Stack>
 
                 </Box>

@@ -1,4 +1,4 @@
-import { login, logout, tryLoginWithStoredToken, postListing } from "../utils/ApiCaller";
+import { login, logout, tryLoginWithStoredToken, postListing, registerNewSubletter } from "../utils/ApiCaller";
 
 export default class TokenContext {
 
@@ -13,15 +13,15 @@ export default class TokenContext {
         return !(!this.bearer); 
     }
 
-    doLogin(email, password, successCallback = () => {}, errorCallback = (status) => {}) {
-        login(email, password, (token, body, status) => {
+    doLogin(email, password, successCallback = () => {}, errorCallback = (message) => {}) {
+        login(email, password, (token, body) => {
             this.bearer = token;
             this.signInMetaData = body; 
             successCallback();
             this.loginCallback(this.signInMetaData); 
             console.log(this.bearer);
             console.log(this.signInMetaData);
-        }, errorCallback); 
+        }, (message) => errorCallback(message)); 
     }
 
     doLogout() {
@@ -34,7 +34,12 @@ export default class TokenContext {
         postListing(this.bearer, listingData, successCallback, errorCallback); 
     }
 
+    doSublettingOptIn(userId, successCallback = (data) => {}, errorCallback = (status) => {}) {
+        registerNewSubletter(this.bearer, userId, successCallback, errorCallback); 
+    }
+
     tryAutoLogin(successCallback = () => {}) {
+        console.log("attempting to login using stored token");
         const storedCredentials = tryLoginWithStoredToken((body) => {
             this.signInMetaData = body; 
             successCallback(); 
