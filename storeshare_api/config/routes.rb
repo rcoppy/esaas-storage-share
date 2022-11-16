@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   # manual user route
   resources :users, :only => [:show]
 
-  post 'users/email', to: 'users#show_by_email' 
+  post 'users/email', to: 'users#show_by_email'
 
   # Defines the root path route ("/")
   # root "articles#index"
@@ -33,4 +33,9 @@ Rails.application.routes.draw do
   # get 'subletters/:user_id/my_listings/:id', to: 'listings#show'
 
   get 'renters/:id/all_listings', to: 'renters#all_listings'
+
+  resources :conversations do  #might be not suitable for API
+    resources :messages
+  end
+
 end

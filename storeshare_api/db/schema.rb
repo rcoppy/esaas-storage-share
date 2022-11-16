@@ -62,6 +62,23 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_15_024236) do
     t.datetime "updated_at", null: false
     t.index ["subletter_id"], name: "index_listings_on_subletter_id"
   end
+  create_table "conversations", force: :cascade do |t|
+    t.integer "renter_id"
+    t.integer "subletter_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "body"
+    t.bigint "conversation_id"
+    t.bigint "user_id"
+    t.boolean "read", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
 
   create_table "renters", force: :cascade do |t|
     t.bigint "user_id"
