@@ -1,4 +1,4 @@
-import { login, logout, tryLoginWithStoredToken } from "../utils/ApiCaller";
+import { login, logout, tryLoginWithStoredToken, postListing } from "../utils/ApiCaller";
 
 export default class TokenContext {
 
@@ -28,6 +28,10 @@ export default class TokenContext {
         this.bearer = null; 
         logout(); 
         this.logoutCallback(); 
+    }
+
+    doCreateListing(listingData, successCallback = () => {}, errorCallback = (status) => {}) {
+        postListing(this.bearer, listingData, successCallback, errorCallback); 
     }
 
     tryAutoLogin(successCallback = () => {}) {

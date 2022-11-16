@@ -4,6 +4,7 @@ import { Box, Modal, Typography, Stack, TextField, Accordion, AccordionSummary, 
 import PropTypes from 'prop-types';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { flexbox } from '@mui/system';
+import { GlobalContext } from '../lib/GlobalContext.mjs';
 
 const style = {
     position: 'absolute',
@@ -265,10 +266,22 @@ export default function NewListingFlow({ open, handleClose }) {
         }
     };
 
-    const handleNext = () => {
+    const handleNext = (tokenContext) => {
         if (currentStep === step.ENTRY && currentPanel < Object.keys(panel).length - 1) {
             setCurrentPanel(currentPanel + 1);
-        } else {
+        } else if (currentStep === step.SUMMARY) {
+            // this should probably be pulled out into its own function
+            tokenContext.doCreateListing({
+                address: address["street"],
+                price: cost,
+                description: description,
+                subletter_id: 1, // TODO: this can't be hardcoded
+                city: address["city"],
+                state: state["state"],
+                zip_code: zip["zip"],
+            })
+        }
+        else {
             incrementStep();
         }
     };
@@ -288,49 +301,49 @@ export default function NewListingFlow({ open, handleClose }) {
 
 
     return (
-        <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-        >
-            <Box sx={style}>
+        <GlobalContext.Consumer>
+            {({ tokenContext }) => <><Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
 
-                <Typography id="modal-modal-title" variant="h6" sx={{ mb: 2 }}>
-                    Have extra space? Let's rent it out.
-                </Typography>
-                {/* <Typography id="modal-modal-description" variant="p" >
+                    <Typography id="modal-modal-title" variant="h6" sx={{ mb: 2 }}>
+                        Have extra space? Let's rent it out.
+                    </Typography>
+                    {/* <Typography id="modal-modal-description" variant="p" >
 
                 </Typography> */}
 
-                <Switch test={currentStep}>
-                    <FormEntry handleChange={handlePanelChange} currentPanel={currentPanel} value={step.ENTRY} address={address} setAddressField={setAddressField}
-                        footage={footage}
-                        height={height}
-                        cost={cost}
-                        description={description}
-                        setFootage={setFootage}
-                        setHeight={setHeight}
-                        setCost={setCost}
-                        setDescription={setDescription}
-                    />
-                    <FormSummary value={step.SUMMARY} address={address}
-                        footage={footage}
-                        height={height}
-                        cost={cost}
-                        description={description}
-                    />
-                    <Typography value={step.CONFIRMATION} variant="p">You did it!</Typography>
-                </Switch>
+                    <Switch test={currentStep}>
+                        <FormEntry handleChange={handlePanelChange} currentPanel={currentPanel} value={step.ENTRY} address={address} setAddressField={setAddressField}
+                            footage={footage}
+                            height={height}
+                            cost={cost}
+                            description={description}
+                            setFootage={setFootage}
+                            setHeight={setHeight}
+                            setCost={setCost}
+                            setDescription={setDescription}
+                        />
+                        <FormSummary value={step.SUMMARY} address={address}
+                            footage={footage}
+                            height={height}
+                            cost={cost}
+                            description={description}
+                        />
+                        <Typography value={step.CONFIRMATION} variant="p">You did it!</Typography>
+                    </Switch>
 
-                <Stack direction="row" sx={{ display: 'flex', justifyContent: 'end', gap: 1, mt: 2 }}>
-                    <Button variant="outlined" onClick={handleBack}>Back</Button>
-                    <Button variant="contained" onClick={handleNext}>{currentStep === step.SUMMARY ? 'Create listing' : 'Next'}</Button>
-                </Stack>
+                    <Stack direction="row" sx={{ display: 'flex', justifyContent: 'end', gap: 1, mt: 2 }}>
+                        <Button variant="outlined" onClick={handleBack}>Back</Button>
+                        <Button variant="contained" onClick={() => handleNext(tokenContext)}>{currentStep === step.SUMMARY ? 'Create listing' : 'Next'}</Button>
+                    </Stack>
 
-                {/* <p>{currentStep}</p> */}
-
-            </Box>
-        </Modal>
+                </Box>
+            </Modal></>}
+        </GlobalContext.Consumer>
     );
 }

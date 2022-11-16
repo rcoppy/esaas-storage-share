@@ -9,7 +9,7 @@ const defaultHost = 'https://floating-plateau-15656.herokuapp.com:443'; // 'http
 // a really primitive psuedo-dependency injection
 class StorageMock {
     constructor() {
-        this.store = new Map(); 
+        this.store = new Map();
     }
 
     getItem(key) {
@@ -17,21 +17,21 @@ class StorageMock {
     }
 
     setItem(key, value) {
-        this.store[key] = value; 
+        this.store[key] = value;
     }
 }
 
-let storage; 
+let storage;
 
 try {
-    storage = localStorage; 
+    storage = localStorage;
 } catch {
     storage = new StorageMock(); // prefer local storage, but use the mock if its not available
 }
 
 const saveAuthData = (token, email, expirationDate) => {
     storage.setItem('token', token);
-    storage.setItem('email', email); 
+    storage.setItem('email', email);
     // TODO 
     //     storage.setItem('expiration',expirationDate.toISOString());  
 }
@@ -54,17 +54,17 @@ export function logout() {
     clearAuthData();
 }
 
-export function tryLoginWithStoredToken(successCallback = () => {}, errorCallback = () => {}) {
-    const storedAuthData = getAuthData(); 
+export function tryLoginWithStoredToken(successCallback = () => { }, errorCallback = () => { }) {
+    const storedAuthData = getAuthData();
 
-    if (!storedAuthData.token || !storedAuthData.email) return null; 
+    if (!storedAuthData.token || !storedAuthData.email) return null;
 
-    fetchUserDataFromEmail(storedAuthData.token, storedAuthData.email, successCallback, errorCallback); 
+    fetchUserDataFromEmail(storedAuthData.token, storedAuthData.email, successCallback, errorCallback);
 
-    return storedAuthData; 
+    return storedAuthData;
 }
 
-export function fetchUserDataFromEmail(token, email, successCallback = (body) => {}, errorCallback = (error) => {}, host=defaultHost) {
+export function fetchUserDataFromEmail(token, email, successCallback = (body) => { }, errorCallback = (error) => { }, host = defaultHost) {
     axios.post(host + '/users/email', {
         user: {
             email: email,
@@ -83,17 +83,17 @@ export function fetchUserDataFromEmail(token, email, successCallback = (body) =>
         .catch(function (error) {
             console.log(error);
 
-            errorCallback(); 
+            errorCallback();
         });
 }
 
-export function login(email, password, successCallback = (tokenSetter, bodySetter) => {}, errorCallback = (status) => {}) {
+export function login(email, password, successCallback = (tokenSetter, bodySetter) => { }, errorCallback = (status) => { }) {
     fetchBearerToken(email, password, (body) =>
         successCallback(getAuthData().token, body), errorCallback
     );
 }
 
-export function fetchBearerToken(email, password, successCallback = (body) => {}, errorCallback = (status) => {}, host = defaultHost) {
+export function fetchBearerToken(email, password, successCallback = (body) => { }, errorCallback = (status) => { }, host = defaultHost) {
     axios.post(host + '/users/sign_in', {
         user: {
             email: email,
@@ -112,7 +112,7 @@ export function fetchBearerToken(email, password, successCallback = (body) => {}
         })
         .catch(function (error) {
             console.log(error.response.status);
-            errorCallback(error.response.status); 
+            errorCallback(error.response.status);
         });
 }
 
@@ -120,7 +120,7 @@ export function registerAccount(email, password, name, successCallback = () => {
     axios.post(host + '/users', {
         user: {
             email: email,
-            password: password, 
+            password: password,
             name: name
         }
     }, {
@@ -136,5 +136,26 @@ export function registerAccount(email, password, name, successCallback = () => {
         })
         .catch(function (error) {
             console.log(error);
+        });
+}
+
+export function postListing(token, listingData, successCallback = (body) => { }, errorCallback = (error) => { }, host = defaultHost) {
+    axios.post(host + '/listings', {
+        listing: listingData
+    }, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token,
+        }
+    })
+        .then(function (response) {
+            console.log(response);
+
+            successCallback(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+
+            errorCallback();
         });
 }
