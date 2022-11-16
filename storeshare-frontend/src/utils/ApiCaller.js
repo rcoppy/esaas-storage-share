@@ -1,10 +1,15 @@
 import axios from 'axios';
 
+<<<<<<< HEAD
 // const defaultHost = 'http://localhost:8080';
+=======
+const defaultHost = 'http://localhost:8080';
+>>>>>>> 7b30c8069e996e847d3aa3e799fd76a65f0f9b2b
 
-const defaultHost = 'https://floating-plateau-15656.herokuapp.com:443'; // 'http://localhost:8080';
+// const defaultHost = 'https://floating-plateau-15656.herokuapp.com:443'; // 'http://localhost:8080';
 
 
+<<<<<<< HEAD
 
 // a really primitive psuedo-dependency injection
 class StorageMock {
@@ -32,21 +37,38 @@ try {
 const saveAuthData = (token, email, expirationDate) => {
     storage.setItem('token', token);
     storage.setItem('email', email);
+=======
+const saveAuthData = (token, email, expirationDate) => {
+    localStorage.setItem('token', token);
+    localStorage.setItem('email', email); 
+>>>>>>> 7b30c8069e996e847d3aa3e799fd76a65f0f9b2b
     // TODO 
     //     storage.setItem('expiration',expirationDate.toISOString());  
 }
 
 const clearAuthData = () => {
+<<<<<<< HEAD
     storage.removeItem("token");
     storage.removeItem("email");
     storage.removeItem("expiration");
+=======
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
+    localStorage.removeItem("expiration");
+>>>>>>> 7b30c8069e996e847d3aa3e799fd76a65f0f9b2b
 }
 
 const getAuthData = () => {
     return {
+<<<<<<< HEAD
         token: storage.getItem("token"),
         expiration: storage.getItem("expiration"),
         email: storage.getItem("email"),
+=======
+        token: localStorage.getItem("token"),
+        expiration: localStorage.getItem("expiration"),
+        email: localStorage.getItem("email"),
+>>>>>>> 7b30c8069e996e847d3aa3e799fd76a65f0f9b2b
     }
 }
 
@@ -54,6 +76,7 @@ export function logout() {
     clearAuthData();
 }
 
+<<<<<<< HEAD
 export function tryLoginWithStoredToken(successCallback = () => { }, errorCallback = () => { }) {
     const storedAuthData = getAuthData();
 
@@ -65,6 +88,19 @@ export function tryLoginWithStoredToken(successCallback = () => { }, errorCallba
 }
 
 export function fetchUserDataFromEmail(token, email, successCallback = (body) => { }, errorCallback = (error) => { }, host = defaultHost) {
+=======
+export function tryLoginWithStoredToken(successCallback = () => {}, errorCallback = () => {}) {
+    const storedAuthData = getAuthData(); 
+
+    if (!storedAuthData.token || !storedAuthData.email) return null; 
+
+    fetchUserDataFromEmail(storedAuthData.token, storedAuthData.email, successCallback, errorCallback); 
+
+    return storedAuthData; 
+}
+
+export function fetchUserDataFromEmail(token, email, successCallback = (body) => {}, errorCallback = (error) => {}, host=defaultHost) {
+>>>>>>> 7b30c8069e996e847d3aa3e799fd76a65f0f9b2b
     axios.post(host + '/users/email', {
         user: {
             email: email,
