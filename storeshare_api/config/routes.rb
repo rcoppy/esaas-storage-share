@@ -1,8 +1,16 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, defaults: { format: :json }, :controllers  => {
+    :registrations => 'users/registrations',
+    # ...
+  }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+  # manual user route
+  resources :users, :only => [:show]
+
+  post 'users/email', to: 'users#show_by_email'
 
   # Defines the root path route ("/")
   # root "articles#index"
@@ -25,9 +33,9 @@ Rails.application.routes.draw do
   # get 'subletters/:user_id/my_listings/:id', to: 'listings#show'
 
   get 'renters/:id/all_listings', to: 'renters#all_listings'
-  # get 'renters/:id/all_listings', to: 'listings#index'
 
   resources :conversations do  #might be not suitable for API
     resources :messages
   end
+
 end
