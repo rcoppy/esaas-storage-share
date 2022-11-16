@@ -1,7 +1,7 @@
 {
   "RSpec": {
     "coverage": {
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/support/controller_macros.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/spec/support/controller_macros.rb": {
         "lines": [
           null,
           null,
@@ -23,7 +23,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/config/environment.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/config/environment.rb": {
         "lines": [
           null,
           1,
@@ -32,7 +32,7 @@
           1
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/config/application.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/config/application.rb": {
         "lines": [
           1,
           null,
@@ -69,7 +69,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/config/boot.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/config/boot.rb": {
         "lines": [
           1,
           null,
@@ -77,7 +77,7 @@
           1
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/config/environments/test.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/config/environments/test.rb": {
         "lines": [
           1,
           null,
@@ -143,7 +143,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/config/initializers/cors.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/config/initializers/cors.rb": {
         "lines": [
           null,
           null,
@@ -163,7 +163,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/config/initializers/devise.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/config/initializers/devise.rb": {
         "lines": [
           null,
           null,
@@ -478,7 +478,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/config/initializers/filter_parameter_logging.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/config/initializers/filter_parameter_logging.rb": {
         "lines": [
           null,
           null,
@@ -490,7 +490,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/config/initializers/inflections.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/config/initializers/inflections.rb": {
         "lines": [
           null,
           null,
@@ -510,7 +510,16 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/factories/listings.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/spec/factories/conversations.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/spec/factories/listings.rb": {
         "lines": [
           1,
           1,
@@ -528,7 +537,16 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/factories/renters.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/spec/factories/messages.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/spec/factories/renters.rb": {
         "lines": [
           null,
           null,
@@ -539,7 +557,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/factories/subletters.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/spec/factories/subletters.rb": {
         "lines": [
           null,
           null,
@@ -550,7 +568,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/factories/users.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/spec/factories/users.rb": {
         "lines": [
           null,
           null,
@@ -564,7 +582,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/config/routes.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/config/routes.rb": {
         "lines": [
           null,
           null,
@@ -593,10 +611,15 @@
           null,
           null,
           1,
+          null,
+          null,
+          1,
+          1,
+          null,
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/models/user.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/app/models/user.rb": {
         "lines": [
           null,
           null,
@@ -611,14 +634,14 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/models/application_record.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/app/models/application_record.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/support/devise.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/spec/support/devise.rb": {
         "lines": [
           null,
           null,
@@ -632,7 +655,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/controllers/listings_controller.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/app/controllers/listings_controller.rb": {
         "lines": [
           null,
           null,
@@ -681,109 +704,6 @@
           null,
           1,
           0,
-          null,
-          null,
-          1,
-          null,
-          1,
-          0,
-          null,
-          null
-        ]
-      },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/controllers/application_controller.rb": {
-        "lines": [
-          null,
-          null,
-          1,
-          1,
-          null
-        ]
-      },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/controllers/renters_controller_spec.rb": {
-        "lines": [
-          null,
-          null,
-          1,
-          1,
-          null,
-          1,
-          1,
-          1,
-          null,
-          1,
-          1,
-          null,
-          1,
-          1,
-          null,
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          null,
-          1,
-          1,
-          1,
-          null,
-          null,
-          null
-        ]
-      },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/controllers/renters_controller.rb": {
-        "lines": [
-          null,
-          null,
-          1,
-          1,
-          0,
-          null,
-          null,
-          1,
-          0,
-          null,
-          null,
-          1,
-          0,
-          null,
-          null,
-          1,
-          0,
-          0,
-          0,
-          null,
-          0,
-          null,
-          null,
-          null,
-          1,
-          0,
-          null,
-          null,
-          1,
-          0,
-          0,
-          0,
-          null,
-          0,
-          null,
-          null,
-          null,
-          1,
-          0,
-          0,
-          0,
-          null,
-          null,
-          1,
-          1,
           null,
           null,
           1,
@@ -794,7 +714,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/models/renter.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/app/controllers/application_controller.rb": {
         "lines": [
           null,
           null,
@@ -803,7 +723,110 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/models/subletter.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/spec/controllers/renters_controller_spec.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/app/controllers/renters_controller.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          null,
+          1,
+          0,
+          null,
+          null
+        ]
+      },
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/app/models/renter.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/app/models/subletter.rb": {
         "lines": [
           null,
           null,
@@ -814,7 +837,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/controllers/subletters_controller_spec.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/spec/controllers/subletters_controller_spec.rb": {
         "lines": [
           null,
           null,
@@ -870,7 +893,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/controllers/subletters_controller.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/app/controllers/subletters_controller.rb": {
         "lines": [
           null,
           null,
@@ -931,7 +954,64 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/models/listing_spec.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/spec/models/conversation_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/app/models/conversation.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          null,
+          null
+        ]
+      },
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/spec/models/listing_spec.rb": {
         "lines": [
           null,
           null,
@@ -1002,7 +1082,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/models/listing.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/app/models/listing.rb": {
         "lines": [
           null,
           null,
@@ -1011,7 +1091,67 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/models/renter_spec.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/spec/models/message_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/app/models/message.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          null,
+          null
+        ]
+      },
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/spec/models/renter_spec.rb": {
         "lines": [
           1,
           null,
@@ -1032,7 +1172,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/models/subletter_spec.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/spec/models/subletter_spec.rb": {
         "lines": [
           1,
           null,
@@ -1053,7 +1193,7 @@
           null
         ]
       },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/models/user_spec.rb": {
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/spec/models/user_spec.rb": {
         "lines": [
           1,
           null,
@@ -1083,12 +1223,34 @@
           1,
           1,
           1,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/spec/requests/conversations_spec.rb": {
+        "lines": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/kutaykarakas/Documents/columbia/Fall2023/SaaS/esaas-storage-share/storeshare_api/spec/requests/messages_spec.rb": {
+        "lines": [
+          null,
+          null,
+          null,
+          null,
           null,
           null,
           null
         ]
       }
     },
-    "timestamp": 1667429414
+    "timestamp": 1668563227
   }
 }

@@ -47,7 +47,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: storshare_test
+  database: storeshare_test
   pool: 5
   username: kutaykarakas
   password: testpwd
