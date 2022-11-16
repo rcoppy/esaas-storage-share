@@ -61,7 +61,7 @@ class App extends React.Component {
         const profile = new UserProfileModel({ firstName: names[0], lastName: names[1], email: data.user.email, id: data.user.id });
 
         const renterData = data.renter_data ? new RenterModel({ userId: data.user.id, id: data.renter_data.id }) : null;
-        const subletterData = data.subletter_data ? new SubletterModel({ userId: data.user.id, id: data.renter_data.id }) : null;
+        const subletterData = data.subletter_data ? new SubletterModel({ userId: data.user.id, id: data.subletter_data.id }) : null;
 
         profile.renterData = renterData; 
         profile.subletterData = subletterData;
