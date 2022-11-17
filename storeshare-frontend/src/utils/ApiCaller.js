@@ -125,6 +125,7 @@ export function fetchBearerToken(email, password, successCallback = (body) => { 
         .then(function (response) {
             console.log(response);
             console.log("success; raw auth token: " + response.headers.authorization);
+
             saveAuthData(response.headers.authorization, email, null);
             successCallback(response.data);
         })

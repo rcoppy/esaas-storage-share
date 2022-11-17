@@ -25,17 +25,6 @@ const style = {
     borderRadius: 2,
 };
 
-
-
-// this.title = title;
-// this.description = description;
-// this.price = price;
-// this.address = address;
-// this.city = city;
-// this.state = state;
-// this.zipCode = zipCode;
-// this.squareFeet = squareFeet;
-
 function AddressForm({ address, setAddressField }) {
 
     const handleAddressChange = (event, field) => {

@@ -15,7 +15,6 @@ function ErrorMessage({ open, handleClose, error }) {
             </Alert>
         </Snackbar>
 
-
     );
 }
 
@@ -63,6 +62,7 @@ function MyLessorListings() {
         <>
             <GlobalContext.Consumer>
                 {({ tokenContext, myProfile, updateProfile, store }) => <>
+
                     <Container maxWidth="md" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         {myProfile.subletterData &&
                             <><Typography variant="h4">Manage my listings</Typography>
