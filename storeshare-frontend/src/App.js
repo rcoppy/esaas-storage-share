@@ -28,6 +28,8 @@ import Listing from './views/Listing.js';
 import TokenContext from './lib/TokenContext';
 import MyRenterListings from './views/MyRenterListings';
 import MyLessorListings from './views/MyLessorListings';
+import RenterModel from './lib/RenterModel';
+import SubletterModel from './lib/SubletterModel';
 
 class App extends React.Component {
 
@@ -53,10 +55,23 @@ class App extends React.Component {
     }
 
     this.tokenContextLoginCallback = (data) => {
-      const names = data.name.split(" ");
-      const profile = new UserProfileModel({ firstName: names[0], lastName: names[1], email: data.email });
+      try {
+        // transient error--sometimes returned data is null
+        const names = data.user.name.split(" ");
+        const profile = new UserProfileModel({ firstName: names[0], lastName: names[1], email: data.user.email, id: data.user.id });
 
-      this.updateMyProfile(profile);
+        const renterData = data.renter_data ? new RenterModel({ userId: data.user.id, id: data.renter_data.id }) : null;
+        const subletterData = data.subletter_data ? new SubletterModel({ userId: data.user.id, id: data.renter_data.id }) : null;
+
+        profile.renterData = renterData; 
+        profile.subletterData = subletterData;
+
+        this.updateMyProfile(profile);
+      } catch (e) {
+        console.error(e); 
+        console.log(data);
+        this.state.tokenContext.doLogout(); 
+      }
     }
 
     this.state = {
