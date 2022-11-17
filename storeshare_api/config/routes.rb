@@ -3,6 +3,7 @@
 Rails.application.routes.draw do
   devise_for :users, defaults: { format: :json }, :controllers  => {
     :registrations => 'users/registrations',
+    :sessions => 'users/sessions',
     # ...
   }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -10,7 +11,7 @@ Rails.application.routes.draw do
   # manual user route
   resources :users, :only => [:show]
 
-  post 'users/email', to: 'users#show_by_email'
+  post 'users/email', to: 'users#show_by_email' 
 
   # Defines the root path route ("/")
   # root "articles#index"

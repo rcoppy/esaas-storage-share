@@ -4,7 +4,17 @@ class Users::SessionsController < Devise::SessionsController
     private
   
     def respond_with(resource, _opts = {})
-      render json: { message: 'You are logged in.' }, status: :ok
+
+      if !resource.nil? then
+        renter_data = Renter.find_by(user_id: resource.id)
+        subletter_data = Subletter.find_by(user_id: resource.id)
+
+        render json: { user: resource, renter_data: renter_data, subletter_data: subletter_data }, status: :ok
+      else
+        render json: { user: nil, renter_data: nil, subletter_data: nil }
+      end
+
+      # render json: resource, status: :ok
     end
   
     def respond_to_on_destroy

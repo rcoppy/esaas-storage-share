@@ -5,6 +5,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { fetchBearerToken, registerAccount } from '../../utils/ApiCaller';
 
 
+// TODO: extract error message as a widget
 function ErrorMessage({ open, handleClose, error }) {
     return (
 

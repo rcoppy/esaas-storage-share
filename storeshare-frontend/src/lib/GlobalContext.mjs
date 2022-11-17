@@ -5,7 +5,7 @@ import UserProfileModel from './UserProfileModel.mjs';
 
 export const GlobalContext = React.createContext({
     myProfile: new UserProfileModel(),
-    updateProfile: () => {},
+    updateMyProfile: () => {},
 
     uiInfo: new UiInfo(), 
     updateUiInfo: () => {},
