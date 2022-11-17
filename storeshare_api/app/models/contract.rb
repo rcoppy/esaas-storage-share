@@ -7,7 +7,7 @@ class Contract < ApplicationRecord
 
   has_many :payments, dependent: :destroy
 
-  validates :start_date, :renter_id, :subletter_id, :listing_id, presence: true
+  validates :start_date, :renter_id, :subletter_id, :listing_id, :price, presence: true
   validate :start_date_cannot_be_in_the_past
   validates :end_date, date: { after_or_equal_to: :start_date }, presence: true
 
