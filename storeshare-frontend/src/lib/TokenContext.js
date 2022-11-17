@@ -1,4 +1,4 @@
-import { login, logout, tryLoginWithStoredToken, postListing, registerNewSubletter } from "../utils/ApiCaller";
+import { login, logout, tryLoginWithStoredToken, postListing, registerNewSubletter, getAllListings } from "../utils/ApiCaller";
 
 export default class TokenContext {
 
@@ -30,7 +30,11 @@ export default class TokenContext {
         this.logoutCallback(); 
     }
 
-    doCreateListing(listingData, successCallback = () => {}, errorCallback = (status) => {}) {
+    doGetAllListings(successCallback = (data) => {}, errorCallback = (status) => {}) {
+        getAllListings(this.bearer, successCallback, errorCallback); 
+    }
+
+    doCreateListing(listingData, successCallback = (data) => {}, errorCallback = (status) => {}) {
         postListing(this.bearer, listingData, successCallback, errorCallback); 
     }
 

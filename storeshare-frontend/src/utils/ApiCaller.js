@@ -125,7 +125,8 @@ export function fetchBearerToken(email, password, successCallback = (body) => { 
         .then(function (response) {
             console.log(response);
             console.log("success; raw auth token: " + response.headers.authorization);
-            saveAuthData(response.headers.authorization, response.data.email, null);
+
+            saveAuthData(response.headers.authorization, email, null);
             successCallback(response.data);
         })
         .catch(function (error) {
@@ -176,6 +177,25 @@ export function registerNewSubletter(token, userId, successCallback = (body) => 
         .catch(function (error) {
             console.log(error);
             console.log("userId: " + userId);
+            errorCallback();
+        });
+}
+
+export function getAllListings(token, successCallback = (body) => { }, errorCallback = (error) => { }, host = defaultHost) {
+    axios.get(host + '/listings', {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token,
+        }
+    })
+        .then(function (response) {
+            console.log(response);
+
+            successCallback(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+
             errorCallback();
         });
 }

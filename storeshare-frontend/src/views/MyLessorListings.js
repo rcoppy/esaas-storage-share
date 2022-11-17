@@ -9,12 +9,11 @@ import SubletterModel from '../lib/SubletterModel.js';
 function ErrorMessage({ open, handleClose, error }) {
     return (
 
-        <Snackbar anchorOrigin={{vertical: 'top', horizontal: 'center'}} open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={6000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
                 Error: {error}
             </Alert>
         </Snackbar>
-
 
     );
 }
@@ -44,25 +43,26 @@ function MyLessorListings() {
     }, []);
 
     const handleOptInError = () => {
-        setShowPending(false); 
+        setShowPending(false);
         setErrorStatus('opt-in failed');
         setIsErrorOpen(true);
         timer = setTimeout(() => setIsErrorOpen(false), 3000);
     }
 
     const handleOptInSuccess = (data, myProfile, updateProfile) => {
-        setShowPending(false); 
-        const subletterData = new SubletterModel({ id: data.id, userId: data.user_id }); 
-        const updatedProfile = myProfile; 
-        updatedProfile.subletterData = subletterData; 
+        setShowPending(false);
+        const subletterData = new SubletterModel({ id: data.id, userId: data.user_id });
+        const updatedProfile = myProfile;
+        updatedProfile.subletterData = subletterData;
 
-        updateProfile(updatedProfile); 
+        updateProfile(updatedProfile);
     }
 
     return (
         <>
             <GlobalContext.Consumer>
-                {({ tokenContext, myProfile, updateProfile }) => <>
+                {({ tokenContext, myProfile, updateProfile, store }) => <>
+
                     <Container maxWidth="md" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         {myProfile.subletterData &&
                             <><Typography variant="h4">Manage my listings</Typography>
@@ -71,7 +71,7 @@ function MyLessorListings() {
                         {!myProfile.subletterData && <>
                             <Typography variant="h4">Register as a lessor today!</Typography>
 
-                            {!showPending && <Button variant="contained" onClick={() => {                               
+                            {!showPending && <Button variant="contained" onClick={() => {
                                 tokenContext.doSublettingOptIn(myProfile.id, (data) => handleOptInSuccess(data, myProfile, updateProfile), (status) => handleOptInError());
                                 setShowPending(true);
                             }}>
@@ -83,6 +83,17 @@ function MyLessorListings() {
                             <ErrorMessage open={isErrorOpen} handleClose={handleErrorClose} error={errorStatus} />
 
                         </>}
+
+                        <Typography variant="h6">My existing listings</Typography>
+
+                        <ul>
+                            {Array.from(store.myLessorListings.values()).map((s, index) => {
+                                return (
+                                    <li key={index}>{s.address}</li>
+                                );
+                            })}
+                        </ul>
+
                     </Container>
                     {myProfile.subletterData && <NewListingFlow open={isNewListingFlowOpen} handleClose={handleListingClose} />}
                 </>}
