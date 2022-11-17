@@ -3,10 +3,12 @@
 class SublettersController < ApplicationController
   def index
     @subletters = Subletter.all
+    render json: @subletters
   end
 
   def show
     @subletter = Subletter.find(params[:id])
+    render json: @subletter
   end
 
   def new
@@ -15,10 +17,14 @@ class SublettersController < ApplicationController
 
   def create
     @subletter = Subletter.new(subletter_params)
+
+    # validation TODO: check that user_id submitted isn't already affiliated
+    # with a different subletter profile 
+
     if @subletter.save
-      redirect_to @subletter
+      render json: @subletter
     else
-      render :new
+      render json: {error: "couldn't create subletter"}
     end
   end
 
@@ -29,7 +35,7 @@ class SublettersController < ApplicationController
   def update
     @subletter = Subletter.find(params[:id])
     if @subletter.update(subletter_params)
-      redirect_to @subletter
+      render json: @subletter
     else
       render :edit
     end
@@ -43,10 +49,12 @@ class SublettersController < ApplicationController
 
   def all_listings
     @listings = Listing.all
+    render json: @listings
   end
 
   def my_listings
     @listings = Listing.where(subletter_id: params[:id])
+    render json @listings
   end
 
   private

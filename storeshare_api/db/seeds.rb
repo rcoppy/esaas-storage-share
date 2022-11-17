@@ -97,3 +97,57 @@ Listing.destroy_all
     square_feet: Faker::Number.number(digits: 3)
   )
 end
+
+# Create Conversations
+Conversation.destroy_all
+
+alex_user = User.find_by(name: 'Alex Rupp-Coppi')
+unal_user = User.find_by(name: 'Unal Yigit Ozulku')
+kutay_user = User.find_by(name: 'Kutay Karakas')
+
+alex = Subletter.find_by(user_id: alex_user.id)
+unal = Renter.find_by(user_id: unal_user.id)
+kutay = Renter.find_by(user_id: kutay_user.id)
+Conversation.create!(
+  [
+    {
+      renter_id: unal.id,
+      subletter_id: alex.id
+    },
+    {
+      renter_id: kutay.id,
+      subletter_id: alex.id
+    }
+
+  ]
+)
+
+# Create Messages
+Message.destroy_all
+alex = User.find_by(name: 'Alex Rupp-Coppi')
+unal = User.find_by(name: 'Unal Yigit Ozulku')
+kutay = User.find_by(name: 'Kutay Karakas')
+
+
+alex_subletter = Subletter.find_by(user_id: alex.id)
+unal_renter = Renter.find_by(user_id: unal.id)
+kutay_renter = Renter.find_by(user_id: kutay.id)
+
+
+ConvoUnalAndAlex =Conversation.find_by(renter_id: unal_renter.id, subletter_id: alex_subletter.id)
+ConvoKutayAndAlex =Conversation.find_by(renter_id: kutay_renter.id, subletter_id: alex_subletter.id)
+
+Message.create!(
+  [
+    {
+      body:"Hey could I rent out your place.",
+      conversation_id:ConvoUnalAndAlex.id,
+      user_id: unal.id
+    },
+    {
+      body: "Sure give me money.",
+      conversation_id:ConvoUnalAndAlex.id,
+      user_id: alex_user.id
+    }
+  ]
+)

@@ -43,11 +43,25 @@ ActiveRecord::Schema[7.0].define(version: 20_221_115_024_236) do
     t.index %w[blob_id variation_digest], name: 'index_active_storage_variant_records_uniqueness', unique: true
   end
 
+<<<<<<< HEAD
   create_table 'conversations', force: :cascade do |t|
     t.integer 'renter_id'
     t.integer 'subletter_id'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+=======
+  create_table "conversations", force: :cascade do |t|
+    t.integer "renter_id"
+    t.integer "subletter_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "jwt_denylists", force: :cascade do |t|
+    t.string "jti", null: false
+    t.datetime "exp", null: false
+    t.index ["jti"], name: "index_jwt_denylists_on_jti"
+>>>>>>> 8b2085f6aff045815e126f1a990a4e0a0063c767
   end
 
   create_table 'jwt_denylists', force: :cascade do |t|
@@ -55,6 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 20_221_115_024_236) do
     t.datetime 'exp', null: false
     t.index ['jti'], name: 'index_jwt_denylists_on_jti'
   end
+<<<<<<< HEAD
 
   create_table 'listings', force: :cascade do |t|
     t.bigint 'subletter_id'
@@ -70,6 +85,8 @@ ActiveRecord::Schema[7.0].define(version: 20_221_115_024_236) do
     t.datetime 'updated_at', null: false
     t.index ['subletter_id'], name: 'index_listings_on_subletter_id'
   end
+=======
+>>>>>>> 8b2085f6aff045815e126f1a990a4e0a0063c767
 
   create_table 'messages', force: :cascade do |t|
     t.text 'body'
