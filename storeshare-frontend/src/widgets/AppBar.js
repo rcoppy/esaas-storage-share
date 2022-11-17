@@ -47,7 +47,7 @@ function AppBar() {
     return (
         <>
             <GlobalContext.Consumer>
-                {({ tokenContext, myProfile }) => <>
+                {({ myProfile, doTotalLogout }) => <>
                     <MuiAppBar color="grey" position='sticky'>
                         <Container maxWidth="xl">
                             <Toolbar color={theme.palette.primary.dark} disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -138,7 +138,7 @@ function AppBar() {
                                             </ListItemIcon>
                                             Privacy
                                         </MenuItem>
-                                        <MenuItem component={Link} to="/" onClick={() => tokenContext.doLogout()}>
+                                        <MenuItem component={Link} to="/" onClick={() => doTotalLogout()}>
                                             <ListItemIcon>
                                                 <Logout fontSize="small" />
                                             </ListItemIcon>

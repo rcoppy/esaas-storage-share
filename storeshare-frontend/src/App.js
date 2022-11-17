@@ -60,6 +60,24 @@ class App extends React.Component {
       }));
     }
 
+    this.resetUserState = () => {
+      this.state.uiInfo = new UiInfo();
+      this.state.myProfile = new UserProfileModel();
+      this.state.tokenContext = new TokenContext(this.tokenContextLoginCallback,
+        () => this.updateIsLoggedIn(false));
+
+      this.state.store = {
+        myLessorListings: new Map(),
+      };
+
+      this.state.isLoggedIn = false;
+    }
+
+    this.doTotalLogout = () => {
+      this.state.tokenContext.doLogout();
+      this.resetUserState();
+    }
+
     this.tokenContextLoginCallback = (data) => {
       try {
         // transient error--sometimes returned data is null
@@ -69,14 +87,14 @@ class App extends React.Component {
         const renterData = data.renter_data ? new RenterModel({ userId: data.user.id, id: data.renter_data.id }) : null;
         const subletterData = data.subletter_data ? new SubletterModel({ userId: data.user.id, id: data.subletter_data.id }) : null;
 
-        profile.renterData = renterData; 
+        profile.renterData = renterData;
         profile.subletterData = subletterData;
 
         this.updateMyProfile(profile);
       } catch (e) {
-        console.error(e); 
+        console.error(e);
         console.log(data);
-        this.state.tokenContext.doLogout(); 
+        this.state.tokenContext.doLogout();
       }
     }
 
@@ -97,6 +115,8 @@ class App extends React.Component {
 
       isLoggedIn: false,
       updateIsLoggedIn: this.updateIsLoggedIn,
+
+      doTotalLogout: this.doTotalLogout,
     };
   }
 
@@ -146,7 +166,7 @@ class App extends React.Component {
     return (
       <>
         <CssBaseline />
-        <div className="App" style={{ minHeight: '100vh', backgroundColor: customTheme.palette.grey[200]}}>
+        <div className="App" style={{ minHeight: '100vh', backgroundColor: customTheme.palette.grey[200] }}>
           <GlobalContext.Provider value={this.state}>
             <ThemeProvider theme={customTheme}>
               {this.state.isLoggedIn && <AppBar />}
