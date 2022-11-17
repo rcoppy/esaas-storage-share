@@ -30,6 +30,7 @@ import MyRenterListings from './views/MyRenterListings';
 import MyLessorListings from './views/MyLessorListings';
 import RenterModel from './lib/RenterModel';
 import SubletterModel from './lib/SubletterModel';
+import ListingModel from './lib/ListingModel';
 
 class App extends React.Component {
 
@@ -68,6 +69,7 @@ class App extends React.Component {
 
       this.state.store = {
         myLessorListings: new Map(),
+        globalListings: new Map(),
       };
 
       this.state.isLoggedIn = false;
@@ -76,6 +78,42 @@ class App extends React.Component {
     this.doTotalLogout = () => {
       this.state.tokenContext.doLogout();
       this.resetUserState();
+    }
+
+    this.populateListings = () => {
+      this.state.tokenContext.doGetAllListings(
+        (data) => {
+          // comes in the form of an array 
+          data.forEach((item) => {
+            const listing = new ListingModel({
+              id: item.id,
+              subletterId: item.subletter_id,
+              title: item.title,
+              description: item.description,
+              price: item.price,
+              address: item.address,
+              city: item.city,
+              state: item.state,
+              zipCode: item.zip_code,
+              squareFeet: item.square_feet,
+              createdAt: item.created_at,
+              updatedAt: item.updated_at,
+            });
+
+            let newStore = this.state.store;
+            newStore.globalListings.set(item.id, listing);
+
+            this.updateStore(newStore);
+
+            if (this.state.myProfile.subletterData) {
+              if (this.state.myProfile.subletterData.id === listing.subletterId) {
+                newStore = this.state.store;
+                newStore.myLessorListings.set(item.id, listing);
+              }
+            }
+          });
+        },
+        (error) => { });
     }
 
     this.tokenContextLoginCallback = (data) => {
@@ -91,6 +129,7 @@ class App extends React.Component {
         profile.subletterData = subletterData;
 
         this.updateMyProfile(profile);
+        this.populateListings();
       } catch (e) {
         console.error(e);
         console.log(data);
@@ -110,6 +149,7 @@ class App extends React.Component {
 
       store: {
         myLessorListings: new Map(),
+        globalListings: new Map(),
       },
       updateStore: this.updateStore,
 
@@ -123,7 +163,6 @@ class App extends React.Component {
   componentDidMount() {
     this.state.tokenContext.tryAutoLogin(() => {
       this.state.isLoggedIn = true;
-      // navigate("/"); 
     });
   }
 

@@ -11,6 +11,7 @@ export const GlobalContext = React.createContext({
     updateUiInfo: () => {},
 
     store: {},
+    updateStore: () => {},
 
     tokenContext: new TokenContext(), 
 
