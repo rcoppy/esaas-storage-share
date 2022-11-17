@@ -7,7 +7,7 @@ class CreatePayments < ActiveRecord::Migration[7.0]
 
       t.decimal :amount
       t.string :payment_type
-      t.string :payment_status, default: "pending"
+      t.string :payment_status, default: 'pending'
       t.date :due_date
 
       t.timestamps

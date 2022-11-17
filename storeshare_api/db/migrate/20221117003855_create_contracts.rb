@@ -8,6 +8,8 @@ class CreateContracts < ActiveRecord::Migration[7.0]
       t.date :start_date
       t.date :end_date
 
+      t.decimal :price
+
       t.timestamps
     end
   end
