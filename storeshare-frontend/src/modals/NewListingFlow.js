@@ -1,10 +1,12 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import { Box, Modal, Typography, Stack, TextField, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { CircularProgress, Box, Modal, Typography, Stack, TextField, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import PropTypes from 'prop-types';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { flexbox } from '@mui/system';
 import { GlobalContext } from '../lib/GlobalContext.mjs';
+import ListingModel from '../lib/ListingModel.js';
+import ErrorMessage from '../widgets/ErrorMessage.js';
 
 const style = {
     position: 'absolute',
@@ -266,7 +268,7 @@ export default function NewListingFlow({ open, handleClose }) {
         }
     };
 
-    const handleNext = (tokenContext, myProfile) => {
+    const handleNext = (tokenContext, myProfile, store, updateStore) => {
         if (currentStep === step.ENTRY && currentPanel < Object.keys(panel).length - 1) {
             setCurrentPanel(currentPanel + 1);
         } else if (currentStep === step.SUMMARY) {
@@ -279,7 +281,12 @@ export default function NewListingFlow({ open, handleClose }) {
                 city: address["city"],
                 state: address["state"],
                 zip_code: address["zip"],
-            })
+            },
+                (data) => handleSubmitSuccess(data, store, updateStore),
+                (status) => handleSubmitError(),
+            );
+
+            setShowPending(true);
         }
         else {
             incrementStep();
@@ -299,10 +306,71 @@ export default function NewListingFlow({ open, handleClose }) {
     const [cost, setCost] = React.useState(0);
     const [description, setDescription] = React.useState("");
 
+    const [showPending, setShowPending] = React.useState(false);
+    const [isErrorOpen, setIsErrorOpen] = React.useState(false);
+    const [errorStatus, setErrorStatus] = React.useState('');
+
+    const handleErrorClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setIsErrorOpen(false);
+    };
+
+    let timer = null;
+
+    React.useEffect(() => {
+        return () => clearTimeout(timer);
+    }, []);
+
+    const clearFormData = () => {
+        setAddress(new Map());
+
+        setFootage(0);
+        setHeight(0);
+        setCost(0);
+        setDescription("");
+
+        setCurrentStep(step.ENTRY);
+        setCurrentPanel(panel.panel1);
+    }
+
+    const handleSubmitError = () => {
+        setShowPending(false);
+        setErrorStatus('listing submission failed');
+        setIsErrorOpen(true);
+        timer = setTimeout(() => setIsErrorOpen(false), 3000);
+    }
+
+    const handleSubmitSuccess = (data, store, updateStore) => {
+        setShowPending(false);
+        const newListing = new ListingModel({
+            id: data.id,
+            userId: data.subletter_id,
+            title: data.title,
+            description: data.description,
+            price: data.price,
+            address: data.address,
+            city: data.city,
+            state: data.state,
+            zipCode: data.zip_code,
+        });
+
+        const newStore = store;
+        newStore.myLessorListings.set(newListing.id, newListing);
+        updateStore(newStore);
+
+        clearFormData(); 
+
+        handleClose(); // close the modal
+
+        // TODO: trigger myListings rerender? maybe we don't need to 
+    }
 
     return (
         <GlobalContext.Consumer>
-            {({ tokenContext, myProfile }) => <><Modal
+            {({ tokenContext, myProfile, store, updateStore }) => <><Modal
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
@@ -337,11 +405,14 @@ export default function NewListingFlow({ open, handleClose }) {
                         <Typography value={step.CONFIRMATION} variant="p">You did it!</Typography>
                     </Switch>
 
-                    <Stack direction="row" sx={{ display: 'flex', justifyContent: 'end', gap: 1, mt: 2 }}>
+                    {!showPending && <Stack direction="row" sx={{ display: 'flex', justifyContent: 'end', gap: 1, mt: 2 }}>
                         <Button variant="outlined" onClick={handleBack}>Back</Button>
-                        <Button variant="contained" onClick={() => handleNext(tokenContext, myProfile)}>{currentStep === step.SUMMARY ? 'Create listing' : 'Next'}</Button>
-                    </Stack>
+                        <Button variant="contained" onClick={() => handleNext(tokenContext, myProfile, store, updateStore)}>{currentStep === step.SUMMARY ? 'Create listing' : 'Next'}</Button>
+                    </Stack>}
 
+                    {showPending && <CircularProgress sx={{ alignSelf: 'center' }} />}
+
+                    <ErrorMessage open={isErrorOpen} handleClose={handleErrorClose} error={errorStatus} />
                 </Box>
             </Modal></>}
         </GlobalContext.Consumer>

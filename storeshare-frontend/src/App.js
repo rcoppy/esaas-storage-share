@@ -54,6 +54,12 @@ class App extends React.Component {
       }));
     }
 
+    this.updateStore = (newStore) => {
+      this.setState(state => ({
+        store: newStore,
+      }));
+    }
+
     this.tokenContextLoginCallback = (data) => {
       try {
         // transient error--sometimes returned data is null
@@ -84,7 +90,10 @@ class App extends React.Component {
       tokenContext: new TokenContext(this.tokenContextLoginCallback,
         () => this.updateIsLoggedIn(false)),
 
-      store: {},
+      store: {
+        myLessorListings: new Map(),
+      },
+      updateStore: this.updateStore,
 
       isLoggedIn: false,
       updateIsLoggedIn: this.updateIsLoggedIn,

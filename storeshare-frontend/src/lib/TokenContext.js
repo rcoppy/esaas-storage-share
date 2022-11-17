@@ -30,7 +30,7 @@ export default class TokenContext {
         this.logoutCallback(); 
     }
 
-    doCreateListing(listingData, successCallback = () => {}, errorCallback = (status) => {}) {
+    doCreateListing(listingData, successCallback = (data) => {}, errorCallback = (status) => {}) {
         postListing(this.bearer, listingData, successCallback, errorCallback); 
     }
 
