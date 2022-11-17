@@ -5,6 +5,7 @@ import {
     SelectorMatcherOptions,
     act,
     render,
+    fireEvent,
 } from '@testing-library/react/pure';
 
 import { World } from '@cucumber/cucumber';
@@ -47,6 +48,7 @@ export class AppWorld {
         this.getButtonByText = this.getButtonByText.bind(this);
         this.getButtonByAria = this.getButtonByAria.bind(this);
         this.getByText = this.getByText.bind(this);
+        this.setValue = this.setValue.bind(this);
         this.render = this.render.bind(this);
         this.setRoute = this.setRoute.bind(this);
         this.attach = attach;
@@ -104,6 +106,13 @@ export class AppWorld {
         options,
     ) {
         return this.result.getByLabelText(label, options);
+    }
+
+    setValue(
+        element,
+        value
+    ) {
+        fireEvent.change(element, {target: {value: value}})
     }
 
     get location() {
