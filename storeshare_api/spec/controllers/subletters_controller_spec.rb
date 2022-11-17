@@ -46,7 +46,7 @@ RSpec.describe SublettersController, type: :controller do
 
     it 'creates a new subletter' do
       post :create, params: { subletter: { user_id: user.id } }
-      expect(response).to have_http_status(:redirect)
+      expect(response).to have_http_status(:success)
       expect(Subletter.last.user_id).to eq(user.id)
     end
   end
@@ -66,7 +66,7 @@ RSpec.describe SublettersController, type: :controller do
 
     it 'updates a subletter' do
       put :update, params: { id: subletter.id, subletter: { user_id: user.id } }
-      expect(response).to have_http_status(:redirect)
+      expect(response).to have_http_status(:success)
       expect(Subletter.last.user_id).to eq(user.id)
     end
   end
