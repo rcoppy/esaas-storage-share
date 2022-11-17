@@ -19,7 +19,7 @@ class SublettersController < ApplicationController
     @subletter = Subletter.new(subletter_params)
 
     # validation TODO: check that user_id submitted isn't already affiliated
-    # with a different subletter profile
+    # with a different subletter profile 
 
     if @subletter.save
       render json: @subletter
