@@ -19,12 +19,12 @@ class SublettersController < ApplicationController
     @subletter = Subletter.new(subletter_params)
 
     # validation TODO: check that user_id submitted isn't already affiliated
-    # with a different subletter profile 
+    # with a different subletter profile
 
     if @subletter.save
       render json: @subletter
     else
-      render json: {error: "couldn't create subletter"}
+      render json: { error: "couldn't create subletter" }
     end
   end
 
@@ -54,7 +54,7 @@ class SublettersController < ApplicationController
 
   def my_listings
     @listings = Listing.where(subletter_id: params[:id])
-    render json @listings
+    render json: @listings
   end
 
   private

@@ -14,10 +14,10 @@
           null,
           null,
           1,
-          0,
-          0,
-          0,
-          0,
+          15,
+          15,
+          15,
+          15,
           null,
           null,
           null
@@ -588,47 +588,14 @@
         "lines": [
           1,
           1,
-          null,
-          null,
-          null
-        ]
-      },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/factories/conversations.rb": {
-        "lines": [
-          1,
-          1,
-          null,
-          null,
-          null
-        ]
-      },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/factories/inquiries.rb": {
-        "lines": [
-          null,
-          null,
-          1,
-          1,
-          1,
-          1,
-          null,
-          1,
-          1,
-          null,
-          null
-        ]
-      },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/spec/factories/listings.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
           null,
           1,
           null,
@@ -683,8 +650,8 @@
           null,
           1,
           1,
-          1,
-          1,
+          34,
+          34,
           null,
           null
         ]
@@ -695,6 +662,7 @@
           null,
           1,
           1,
+          null,
           null,
           null,
           null,
@@ -783,33 +751,11 @@
           null,
           null,
           1,
-          1,
-          1,
-          null,
-          1,
-          null,
-          1,
           null,
           1,
           1,
           1,
           null,
-          1,
-          null,
-          1,
-          8,
-          null,
-          1,
-          null,
-          null
-        ]
-      },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/models/listing.rb": {
-        "lines": [
-          null,
-          null,
-          1,
-          1,
           1,
           null
         ]
@@ -820,17 +766,12 @@
           null,
           1,
           1,
-          null
-        ]
-      },
-      "/Users/yigit/Desktop/esaas-storage-share/storeshare_api/app/models/conversation.rb": {
-        "lines": [
-          1,
-          1,
-          1,
           1,
           1,
           null,
+          null,
+          1,
+          1,
           1,
           null,
           null,
@@ -1110,10 +1051,29 @@
           1,
           1,
           0,
+          0,
           null,
           null,
           1,
           1,
+          1,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          null,
+          0,
+          null,
           null,
           null,
           1,
@@ -1130,19 +1090,6 @@
           null,
           null,
           1,
-          0,
-          null,
-          null,
-          1,
-          1,
-          1,
-          1,
-          null,
-          0,
-          null,
-          null,
-          null,
-          1,
           1,
           1,
           1,
@@ -1150,8 +1097,10 @@
           null,
           1,
           1,
+          1,
           null,
           null,
+          1,
           1,
           1,
           null,
@@ -1639,6 +1588,6 @@
         ]
       }
     },
-    "timestamp": 1668657416
+    "timestamp": 1668659325
   }
 }
