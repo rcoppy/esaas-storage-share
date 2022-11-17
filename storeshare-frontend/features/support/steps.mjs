@@ -1,6 +1,7 @@
 import { strict as assert } from 'assert';
 import { When, Then, Given } from '@cucumber/cucumber';
 import UserProfileModel from '../../src/lib/UserProfileModel.mjs';
+import exp from 'constants';
 
 Given('I am on the {string}', function (page) {
   switch (page) {
@@ -15,7 +16,26 @@ When('I click the {string} icon', function (iconLabel) {
   this.click(button);
 });
 
+When('I click the {string} button', function (buttonLabel) {
+  const button = this.getButtonByText(buttonLabel);
+  this.click(button);
+});
+
+When('I fill in my email with {string}', function (email) {
+  const field = this.getButtonByAria("email field").querySelector('input');
+  this.setValue(field, email);
+});
+
+When('I fill in my password with {string}', function (password) {
+  const field = this.getButtonByAria("password field").querySelector('input');
+  this.setValue(field, password);
+});
+
 Then('I should see the {string} view.', function (expected) {
+
+  if (expected === "listing gallery") {
+    expected = '';
+  }
 
   const route = '/' + expected;
 
