@@ -30,6 +30,7 @@ import MyRenterListings from './views/MyRenterListings';
 import MyLessorListings from './views/MyLessorListings';
 import RenterModel from './lib/RenterModel';
 import SubletterModel from './lib/SubletterModel';
+import ListingModel from './lib/ListingModel';
 
 class App extends React.Component {
 
@@ -54,6 +55,67 @@ class App extends React.Component {
       }));
     }
 
+    this.updateStore = (newStore) => {
+      this.setState(state => ({
+        store: newStore,
+      }));
+    }
+
+    this.resetUserState = () => {
+      this.state.uiInfo = new UiInfo();
+      this.state.myProfile = new UserProfileModel();
+      this.state.tokenContext = new TokenContext(this.tokenContextLoginCallback,
+        () => this.updateIsLoggedIn(false));
+
+      this.state.store = {
+        myLessorListings: new Map(),
+        globalListings: new Map(),
+      };
+
+      this.state.isLoggedIn = false;
+    }
+
+    this.doTotalLogout = () => {
+      this.state.tokenContext.doLogout();
+      this.resetUserState();
+    }
+
+    this.populateListings = () => {
+      this.state.tokenContext.doGetAllListings(
+        (data) => {
+          // comes in the form of an array 
+          data.forEach((item) => {
+            const listing = new ListingModel({
+              id: item.id,
+              subletterId: item.subletter_id,
+              title: item.title,
+              description: item.description,
+              price: item.price,
+              address: item.address,
+              city: item.city,
+              state: item.state,
+              zipCode: item.zip_code,
+              squareFeet: item.square_feet,
+              createdAt: item.created_at,
+              updatedAt: item.updated_at,
+            });
+
+            let newStore = this.state.store;
+            newStore.globalListings.set(item.id, listing);
+
+            this.updateStore(newStore);
+
+            if (this.state.myProfile.subletterData) {
+              if (this.state.myProfile.subletterData.id === listing.subletterId) {
+                newStore = this.state.store;
+                newStore.myLessorListings.set(item.id, listing);
+              }
+            }
+          });
+        },
+        (error) => { });
+    }
+
     this.tokenContextLoginCallback = (data) => {
       try {
         // transient error--sometimes returned data is null
@@ -61,16 +123,17 @@ class App extends React.Component {
         const profile = new UserProfileModel({ firstName: names[0], lastName: names[1], email: data.user.email, id: data.user.id });
 
         const renterData = data.renter_data ? new RenterModel({ userId: data.user.id, id: data.renter_data.id }) : null;
-        const subletterData = data.subletter_data ? new SubletterModel({ userId: data.user.id, id: data.renter_data.id }) : null;
+        const subletterData = data.subletter_data ? new SubletterModel({ userId: data.user.id, id: data.subletter_data.id }) : null;
 
-        profile.renterData = renterData; 
+        profile.renterData = renterData;
         profile.subletterData = subletterData;
 
         this.updateMyProfile(profile);
+        this.populateListings();
       } catch (e) {
-        console.error(e); 
+        console.error(e);
         console.log(data);
-        this.state.tokenContext.doLogout(); 
+        this.state.tokenContext.doLogout();
       }
     }
 
@@ -84,17 +147,22 @@ class App extends React.Component {
       tokenContext: new TokenContext(this.tokenContextLoginCallback,
         () => this.updateIsLoggedIn(false)),
 
-      store: {},
+      store: {
+        myLessorListings: new Map(),
+        globalListings: new Map(),
+      },
+      updateStore: this.updateStore,
 
       isLoggedIn: false,
       updateIsLoggedIn: this.updateIsLoggedIn,
+
+      doTotalLogout: this.doTotalLogout,
     };
   }
 
   componentDidMount() {
     this.state.tokenContext.tryAutoLogin(() => {
       this.state.isLoggedIn = true;
-      // navigate("/"); 
     });
   }
 
@@ -137,7 +205,7 @@ class App extends React.Component {
     return (
       <>
         <CssBaseline />
-        <div className="App" style={{ minHeight: '100vh', backgroundColor: customTheme.palette.grey[200]}}>
+        <div className="App" style={{ minHeight: '100vh', backgroundColor: customTheme.palette.grey[200] }}>
           <GlobalContext.Provider value={this.state}>
             <ThemeProvider theme={customTheme}>
               {this.state.isLoggedIn && <AppBar />}

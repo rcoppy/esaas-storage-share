@@ -6,9 +6,9 @@ class UsersController < ApplicationController
       @renter_data = Renter.find_by(user_id: @user.id)
       @subletter_data = Subletter.find_by(user_id: @user.id)
 
-      render json: { user: @user, renter_data: @renter_data, subletter_data: @subletter_data }
+      render json: { user: @user, renter_data: @renter_data, subletter_data: @subletter_data }, status: :ok
     else
-      render json: { user: nil, renter_data: nil, subletter_data: nil }
+      render json: { user: nil, renter_data: nil, subletter_data: nil }, status: :not_found
     end
   end
 
@@ -19,9 +19,9 @@ class UsersController < ApplicationController
       @renter_data = Renter.find_by(user_id: @user.id)
       @subletter_data = Subletter.find_by(user_id: @user.id)
 
-      render json: { user: @user, renter_data: @renter_data, subletter_data: @subletter_data }
+      render json: { user: @user, renter_data: @renter_data, subletter_data: @subletter_data }, status: :ok
     else
-      render json: { user: nil, renter_data: nil, subletter_data: nil }
+      render json: { user: nil, renter_data: nil, subletter_data: nil }, status: :not_found
     end
   end
 
