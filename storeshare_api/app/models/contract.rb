@@ -7,8 +7,15 @@ class Contract < ApplicationRecord
 
   has_many :payments, dependent: :destroy
 
-  validates :start_date, :end_date, :renter_id, :subletter_id, :listing_id, presence: true
-
+  validates :start_date, :renter_id, :subletter_id, :listing_id, presence: true
   validate :start_date_cannot_be_in_the_past
-  validate :end_date_cannot_be_before_start_date
+  validates :end_date, date: { after_or_equal_to: :start_date }, presence: true
+
+  private
+
+  def start_date_cannot_be_in_the_past
+    return unless start_date.present? && start_date < Date.today
+
+    errors.add(:start_date, 'cannot be in the past')
+  end
 end
