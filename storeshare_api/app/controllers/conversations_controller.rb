@@ -1,5 +1,6 @@
 class ConversationsController < ApplicationController
   # before_action :authenticate_user
+
   def index
     @users = User.all
     @conversations = Conversation.all
@@ -17,9 +18,11 @@ class ConversationsController < ApplicationController
   end
 
   def filter_by_user
+    renter_id = Renter.where(user_id: params[:id]).first&.id
+    subletter_id = Subletter.where(user_id: params[:id]).first&.id
+
     @conversations = Conversation.where('renter_id = ? OR subletter_id = ?',
-                                        Renter.find(params[:user_id]),
-                                        Subletter.find(params[:user_id]))
+                                        renter_id, subletter_id)
 
     render json: @conversations
   end

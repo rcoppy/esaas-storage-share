@@ -35,9 +35,7 @@ Rails.application.routes.draw do
 
   get 'renters/:id/all_listings', to: 'renters#all_listings'
 
-  get 'conversations/filter_by_user/:user_id', to: 'conversations#filter_by_user'
-
-  get 'messages/filter_by_conversation/:conversation_id', to: 'messages#filter_by_conversation'
+  get 'conversations/filter_by_user/:id', to: 'conversations#filter_by_user'
 
   resources :conversations do
     resources :messages

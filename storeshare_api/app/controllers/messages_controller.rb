@@ -31,11 +31,6 @@ class MessagesController < ApplicationController
     redirect_to conversation_messages_path(@conversation) if @message.save
   end
 
-  def filter_by_conversation
-    @messages = Message.where('conversation_id = ?', params[:conversation_id])
-    render json: @messages
-  end
-
   private
 
   def message_params
