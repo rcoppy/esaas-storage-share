@@ -31,6 +31,8 @@ import { GlobalContext } from '../lib/GlobalContext.mjs';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import { useTheme } from '@mui/system';
 import AvatarPhoto from '../static/placeholders/avatar.jpg'; 
+import { Chip } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 function AppBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -56,6 +58,10 @@ function AppBar() {
                                     <Typography variant="h6" pt={0.5}>
                                         StoreShare
                                     </Typography>
+                                </Stack>
+
+                                <Stack>
+                                    <Chip icon={<SearchIcon />} clickable component={Link} to="/" size="large" label="Explore storage options" color="primary" />
                                 </Stack>
 
                                 <Stack direction="row" color={theme.palette.primary.contrastText} spacing={1} sx={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
