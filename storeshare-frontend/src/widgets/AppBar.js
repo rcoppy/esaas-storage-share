@@ -67,7 +67,7 @@ function AppBar() {
                                     {/* <Link to="/messages"> */}
                                         <IconButton aria-label="see messages" component={Link} to="/messages">
                                             <Badge badgeContent={14} color="warning">
-                                                <MailIcon htmlColor={theme.palette.primary.contrastText} />
+                                                <MailIcon htmlColor={theme.palette.primary.dark} />
                                             </Badge>
                                         </IconButton>
                                     {/* </Link> */}
