@@ -209,7 +209,7 @@ class App extends React.Component {
           <GlobalContext.Provider value={this.state}>
             <ThemeProvider theme={customTheme}>
               {this.state.isLoggedIn && <AppBar />}
-              <MediaQueryHelper uiInfo={this.state.uiInfo} updateUiInfo={this.state.updateUiInfo} />
+              <MediaQueryHelper desktopWidth="lg" uiInfo={this.state.uiInfo} updateUiInfo={this.state.updateUiInfo} />
               <Container maxWidth={this.state.uiInfo.containerWidth} sx={{ mt: 1, overflowX: 'hidden' }}>
 
                 {!this.state.isLoggedIn && <Welcome />}

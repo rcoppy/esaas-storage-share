@@ -52,7 +52,7 @@ function AppBar() {
                         <Container maxWidth="xl">
                             <Toolbar color={theme.palette.primary.dark} disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <Stack aria-label="see homepage" component={Link} to="/" direction="row" spacing={1} color={theme.palette.primary.dark} sx={{ textDecoration: 'none', display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
-                                    <ArchiveIcon fontSize="large" htmlColor='white' />                                    
+                                    <ArchiveIcon fontSize="large" />                                    
                                     <Typography variant="h6" pt={0.5}>
                                         StoreShare
                                     </Typography>
