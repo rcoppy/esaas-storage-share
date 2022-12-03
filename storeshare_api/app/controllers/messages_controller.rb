@@ -12,25 +12,27 @@ class MessagesController < ApplicationController
     else
       @over_ten = false
       @messages = @conversation.messages
-    end #params might need to change below
+    end # params might need to change below
 
-    #TODO functionality to check if message has been read
+    # TODO: functionality to check if message has been read
     @message = @conversation.messages.new
 
-    render :json => @messages
+    render json: @messages
 
     # return @messages
   end
+
   def new
     @message = @conversation.messages.new
   end
+
   def create
     @message = @conversation.messages.new(message_params)
-    if @message.save
-      redirect_to conversation_messages_path(@conversation)
-    end
+    redirect_to conversation_messages_path(@conversation) if @message.save
   end
+
   private
+
   def message_params
     params.require(:message).permit(:body, :user_id)
   end

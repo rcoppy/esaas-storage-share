@@ -98,6 +98,29 @@ Listing.destroy_all
   )
 end
 
+# Create Inquiries
+Inquiry.destroy_all
+
+# make 2 inquiries
+start_date = Date.today
+
+Inquiry.create!(
+  [
+    {
+      start_date:,
+      end_date: start_date + 1.month,
+      renter_id: unal.renter.id,
+      listing_id: Listing.first.id
+    },
+    {
+      start_date:,
+      end_date: start_date + 1.year,
+      renter_id: kutay.renter.id,
+      listing_id: Listing.second.id
+    }
+  ]
+)
+
 # Create Conversations
 Conversation.destroy_all
 
@@ -112,11 +135,13 @@ Conversation.create!(
   [
     {
       renter_id: unal.id,
-      subletter_id: alex.id
+      subletter_id: alex.id,
+      inquiry_id: Inquiry.first.id
     },
     {
       renter_id: kutay.id,
-      subletter_id: alex.id
+      subletter_id: alex.id,
+      inquiry_id: Inquiry.second.id
     }
 
   ]
@@ -128,25 +153,23 @@ alex = User.find_by(name: 'Alex Rupp-Coppi')
 unal = User.find_by(name: 'Unal Yigit Ozulku')
 kutay = User.find_by(name: 'Kutay Karakas')
 
-
 alex_subletter = Subletter.find_by(user_id: alex.id)
 unal_renter = Renter.find_by(user_id: unal.id)
 kutay_renter = Renter.find_by(user_id: kutay.id)
 
-
-ConvoUnalAndAlex =Conversation.find_by(renter_id: unal_renter.id, subletter_id: alex_subletter.id)
-ConvoKutayAndAlex =Conversation.find_by(renter_id: kutay_renter.id, subletter_id: alex_subletter.id)
+ConvoUnalAndAlex = Conversation.find_by(renter_id: unal_renter.id, subletter_id: alex_subletter.id)
+ConvoKutayAndAlex = Conversation.find_by(renter_id: kutay_renter.id, subletter_id: alex_subletter.id)
 
 Message.create!(
   [
     {
-      body:"Hey could I rent out your place.",
-      conversation_id:ConvoUnalAndAlex.id,
+      body: 'Hey could I rent out your place.',
+      conversation_id: ConvoUnalAndAlex.id,
       user_id: unal.id
     },
     {
-      body: "Sure give me money.",
-      conversation_id:ConvoUnalAndAlex.id,
+      body: 'Sure give me money.',
+      conversation_id: ConvoUnalAndAlex.id,
       user_id: alex_user.id
     }
   ]
