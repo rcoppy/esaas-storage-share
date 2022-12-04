@@ -17,6 +17,8 @@ class ListingsController < ApplicationController
 
   def create
     @listing = Listing.new(listing_params)
+    @listing.image.attach(params[:image])
+
     if @listing.save
       redirect_to @listing
     else

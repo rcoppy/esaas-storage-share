@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   has_one :renter, dependent: :destroy
 
+  has_one_attached :profile_picture, dependent: :destroy
+
   # include Devise::JWT::RevocationStrategies::Denylist
 
   # self.abstract_class = true
