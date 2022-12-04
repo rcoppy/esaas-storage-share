@@ -18,7 +18,7 @@ export default function ListingCard({ listing }) {
 
     return <>
         <Card sx={{ width: maxWidth }}>
-            <CardActionArea component={Link} to="/listings/mine">
+            <CardActionArea component={Link} to={`/listings/${listing.id}`}>
                 <CardMedia
                     component="img"
                     height="140"

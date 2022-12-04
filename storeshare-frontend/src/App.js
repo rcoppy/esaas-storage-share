@@ -78,6 +78,41 @@ class App extends React.Component {
       this.resetUserState();
     }
 
+    this.populateSingleListing = (id) => {
+      this.state.tokenContext.doGetListingById(id,
+        (item) => {
+          // comes in the form of an object 
+          const listing = new ListingModel({
+            id: item.id,
+            subletterId: item.subletter_id,
+            title: item.title,
+            description: item.description,
+            price: item.price,
+            address: item.address,
+            city: item.city,
+            state: item.state,
+            zipCode: item.zip_code,
+            squareFeet: item.square_feet,
+            createdAt: item.created_at,
+            updatedAt: item.updated_at,
+          });
+
+          let newStore = this.state.store;
+          newStore.globalListings.set(item.id, listing);
+          // newStore.lastListingSyncTimestamp = new Date();
+
+          this.updateStore(newStore);
+
+          // if (this.state.myProfile.subletterData) {
+          //   if (this.state.myProfile.subletterData.id === listing.subletterId) {
+          //     newStore = this.state.store;
+          //     newStore.myLessorListings.set(item.id, listing);
+          //   }
+          // }
+        },
+        (error) => { });
+    }
+
     this.populateListings = () => {
       this.state.tokenContext.doGetAllListings(
         (data) => {
@@ -150,6 +185,7 @@ class App extends React.Component {
         myLessorListings: new Map(),
         globalListings: new Map(),
         refreshListings: this.populateListings,
+        fetchSingleListingById: this.populateSingleListing,
         lastListingSyncTimestamp: new Date(),
       },
       updateStore: this.updateStore,
