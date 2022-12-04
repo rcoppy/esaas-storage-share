@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { Button, Container, Divider, Typography, Snackbar, Alert, CircularProgress } from '@mui/material';
+import { Box, Button, Container, Divider, Typography, Snackbar, Alert, CircularProgress } from '@mui/material';
 import { GlobalContext } from '../lib/GlobalContext.mjs';
 import { Link } from 'react-router-dom';
 import ConfirmStateChangeDialog from '../modals/ConfirmStateChangeDialog.js';
 import NewListingFlow from '../modals/NewListingFlow.js';
 import SubletterModel from '../lib/SubletterModel.js';
+import ListingCard from '../widgets/ListingCard.js';
+import { ListingDataHelper } from '../utils/DataHelpers.js';
 
 function ErrorMessage({ open, handleClose, error }) {
     return (
@@ -62,7 +64,7 @@ function MyLessorListings() {
         <>
             <GlobalContext.Consumer>
                 {({ tokenContext, myProfile, updateProfile, store }) => <>
-
+                    <ListingDataHelper store={store} />
                     <Container maxWidth="md" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         {myProfile.subletterData &&
                             <><Typography variant="h4">Manage my listings</Typography>
@@ -84,15 +86,18 @@ function MyLessorListings() {
 
                         </>}
 
-                        <Typography variant="h6">My existing listings</Typography>
+                        <Typography variant="h6" sx={{ mt: 3 }} >My existing listings</Typography>
 
-                        <ul>
-                            {Array.from(store.myLessorListings.values()).map((s, index) => {
-                                return (
-                                    <li key={index}>{s.address}</li>
-                                );
-                            })}
-                        </ul>
+                        {myProfile.subletterData && 
+                        <Box sx={{ width: '100%', my: 2, display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center'}}>
+                            {Array.from(store.globalListings.values())
+                                .filter(l => l.subletterId === myProfile.subletterData.id)
+                                .map((l, index) => {
+                                    return (
+                                        <ListingCard listing={l} />
+                                    );
+                                })}
+                        </Box>}
 
                     </Container>
                     {myProfile.subletterData && <NewListingFlow open={isNewListingFlowOpen} handleClose={handleListingClose} />}

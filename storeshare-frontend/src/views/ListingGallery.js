@@ -22,9 +22,9 @@ function ListingGallery() {
                 {({ store, myProfile, tokenContext }) => <>
                     <ListingDataHelper store={store} />
                     <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <Typography gutterBottom variant="h4">Explore storage options</Typography>
+                        {/* <Typography gutterBottom variant="h4">Explore storage options</Typography> */}
 
-                        <Box sx={{display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center'}}>
+                        <Box sx={{my: 3, display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center'}}>
                         {Array.from(store.globalListings.values()).map((listing, index) => {
                             return <ListingCard key={index} listing={listing} />
                         })};

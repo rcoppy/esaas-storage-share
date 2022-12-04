@@ -99,7 +99,7 @@ class App extends React.Component {
 
           let newStore = this.state.store;
           newStore.globalListings.set(item.id, listing);
-          // newStore.lastListingSyncTimestamp = new Date();
+          newStore.lastListingSyncTimestamp = new Date();
 
           this.updateStore(newStore);
 

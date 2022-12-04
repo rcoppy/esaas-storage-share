@@ -347,7 +347,7 @@ export default function NewListingFlow({ open, handleClose }) {
         });
 
         const newStore = store;
-        newStore.myLessorListings.set(newListing.id, newListing);
+        newStore.globalListings.set(newListing.id, newListing);
         updateStore(newStore);
 
         clearFormData(); 
