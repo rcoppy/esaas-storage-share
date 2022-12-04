@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
-    
-    if !@user.nil? then
+
+    if !@user.nil?
       @renter_data = Renter.find_by(user_id: @user.id)
       @subletter_data = Subletter.find_by(user_id: @user.id)
 
@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   def show_by_email
     @user = User.find_by(email: params[:user][:email])
 
-    if !@user.nil? then
+    if !@user.nil?
       @renter_data = Renter.find_by(user_id: @user.id)
       @subletter_data = Subletter.find_by(user_id: @user.id)
 

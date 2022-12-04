@@ -1,13 +1,13 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-    respond_to :json
-  
-    include RackSessionFix
+  respond_to :json
 
-    before_action :configure_sign_up_params, only: [:create]
+  include RackSessionFix
 
-    protected
+  before_action :configure_sign_up_params, only: [:create]
 
-    def configure_sign_up_params
-      devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
-    end
+  protected
+
+  def configure_sign_up_params
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name profile_picture])
   end
+end
