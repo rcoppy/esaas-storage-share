@@ -67,10 +67,8 @@ class App extends React.Component {
       this.state.tokenContext = new TokenContext(this.tokenContextLoginCallback,
         () => this.updateIsLoggedIn(false));
 
-      this.state.store = {
-        myLessorListings: new Map(),
-        globalListings: new Map(),
-      };
+      this.state.store.myLessorListings = new Map();
+      this.state.globalListings = new Map();
 
       this.state.isLoggedIn = false;
     }
@@ -102,6 +100,7 @@ class App extends React.Component {
 
             let newStore = this.state.store;
             newStore.globalListings.set(item.id, listing);
+            newStore.lastListingSyncTimestamp = new Date();
 
             this.updateStore(newStore);
 
@@ -150,6 +149,8 @@ class App extends React.Component {
       store: {
         myLessorListings: new Map(),
         globalListings: new Map(),
+        refreshListings: this.populateListings,
+        lastListingSyncTimestamp: new Date(),
       },
       updateStore: this.updateStore,
 

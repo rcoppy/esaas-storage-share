@@ -200,6 +200,25 @@ export function getAllListings(token, successCallback = (body) => { }, errorCall
         });
 }
 
+export function getListingById(id, token, successCallback = (body) => { }, errorCallback = (error) => { }, host = defaultHost) {
+    axios.get(host + `/listings/${id}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token,
+        }
+    })
+        .then(function (response) {
+            console.log(response);
+
+            successCallback(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+
+            errorCallback();
+        });
+}
+
 export function postListing(token, listingData, successCallback = (body) => { }, errorCallback = (error) => { }, host = defaultHost) {
     axios.post(host + '/listings', {
         listing: listingData

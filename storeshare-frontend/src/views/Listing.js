@@ -1,9 +1,12 @@
 import * as React from 'react';
 import { Button, Container, Divider, Typography } from '@mui/material';
 import { GlobalContext } from '../lib/GlobalContext.mjs';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 function Listing() {
+
+    const { id } = useParams(); 
+
     return (
         <>
             <GlobalContext.Consumer>
