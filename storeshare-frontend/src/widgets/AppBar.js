@@ -31,7 +31,7 @@ import { GlobalContext } from '../lib/GlobalContext.mjs';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import { useTheme } from '@mui/system';
 import AvatarPhoto from '../static/placeholders/avatar.jpg'; 
-import { Chip } from '@mui/material';
+import { Chip, useMediaQuery } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 function AppBar() {
@@ -46,6 +46,9 @@ function AppBar() {
 
     const theme = useTheme(); 
 
+    const isMobile = useMediaQuery(theme.breakpoints.down('md')); 
+    const searchBubbleText = isMobile ? "Explore" : "Explore storage options"; 
+
     return (
         <>
             <GlobalContext.Consumer>
@@ -55,13 +58,13 @@ function AppBar() {
                             <Toolbar color={theme.palette.primary.dark} disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <Stack aria-label="see homepage" component={Link} to="/" direction="row" spacing={1} color={theme.palette.primary.dark} sx={{ textDecoration: 'none', display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
                                     <ArchiveIcon fontSize="large" />                                    
-                                    <Typography variant="h6" pt={0.5}>
+                                    {!isMobile && <Typography variant="h6" pt={0.5}>
                                         StoreShare
-                                    </Typography>
+                                    </Typography>}
                                 </Stack>
 
                                 <Stack>
-                                    <Chip icon={<SearchIcon />} clickable component={Link} to="/" size="large" label="Explore storage options" color="primary" />
+                                    <Chip icon={<SearchIcon />} clickable component={Link} to="/" size="large" label={searchBubbleText} color="primary" />
                                 </Stack>
 
                                 <Stack direction="row" color={theme.palette.primary.contrastText} spacing={1} sx={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
