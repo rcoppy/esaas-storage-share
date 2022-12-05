@@ -3,4 +3,8 @@ export function formattedMoneyStylized(cost) {
         .replace('.00', '')
         .replace('.0', '');
 } 
+
+export function SquareFeetText() {
+    return <>ft<sup>2</sup></>;
+}
         

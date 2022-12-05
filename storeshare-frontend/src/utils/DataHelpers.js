@@ -8,3 +8,18 @@ export function ListingDataHelper({ store }) {
         }
     }); 
 }
+
+export function SubletterDataHelper({ store, updateStore, id, tokenContext }) {
+    React.useEffect(() => {
+        if (new Date() - store.lastSubletterSyncTimestamp > 3000) {
+            tokenContext.doGetSubletterRecord(id, (record) => {
+                // console.log("subletter user data: "); 
+                // console.log(record); 
+                const newStore = store; 
+                newStore.lastSubletterSyncTimestamp = new Date(); 
+                newStore.sublettersList.set(record.subletterData.id, record); 
+                updateStore(newStore); 
+            }, (error) => {}); 
+        }
+    }); 
+}

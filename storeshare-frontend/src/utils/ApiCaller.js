@@ -200,6 +200,44 @@ export function getAllListings(token, successCallback = (body) => { }, errorCall
         });
 }
 
+export function getUserById(id, token, successCallback = (body) => { }, errorCallback = (error) => { }, host = defaultHost) {
+    axios.get(host + `/users/${id}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token,
+        }
+    })
+        .then(function (response) {
+            console.log(response);
+
+            successCallback(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+
+            errorCallback();
+        });
+}
+
+export function getSubletterById(id, token, successCallback = (body) => { }, errorCallback = (error) => { }, host = defaultHost) {
+    axios.get(host + `/subletters/${id}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token,
+        }
+    })
+        .then(function (response) {
+            console.log(response);
+
+            successCallback(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+
+            errorCallback();
+        });
+}
+
 export function getListingById(id, token, successCallback = (body) => { }, errorCallback = (error) => { }, host = defaultHost) {
     axios.get(host + `/listings/${id}`, {
         headers: {

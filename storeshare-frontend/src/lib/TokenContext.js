@@ -1,4 +1,6 @@
-import { login, logout, tryLoginWithStoredToken, postListing, registerNewSubletter, getAllListings, getListingById } from "../utils/ApiCaller";
+import { getUserById, login, logout, tryLoginWithStoredToken, postListing, registerNewSubletter, getAllListings, getListingById, getSubletterById } from "../utils/ApiCaller";
+import SubletterModel from "./SubletterModel";
+import UserProfileModel from "./UserProfileModel.mjs";
 
 export default class TokenContext {
 
@@ -28,6 +30,39 @@ export default class TokenContext {
         this.bearer = null; 
         logout(); 
         this.logoutCallback(); 
+    }
+
+    doGetSubletterRecord(id, successCallback = (data) => {}, errorCallback = (status) => {}) {
+        getSubletterById(id, this.bearer, (record) => {
+            const subletter = new SubletterModel({
+                userId: record.user_id, 
+                id: record.id,
+                createdAt: record.created_at, 
+                updatedAt: record.updated_at, 
+            });
+
+            getUserById(subletter.userId, this.bearer, (item) => {
+                const data = item.user; 
+                const user = new UserProfileModel({
+                    firstName: data.name,
+                    lastName: data.name,
+                    id: data.id, 
+            
+                    createdAt: data.created_at, 
+                    updatedAt: data.updated_at,
+            
+                    contactInfo: {
+                        email: data.email,
+                        phone: data.phone_number,
+                    },
+            
+                    renterData: null, 
+                    subletterData: subletter, 
+                });
+
+                successCallback(user); 
+            }, errorCallback);
+        }, errorCallback); 
     }
 
     doGetAllListings(successCallback = (data) => {}, errorCallback = (status) => {}) {

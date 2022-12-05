@@ -184,9 +184,11 @@ class App extends React.Component {
       store: {
         myLessorListings: new Map(),
         globalListings: new Map(),
+        sublettersList: new Map(),
         refreshListings: this.populateListings,
         fetchSingleListingById: this.populateSingleListing,
         lastListingSyncTimestamp: new Date(),
+        lastSubletterSyncTimestamp: new Date(),
       },
       updateStore: this.updateStore,
 
