@@ -1,4 +1,4 @@
-import { getUserById, login, logout, tryLoginWithStoredToken, postListing, registerNewSubletter, getAllListings, getListingById, getSubletterById } from "../utils/ApiCaller";
+import { postContract, getAllContracts, getUserById, login, logout, tryLoginWithStoredToken, postListing, registerNewSubletter, getAllListings, getListingById, getSubletterById } from "../utils/ApiCaller";
 import SubletterModel from "./SubletterModel";
 import UserProfileModel from "./UserProfileModel.mjs";
 
@@ -65,6 +65,10 @@ export default class TokenContext {
         }, errorCallback); 
     }
 
+    doGetAllContracts(successCallback = (data) => {}, errorCallback = (status) => {}) {
+        getAllContracts(this.bearer, successCallback, errorCallback); 
+    }
+
     doGetAllListings(successCallback = (data) => {}, errorCallback = (status) => {}) {
         getAllListings(this.bearer, successCallback, errorCallback); 
     }
@@ -75,6 +79,10 @@ export default class TokenContext {
 
     doCreateListing(listingData, successCallback = (data) => {}, errorCallback = (status) => {}) {
         postListing(this.bearer, listingData, successCallback, errorCallback); 
+    }
+
+    doCreateContract(contractData, successCallback = (data) => {}, errorCallback = (status) => {}) {
+        postContract(this.bearer, contractData, successCallback, errorCallback); 
     }
 
     doSublettingOptIn(userId, successCallback = (data) => {}, errorCallback = (status) => {}) {

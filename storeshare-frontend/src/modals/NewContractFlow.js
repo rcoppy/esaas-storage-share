@@ -32,6 +32,7 @@ const style = {
 function DateForm({ startDate, endDate, setStartDate, setEndDate, months, setMonths }) {
 
     const handleStartDateChange = (event) => {
+        console.log(event.target.value);
         setStartDate(event.target.value);
     };
 
@@ -43,7 +44,7 @@ function DateForm({ startDate, endDate, setStartDate, setEndDate, months, setMon
         const newDateMoment = moment(startDate); 
         newDateMoment.add(newMonths, 'months'); 
 
-        setEndDate(newDateMoment.valueOf())
+        setEndDate(new Date(newDateMoment.valueOf())); 
     };
 
     return (
@@ -53,7 +54,8 @@ function DateForm({ startDate, endDate, setStartDate, setEndDate, months, setMon
                     label="Lease start date"
                     value={startDate}
                     onChange={(newValue) => {
-                        setStartDate(newValue);
+                        console.log(new Date(newValue.valueOf()));
+                        setStartDate(new Date(newValue.valueOf()));
                     }}
                     renderInput={(params) => <TextField {...params} />}
                 />
@@ -262,19 +264,17 @@ export default function NewContractFlow({ open, handleClose, listing }) {
             setCurrentPanel(currentPanel + 1);
         } else if (currentStep === step.SUMMARY) {
             // this should probably be pulled out into its own function
-            // tokenContext.doCreateListing({
-            //     address: address["street"],
-            //     price: cost,
-            //     description: description,
-            //     subletter_id: myProfile.subletterData.id,
-            //     city: address["city"],
-            //     state: address["state"],
-            //     zip_code: address["zip"],
-
-            // },
-            //     (data) => handleSubmitSuccess(data, store, updateStore),
-            //     (status) => handleSubmitError(),
-            // );
+            tokenContext.doCreateContract({
+                renter_id: myProfile.renterData.id,
+                price: footage * months * listing.price,
+                listing_id: listing.id,
+                subletter_id: listing.subletterId,
+                start_date: startDate,
+                end_date: endDate,
+            },
+                (data) => handleSubmitSuccess(data, store, updateStore),
+                (status) => handleSubmitError(),
+            );
 
             setShowPending(true);
         }

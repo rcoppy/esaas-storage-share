@@ -9,6 +9,15 @@ export function ListingDataHelper({ store }) {
     }); 
 }
 
+export function ContractDataHelper({ store }) {
+    React.useEffect(() => {
+        if (new Date() - store.lastContractSyncTimestamp > 3000) {
+            store.refreshContracts(); 
+            console.log("refreshed contracts");
+        }
+    }); 
+}
+
 export function SubletterDataHelper({ store, updateStore, id, tokenContext }) {
     React.useEffect(() => {
         if (new Date() - store.lastSubletterSyncTimestamp > 3000) {

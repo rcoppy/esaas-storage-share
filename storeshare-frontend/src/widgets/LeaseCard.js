@@ -9,7 +9,7 @@ export default function LeaseCard({ listing, contract }) {
     const theme = useTheme();
     const isDisplaySmall = useMediaQuery(theme.breakpoints.down('md'));
 
-    const maxWidth = isDisplaySmall ? '80%' : '23%';
+    const maxWidth = isDisplaySmall ? '85%' : '23%';
 
     const costString = formattedMoneyStylized(contract.price); 
 

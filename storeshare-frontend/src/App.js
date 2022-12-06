@@ -33,6 +33,7 @@ import MyLessorListings from './views/MyLessorListings';
 import RenterModel from './lib/RenterModel';
 import SubletterModel from './lib/SubletterModel';
 import ListingModel from './lib/ListingModel';
+import ContractModel from './lib/ContractModel';
 
 class App extends React.Component {
 
@@ -152,6 +153,40 @@ class App extends React.Component {
         (error) => { });
     }
 
+    this.populateContracts = () => {
+      this.state.tokenContext.doGetAllContracts(
+        (data) => {
+          // comes in the form of an array 
+          data.forEach((item) => {
+            const contract = new ContractModel({
+              id: item.id,
+              subletterId: item.subletter_id,
+              renterId: item.renter_id,
+              listingId: item.listing_id,
+              price: item.price,
+              createdAt: item.created_at,
+              updatedAt: item.updated_at,
+              endDate: new Date(item.end_date),
+              startDate: new Date(item.start_date)
+            });
+
+            let newStore = this.state.store;
+            newStore.contractsList.set(item.id, contract);
+            newStore.lastContractSyncTimestamp = new Date();
+
+            this.updateStore(newStore);
+
+            // if (this.state.myProfile.subletterData) {
+            //   if (this.state.myProfile.subletterData.id === listing.subletterId) {
+            //     newStore = this.state.store;
+            //     newStore.myLessorListings.set(item.id, listing);
+            //   }
+            // }
+          });
+        },
+        (error) => { });
+    }
+
     this.tokenContextLoginCallback = (data) => {
       try {
         // transient error--sometimes returned data is null
@@ -187,10 +222,14 @@ class App extends React.Component {
         myLessorListings: new Map(),
         globalListings: new Map(),
         sublettersList: new Map(),
+        rentersList: new Map(),
+        contractsList: new Map(),
+        refreshContracts: this.populateContracts,
         refreshListings: this.populateListings,
         fetchSingleListingById: this.populateSingleListing,
         lastListingSyncTimestamp: new Date(),
         lastSubletterSyncTimestamp: new Date(),
+        lastContractSyncTimestamp: new Date(),
       },
       updateStore: this.updateStore,
 

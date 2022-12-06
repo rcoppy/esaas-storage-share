@@ -65,7 +65,7 @@ function Listing() {
                             </Stack>
                             <Typography alignSelf='flex-end' variant="h4">Rented out by {subletterName}</Typography>
                         </Container>}
-                        {listing && myProfile.subletterData && <NewContractFlow open={isNewContractFlowOpen} handleClose={handleContractClose} listing={listing} />}
+                        {listing && myProfile.renterData && <NewContractFlow open={isNewContractFlowOpen} handleClose={handleContractClose} listing={listing} />}
                     </>;
                 }
                 }

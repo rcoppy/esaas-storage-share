@@ -150,13 +150,41 @@ export function registerAccount(email, password, name, successCallback = () => {
         .then(function (response) {
             console.log(response);
 
-            saveAuthData(response.headers.authorization, email, null);
+            const userId = response.data.id; 
+            const token = response.headers.authorization;
+            registerNewRenter(token, userId); 
+
+            saveAuthData(token, email, null);
             successCallback();
         })
         .catch(function (error) {
             console.log(error);
         });
 }
+
+export function registerNewRenter(token, userId, successCallback = (body) => { }, errorCallback = (error) => { }, host = defaultHost) {
+    axios.post(host + '/renters', {
+        renter: {
+            user_id: userId,
+        }
+    }, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token,
+        }
+    })
+        .then(function (response) {
+            console.log(response);
+
+            successCallback(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+            console.log("userId: " + userId);
+            errorCallback();
+        });
+}
+
 
 export function registerNewSubletter(token, userId, successCallback = (body) => { }, errorCallback = (error) => { }, host = defaultHost) {
     axios.post(host + '/subletters', {
@@ -183,6 +211,25 @@ export function registerNewSubletter(token, userId, successCallback = (body) => 
 
 export function getAllListings(token, successCallback = (body) => { }, errorCallback = (error) => { }, host = defaultHost) {
     axios.get(host + '/listings', {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token,
+        }
+    })
+        .then(function (response) {
+            console.log(response);
+
+            successCallback(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+
+            errorCallback();
+        });
+}
+
+export function getAllContracts(token, successCallback = (body) => { }, errorCallback = (error) => { }, host = defaultHost) {
+    axios.get(host + '/contracts', {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': token,
@@ -260,6 +307,27 @@ export function getListingById(id, token, successCallback = (body) => { }, error
 export function postListing(token, listingData, successCallback = (body) => { }, errorCallback = (error) => { }, host = defaultHost) {
     axios.post(host + '/listings', {
         listing: listingData
+    }, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token,
+        }
+    })
+        .then(function (response) {
+            console.log(response);
+
+            successCallback(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+
+            errorCallback();
+        });
+}
+
+export function postContract(token, contractData, successCallback = (body) => { }, errorCallback = (error) => { }, host = defaultHost) {
+    axios.post(host + '/contracts', {
+        contract: contractData
     }, {
         headers: {
             'Content-Type': 'application/json',
