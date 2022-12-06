@@ -18,9 +18,9 @@ class ContractsController < ApplicationController
   def create
     @contract = Contract.new(contract_params)
     if @contract.save
-      redirect_to @contract
+      render json: @contract
     else
-      render :new
+      render json: { error: "couldn't create contract" }
     end
   end
 
