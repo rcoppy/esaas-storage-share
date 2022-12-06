@@ -49,7 +49,7 @@ const getSizeFromMediaQuery = (theme) => {
     return match;
 }
 
-const getContainerMaxWidth = (theme) => {
+const getContainerMaxWidth = (theme, desktopWidth) => {
     const screenWidth = getSizeFromMediaQuery(theme);
 
     // smaller screens--container should match full screen
@@ -58,12 +58,12 @@ const getContainerMaxWidth = (theme) => {
     }
 
     // larger screens--container should be smaller
-    return "sm";
+    return desktopWidth;
 }
 
-export default function MediaQueryHelper({ uiInfo, updateUiInfo }) {
+export default function MediaQueryHelper({ uiInfo, updateUiInfo, desktopWidth }) {
     const theme = useTheme();
-    const containerWidth = getContainerMaxWidth(theme);
+    const containerWidth = getContainerMaxWidth(theme, desktopWidth);
 
     const setWidth = () => {
         if (containerWidth !== uiInfo.containerWidth) {

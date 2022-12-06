@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 
 import * as React from 'react';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 import { GlobalContext } from './lib/GlobalContext.mjs';
 import MediaQueryHelper from './utils/MediaQueryHelper.js';
@@ -31,6 +33,7 @@ import MyLessorListings from './views/MyLessorListings';
 import RenterModel from './lib/RenterModel';
 import SubletterModel from './lib/SubletterModel';
 import ListingModel from './lib/ListingModel';
+import ContractModel from './lib/ContractModel';
 
 class App extends React.Component {
 
@@ -67,10 +70,8 @@ class App extends React.Component {
       this.state.tokenContext = new TokenContext(this.tokenContextLoginCallback,
         () => this.updateIsLoggedIn(false));
 
-      this.state.store = {
-        myLessorListings: new Map(),
-        globalListings: new Map(),
-      };
+      this.state.store.myLessorListings = new Map();
+      this.state.globalListings = new Map();
 
       this.state.isLoggedIn = false;
     }
@@ -78,6 +79,41 @@ class App extends React.Component {
     this.doTotalLogout = () => {
       this.state.tokenContext.doLogout();
       this.resetUserState();
+    }
+
+    this.populateSingleListing = (id) => {
+      this.state.tokenContext.doGetListingById(id,
+        (item) => {
+          // comes in the form of an object 
+          const listing = new ListingModel({
+            id: item.id,
+            subletterId: item.subletter_id,
+            title: item.title,
+            description: item.description,
+            price: item.price,
+            address: item.address,
+            city: item.city,
+            state: item.state,
+            zipCode: item.zip_code,
+            squareFeet: item.square_feet,
+            createdAt: item.created_at,
+            updatedAt: item.updated_at,
+          });
+
+          let newStore = this.state.store;
+          newStore.globalListings.set(item.id, listing);
+          newStore.lastListingSyncTimestamp = new Date();
+
+          this.updateStore(newStore);
+
+          // if (this.state.myProfile.subletterData) {
+          //   if (this.state.myProfile.subletterData.id === listing.subletterId) {
+          //     newStore = this.state.store;
+          //     newStore.myLessorListings.set(item.id, listing);
+          //   }
+          // }
+        },
+        (error) => { });
     }
 
     this.populateListings = () => {
@@ -102,6 +138,7 @@ class App extends React.Component {
 
             let newStore = this.state.store;
             newStore.globalListings.set(item.id, listing);
+            newStore.lastListingSyncTimestamp = new Date();
 
             this.updateStore(newStore);
 
@@ -111,6 +148,40 @@ class App extends React.Component {
                 newStore.myLessorListings.set(item.id, listing);
               }
             }
+          });
+        },
+        (error) => { });
+    }
+
+    this.populateContracts = () => {
+      this.state.tokenContext.doGetAllContracts(
+        (data) => {
+          // comes in the form of an array 
+          data.forEach((item) => {
+            const contract = new ContractModel({
+              id: item.id,
+              subletterId: item.subletter_id,
+              renterId: item.renter_id,
+              listingId: item.listing_id,
+              price: item.price,
+              createdAt: item.created_at,
+              updatedAt: item.updated_at,
+              endDate: new Date(item.end_date),
+              startDate: new Date(item.start_date)
+            });
+
+            let newStore = this.state.store;
+            newStore.contractsList.set(item.id, contract);
+            newStore.lastContractSyncTimestamp = new Date();
+
+            this.updateStore(newStore);
+
+            // if (this.state.myProfile.subletterData) {
+            //   if (this.state.myProfile.subletterData.id === listing.subletterId) {
+            //     newStore = this.state.store;
+            //     newStore.myLessorListings.set(item.id, listing);
+            //   }
+            // }
           });
         },
         (error) => { });
@@ -150,6 +221,15 @@ class App extends React.Component {
       store: {
         myLessorListings: new Map(),
         globalListings: new Map(),
+        sublettersList: new Map(),
+        rentersList: new Map(),
+        contractsList: new Map(),
+        refreshContracts: this.populateContracts,
+        refreshListings: this.populateListings,
+        fetchSingleListingById: this.populateSingleListing,
+        lastListingSyncTimestamp: new Date(),
+        lastSubletterSyncTimestamp: new Date(),
+        lastContractSyncTimestamp: new Date(),
       },
       updateStore: this.updateStore,
 
@@ -207,28 +287,30 @@ class App extends React.Component {
         <CssBaseline />
         <div className="App" style={{ minHeight: '100vh', backgroundColor: customTheme.palette.grey[200] }}>
           <GlobalContext.Provider value={this.state}>
-            <ThemeProvider theme={customTheme}>
-              {this.state.isLoggedIn && <AppBar />}
-              <MediaQueryHelper uiInfo={this.state.uiInfo} updateUiInfo={this.state.updateUiInfo} />
-              <Container maxWidth={this.state.uiInfo.containerWidth} sx={{ mt: 1, overflowX: 'hidden' }}>
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <ThemeProvider theme={customTheme}>
+                {this.state.isLoggedIn && <AppBar />}
+                <MediaQueryHelper desktopWidth="lg" uiInfo={this.state.uiInfo} updateUiInfo={this.state.updateUiInfo} />
+                <Container maxWidth={this.state.uiInfo.containerWidth} sx={{ mt: 1, overflowX: 'hidden' }}>
 
-                {!this.state.isLoggedIn && <Welcome />}
+                  {!this.state.isLoggedIn && <Welcome />}
 
-                {this.state.isLoggedIn &&
-                  <Routes>
-                    <Route path="/" element={<ListingGallery />} />
-                    <Route path="/profile/me" element={<MyProfile />} />
-                    <Route path="/profile/renters/:id" element={<RenterProfile />} />
-                    <Route path="/profile/lessors/:id" element={<LessorProfile />} />
-                    <Route path="/messages" element={<Messages />} />
-                    <Route path="/messages/:id" element={<MessageThread />} />
-                    <Route path="/listings" element={<ListingGallery />} />
-                    <Route path="/listings/mine/renting" element={< MyRenterListings />} />
-                    <Route path="/listings/mine/leasing" element={< MyLessorListings />} />
-                    <Route path="/listings/:id" element={<Listing />} />
-                  </Routes>}
-              </Container>
-            </ThemeProvider>
+                  {this.state.isLoggedIn &&
+                    <Routes>
+                      <Route path="/" element={<ListingGallery />} />
+                      <Route path="/profile/me" element={<MyProfile />} />
+                      <Route path="/profile/renters/:id" element={<RenterProfile />} />
+                      <Route path="/profile/lessors/:id" element={<LessorProfile />} />
+                      <Route path="/messages" element={<Messages />} />
+                      <Route path="/messages/:id" element={<MessageThread />} />
+                      <Route path="/listings" element={<ListingGallery />} />
+                      <Route path="/listings/mine/renting" element={< MyRenterListings />} />
+                      <Route path="/listings/mine/leasing" element={< MyLessorListings />} />
+                      <Route path="/listings/:id" element={<Listing />} />
+                    </Routes>}
+                </Container>
+              </ThemeProvider>
+            </LocalizationProvider>
           </GlobalContext.Provider>
         </div>
       </>

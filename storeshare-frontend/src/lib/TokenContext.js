@@ -1,4 +1,6 @@
-import { login, logout, tryLoginWithStoredToken, postListing, registerNewSubletter, getAllListings } from "../utils/ApiCaller";
+import { postContract, getAllContracts, getUserById, login, logout, tryLoginWithStoredToken, postListing, registerNewSubletter, getAllListings, getListingById, getSubletterById } from "../utils/ApiCaller";
+import SubletterModel from "./SubletterModel";
+import UserProfileModel from "./UserProfileModel.mjs";
 
 export default class TokenContext {
 
@@ -30,12 +32,57 @@ export default class TokenContext {
         this.logoutCallback(); 
     }
 
+    doGetSubletterRecord(id, successCallback = (data) => {}, errorCallback = (status) => {}) {
+        getSubletterById(id, this.bearer, (record) => {
+            const subletter = new SubletterModel({
+                userId: record.user_id, 
+                id: record.id,
+                createdAt: record.created_at, 
+                updatedAt: record.updated_at, 
+            });
+
+            getUserById(subletter.userId, this.bearer, (item) => {
+                const data = item.user; 
+                const user = new UserProfileModel({
+                    firstName: data.name,
+                    lastName: data.name,
+                    id: data.id, 
+            
+                    createdAt: data.created_at, 
+                    updatedAt: data.updated_at,
+            
+                    contactInfo: {
+                        email: data.email,
+                        phone: data.phone_number,
+                    },
+            
+                    renterData: null, 
+                    subletterData: subletter, 
+                });
+
+                successCallback(user); 
+            }, errorCallback);
+        }, errorCallback); 
+    }
+
+    doGetAllContracts(successCallback = (data) => {}, errorCallback = (status) => {}) {
+        getAllContracts(this.bearer, successCallback, errorCallback); 
+    }
+
     doGetAllListings(successCallback = (data) => {}, errorCallback = (status) => {}) {
         getAllListings(this.bearer, successCallback, errorCallback); 
     }
 
+    doGetListingById(id, successCallback = (data) => {}, errorCallback = (status) => {}) {
+        getListingById(id, this.bearer, successCallback, errorCallback); 
+    }
+
     doCreateListing(listingData, successCallback = (data) => {}, errorCallback = (status) => {}) {
         postListing(this.bearer, listingData, successCallback, errorCallback); 
+    }
+
+    doCreateContract(contractData, successCallback = (data) => {}, errorCallback = (status) => {}) {
+        postContract(this.bearer, contractData, successCallback, errorCallback); 
     }
 
     doSublettingOptIn(userId, successCallback = (data) => {}, errorCallback = (status) => {}) {

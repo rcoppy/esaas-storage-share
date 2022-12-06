@@ -1,12 +1,16 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import { CircularProgress, Box, Modal, Typography, Stack, TextField, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { FormControl, InputLabel, OutlinedInput, CircularProgress, Box, Modal, Typography, Stack, TextField, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import PropTypes from 'prop-types';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { flexbox } from '@mui/system';
 import { GlobalContext } from '../lib/GlobalContext.mjs';
 import ListingModel from '../lib/ListingModel.js';
 import ErrorMessage from '../widgets/ErrorMessage.js';
+import ContractModel from '../lib/ContractModel.js';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import moment from 'moment';
+import { dateToMonthDay, dateToMonthDayYear, formattedMoneyStylized } from '../utils/Formatters.js';
 
 const style = {
     position: 'absolute',
@@ -25,48 +29,49 @@ const style = {
     borderRadius: 2,
 };
 
-function AddressForm({ address, setAddressField }) {
+function DateForm({ startDate, endDate, setStartDate, setEndDate, months, setMonths }) {
 
-    const handleAddressChange = (event, field) => {
-        setAddressField(field, event.target.value);
+    const handleStartDateChange = (event) => {
+        console.log(event.target.value);
+        setStartDate(event.target.value);
     };
 
+    const handleEndDateChange = (event) => {
+        const newMonths = parseInt(event.target.value);
+        setMonths(newMonths);
+
+        // https://stackoverflow.com/questions/2706125/javascript-function-to-add-x-months-to-a-date
+        const newDateMoment = moment(startDate); 
+        newDateMoment.add(newMonths, 'months'); 
+
+        setEndDate(new Date(newDateMoment.valueOf())); 
+    };
 
     return (
         <Stack component="form" sx={{ mt: 1 }} >
             <Stack sx={{ width: '100%', display: "flex", gap: 1 }}>
-                <TextField
-                    label="Street address"
-                    id="outlined-size-small"
-                    defaultValue={address["street"]}
-                    size="small"
-                    sx={{ width: "100%" }}
-                    onChange={(event) => handleAddressChange(event, "street")}
+                <DatePicker
+                    label="Lease start date"
+                    value={startDate}
+                    onChange={(newValue) => {
+                        console.log(new Date(newValue.valueOf()));
+                        setStartDate(new Date(newValue.valueOf()));
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
                 />
-                <TextField
-                    label="City"
-                    id="outlined-size-small"
-                    defaultValue={address["city"]}
-                    size="small"
-                    sx={{ width: "70%" }}
-                    onChange={(event) => handleAddressChange(event, "city")}
-                />
-                <TextField
-                    label="State"
-                    id="outlined-size-small"
-                    defaultValue={address["state"]}
-                    size="small"
-                    sx={{ width: "20%" }}
-                    onChange={(event) => handleAddressChange(event, "state")}
-                />
-                <TextField
-                    label="ZIP"
-                    id="outlined-size-small"
-                    defaultValue={address["zip"]}
-                    size="small"
-                    sx={{ width: "50%" }}
-                    onChange={(event) => handleAddressChange(event, "zip")}
-                />
+
+                <FormControl fullWidth sx={{ my: 1 }}>
+                    <InputLabel htmlFor="outlined-month-amount">How many months?</InputLabel>
+                    <OutlinedInput
+                        id="outlined-month-amount"
+                        value={months}
+                        onChange={handleEndDateChange}
+                        label="How many months?"
+                        type="number"
+                    />
+                </FormControl>
+
+                <Typography textAlign="right" fontSize="0.92rem" variant="p">{dateToMonthDay(startDate)} to {dateToMonthDay(endDate)}</Typography>
 
             </Stack>
 
@@ -74,11 +79,16 @@ function AddressForm({ address, setAddressField }) {
     );
 }
 
-function SquareFeetForm({ footage, setFootage, height, setHeight }) {
+
+function SquareFeetForm({ footage, setFootage, monthlyPrice, months }) {
+
+    const totalPrice = formattedMoneyStylized(footage * months * monthlyPrice); 
+
     return (
         <Stack component="form" sx={{ mt: 1 }} >
             <Stack sx={{ width: '100%', display: "flex", gap: 1 }}>
                 <Typography variant="p"><TextField
+                    type="number"
                     label="Square footage"
                     id="outlined-size-small"
                     defaultValue={footage}
@@ -86,23 +96,13 @@ function SquareFeetForm({ footage, setFootage, height, setHeight }) {
                     sx={{ width: "50%" }}
                     onChange={(event) => setFootage(event.target.value)}
                 /> square feet</Typography>
-
-                <Typography variant="p"><TextField
-                    label="Ceiling height"
-                    id="outlined-size-small"
-                    defaultValue={height}
-                    size="small"
-                    sx={{ width: "50%" }}
-                    onChange={(event) => setHeight(event.target.value)}
-                /> feet</Typography>
-
+                <Typography variant="p">Cost: <strong>{totalPrice}</strong> for {months} {months === 1 ? 'month' : 'months'}</Typography>
             </Stack>
-
         </Stack>
     );
 }
 
-function MonthlyRateForm({ cost, setCost, footage }) {
+function PaymentDetailsForm({ cost, setCost, footage }) {
     return (
         <Stack component="form" sx={{ mt: 1 }} >
             <Stack sx={{ width: '100%', display: "flex", gap: 1 }}>
@@ -123,7 +123,7 @@ function MonthlyRateForm({ cost, setCost, footage }) {
     );
 }
 
-function DescriptionForm({ description, setDescription }) {
+/*function DescriptionForm({ description, setDescription }) {
     return (
         <Stack component="form" sx={{ mt: 1 }} >
             <Stack sx={{ width: '100%', display: "flex", gap: 1 }}>
@@ -142,7 +142,7 @@ function DescriptionForm({ description, setDescription }) {
 
         </Stack>
     );
-}
+} */
 
 const step = Object.freeze({
     ENTRY: 0,
@@ -154,7 +154,7 @@ const panel = Object.freeze({
     panel1: 0,
     panel2: 1,
     panel3: 2,
-    panel4: 3,
+    // panel4: 3,
 });
 
 const Switch = (props) => {
@@ -163,8 +163,7 @@ const Switch = (props) => {
     return children.find(child => child.props.value === test);
 }
 
-const FormEntry = ({ currentPanel, handleChange, value, address, setAddressField,
-    footage, setFootage, height, setHeight, cost, setCost, description, setDescription
+const FormEntry = ({ myProfile, currentPanel, handleChange, value, startDate, endDate, setStartDate, setEndDate, monthlyPrice, footage, setFootage, months, setMonths
 }) => {
     return (<Box>
 
@@ -172,10 +171,10 @@ const FormEntry = ({ currentPanel, handleChange, value, address, setAddressField
             <AccordionSummary expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1bh-content"
                 id="panel1bh-header">
-                <Typography variant="p">Where is your space located?</Typography>
+                <Typography variant="p">When do you want to rent?</Typography>
             </AccordionSummary>
             <AccordionDetails>
-                <AddressForm address={address} setAddressField={setAddressField} />
+                <DateForm startDate={startDate} endDate={endDate} setEndDate={setEndDate} setStartDate={setStartDate} monthlyPrice={monthlyPrice} months={months} setMonths={setMonths} />
             </AccordionDetails>
         </Accordion>
 
@@ -183,10 +182,10 @@ const FormEntry = ({ currentPanel, handleChange, value, address, setAddressField
             <AccordionSummary expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel2bh-content"
                 id="panel2bh-header">
-                <Typography variant="p">How big is your space?</Typography>
+                <Typography variant="p">How much space do you need?</Typography>
             </AccordionSummary>
             <AccordionDetails>
-                <SquareFeetForm footage={footage} setFootage={setFootage} height={height} setHeight={setHeight} />
+                <SquareFeetForm footage={footage} setFootage={setFootage} months={months} monthlyPrice={monthlyPrice} />
             </AccordionDetails>
         </Accordion>
 
@@ -194,14 +193,15 @@ const FormEntry = ({ currentPanel, handleChange, value, address, setAddressField
             <AccordionSummary expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel3bh-content"
                 id="panel3bh-header">
-                <Typography variant="p">What rate do you want to charge?</Typography>
+                <Typography variant="p">Payment details</Typography>
             </AccordionSummary>
             <AccordionDetails>
-                <MonthlyRateForm cost={cost} setCost={setCost} footage={footage} />
+                <Typography variant="p">{myProfile.lastName}, {myProfile.firstName}<br />VISA, **3941</Typography>
+                {/* <MonthlyRateForm cost={cost} setCost={setCost} footage={footage} /> */}
             </AccordionDetails>
         </Accordion>
 
-        <Accordion expanded={currentPanel === panel.panel4} onChange={handleChange(panel.panel4)}>
+        {/* <Accordion expanded={currentPanel === panel.panel4} onChange={handleChange(panel.panel4)}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel4bh-content"
                 id="panel4bh-header">
@@ -210,26 +210,28 @@ const FormEntry = ({ currentPanel, handleChange, value, address, setAddressField
             <AccordionDetails>
                 <DescriptionForm description={description} setDescription={setDescription} />
             </AccordionDetails>
-        </Accordion>
+        </Accordion> */}
 
     </Box>);
 };
 
-const FormSummary = ({ value, address, footage, height, cost, description }) => {
+const FormSummary = ({ value, footage, monthlyPrice, months, startDate, endDate }) => {
     return (<Stack>
         <Typography variant="h6">Does everything look right?</Typography>
 
 
-        <Typography variant="h6" pt={2} pb={0.5}><strong>{footage}</strong> square feet (<strong>${cost * footage}</strong> per month)</Typography>
-        <Typography variant="p" pl={3} pb={2}>{address["street"]}<br></br>{address["city"]}, {address["state"]} {address["zip"]}</Typography>
+        <Typography variant="h6" pt={2} pb={0.5}><strong>{footage}</strong> square feet</Typography>
+        <Typography variant="p">{months} {months === 1 ? 'month' : 'months'} for <strong>{formattedMoneyStylized(monthlyPrice * months * footage)}</strong></Typography>
+        <Typography variant="p">{dateToMonthDayYear(startDate)} to {dateToMonthDayYear(endDate)}</Typography>
+        {/* <Typography variant="p" pl={3} pb={2}>{address["street"]}<br></br>{address["city"]}, {address["state"]} {address["zip"]}</Typography> */}
 
         {/* <Typography variant="p">${cost} / sq. ft per month (${cost * footage} per month, total) </Typography> */}
 
-        <Typography variant="p" fontSize='0.9rem'><em>{description}</em></Typography>
+        {/* <Typography variant="p" fontSize='0.9rem'><em>{description}</em></Typography> */}
     </Stack>);
 }
 
-export default function NewListingFlow({ open, handleClose }) {
+export default function NewContractFlow({ open, handleClose, listing }) {
 
     const handlePanelChange = (panel) => (event, isExpanded) => {
         // setExpanded(isExpanded ? panel : false);
@@ -262,14 +264,13 @@ export default function NewListingFlow({ open, handleClose }) {
             setCurrentPanel(currentPanel + 1);
         } else if (currentStep === step.SUMMARY) {
             // this should probably be pulled out into its own function
-            tokenContext.doCreateListing({
-                address: address["street"],
-                price: cost,
-                description: description,
-                subletter_id: myProfile.subletterData.id,
-                city: address["city"],
-                state: address["state"],
-                zip_code: address["zip"],
+            tokenContext.doCreateContract({
+                renter_id: myProfile.renterData.id,
+                price: footage * months * listing.price,
+                listing_id: listing.id,
+                subletter_id: listing.subletterId,
+                start_date: startDate,
+                end_date: endDate,
             },
                 (data) => handleSubmitSuccess(data, store, updateStore),
                 (status) => handleSubmitError(),
@@ -282,19 +283,17 @@ export default function NewListingFlow({ open, handleClose }) {
         }
     };
 
-    const [address, setAddress] = React.useState(new Map());
+    // contract attributes
+    const [startDate, setStartDate] = React.useState(new Date());
+    const [endDate, setEndDate] = React.useState(new Date());
+    const [price, setPrice] = React.useState(20);
+    const [renterId, setRenterId] = React.useState(1);
+    const [subletterId, setSubletterId] = React.useState(1);
+    const [listingId, setListingId] = React.useState(1);
+    const [footage, setFootage] = React.useState(10); 
+    const [months, setMonths] = React.useState(3); 
 
-    const setAddressField = (field, value) => {
-        const newAddress = address;
-        newAddress[field] = value;
-        setAddress(newAddress);
-    }
-
-    const [footage, setFootage] = React.useState(0);
-    const [height, setHeight] = React.useState(0);
-    const [cost, setCost] = React.useState(0);
-    const [description, setDescription] = React.useState("");
-
+    // error attributes
     const [showPending, setShowPending] = React.useState(false);
     const [isErrorOpen, setIsErrorOpen] = React.useState(false);
     const [errorStatus, setErrorStatus] = React.useState('');
@@ -314,12 +313,12 @@ export default function NewListingFlow({ open, handleClose }) {
     }, []);
 
     const clearFormData = () => {
-        setAddress(new Map());
-
-        setFootage(0);
-        setHeight(0);
-        setCost(0);
-        setDescription("");
+        setStartDate(new Date());
+        setEndDate(new Date());
+        setPrice(20);
+        setListingId(1);
+        setRenterId(1);
+        setSubletterId(1);
 
         setCurrentStep(step.ENTRY);
         setCurrentPanel(panel.panel1);
@@ -327,30 +326,28 @@ export default function NewListingFlow({ open, handleClose }) {
 
     const handleSubmitError = () => {
         setShowPending(false);
-        setErrorStatus('listing submission failed');
+        setErrorStatus('contract creation failed');
         setIsErrorOpen(true);
         timer = setTimeout(() => setIsErrorOpen(false), 3000);
     }
 
     const handleSubmitSuccess = (data, store, updateStore) => {
         setShowPending(false);
-        const newListing = new ListingModel({
+        const newContract = new ContractModel({
             id: data.id,
-            userId: data.subletter_id,
-            title: data.title,
-            description: data.description,
+            subletterId: data.subletter_id,
             price: data.price,
-            address: data.address,
-            city: data.city,
-            state: data.state,
-            zipCode: data.zip_code,
+            renterId: data.renter_id,
+            listingId: data.listingId,
+            startDate: data.start_date,
+            endDate: data.end_date
         });
 
         const newStore = store;
-        newStore.globalListings.set(newListing.id, newListing);
+        newStore.contractsList.set(newContract.id, newContract);
         updateStore(newStore);
 
-        clearFormData(); 
+        clearFormData();
 
         handleClose(); // close the modal
 
@@ -368,35 +365,38 @@ export default function NewListingFlow({ open, handleClose }) {
                 <Box sx={style}>
 
                     <Typography id="modal-modal-title" variant="h6" sx={{ mb: 2 }}>
-                        Have extra space? Let's rent it out.
+                        Let's rent some storage!
                     </Typography>
                     {/* <Typography id="modal-modal-description" variant="p" >
 
                 </Typography> */}
 
                     <Switch test={currentStep}>
-                        <FormEntry handleChange={handlePanelChange} currentPanel={currentPanel} value={step.ENTRY} address={address} setAddressField={setAddressField}
+                        <FormEntry handleChange={handlePanelChange} currentPanel={currentPanel} value={step.ENTRY}
+                            startDate={startDate}
+                            endDate={endDate}
+                            setStartDate={setStartDate}
+                            setEndDate={setEndDate}
+                            monthlyPrice={listing.price}
                             footage={footage}
-                            height={height}
-                            cost={cost}
-                            description={description}
                             setFootage={setFootage}
-                            setHeight={setHeight}
-                            setCost={setCost}
-                            setDescription={setDescription}
+                            months={months}
+                            setMonths={setMonths}
+                            myProfile={myProfile}
                         />
-                        <FormSummary value={step.SUMMARY} address={address}
+                        <FormSummary value={step.SUMMARY}
                             footage={footage}
-                            height={height}
-                            cost={cost}
-                            description={description}
+                            monthlyPrice={listing.price}
+                            months={months}
+                            startDate={startDate}
+                            endDate={endDate}
                         />
                         <Typography value={step.CONFIRMATION} variant="p">You did it!</Typography>
                     </Switch>
 
                     {!showPending && <Stack direction="row" sx={{ display: 'flex', justifyContent: 'end', gap: 1, mt: 2 }}>
                         <Button variant="outlined" onClick={handleBack}>Back</Button>
-                        <Button variant="contained" onClick={() => handleNext(tokenContext, myProfile, store, updateStore)}>{currentStep === step.SUMMARY ? 'Create listing' : 'Next'}</Button>
+                        <Button variant="contained" onClick={() => handleNext(tokenContext, myProfile, store, updateStore)}>{currentStep === step.SUMMARY ? 'Reserve space' : 'Next'}</Button>
                     </Stack>}
 
                     {showPending && <CircularProgress sx={{ alignSelf: 'center' }} />}
