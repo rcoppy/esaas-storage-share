@@ -24,10 +24,10 @@ function ListingGallery() {
                     <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         {/* <Typography gutterBottom variant="h4">Explore storage options</Typography> */}
 
-                        <Box sx={{my: 3, display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center'}}>
+                        <Box sx={{ px: 2, my: 3, display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center'}}>
                         {Array.from(store.globalListings.values()).map((listing, index) => {
                             return <ListingCard key={index} listing={listing} />
-                        })};
+                        })}
                         </Box>
 
                     </Container>

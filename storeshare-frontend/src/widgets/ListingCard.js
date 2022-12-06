@@ -8,7 +8,7 @@ export default function ListingCard({ listing }) {
     const theme = useTheme();
     const isDisplaySmall = useMediaQuery(theme.breakpoints.down('md'));
 
-    const maxWidth = isDisplaySmall ? '90%' : '23%';
+    const maxWidth = isDisplaySmall ? '76%' : '23%';
 
     const costString = listing.price
         .toLocaleString('en-US', { style: 'currency', currency: 'USD' })

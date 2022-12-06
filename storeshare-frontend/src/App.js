@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 
 import * as React from 'react';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 import { GlobalContext } from './lib/GlobalContext.mjs';
 import MediaQueryHelper from './utils/MediaQueryHelper.js';
@@ -246,28 +248,30 @@ class App extends React.Component {
         <CssBaseline />
         <div className="App" style={{ minHeight: '100vh', backgroundColor: customTheme.palette.grey[200] }}>
           <GlobalContext.Provider value={this.state}>
-            <ThemeProvider theme={customTheme}>
-              {this.state.isLoggedIn && <AppBar />}
-              <MediaQueryHelper desktopWidth="lg" uiInfo={this.state.uiInfo} updateUiInfo={this.state.updateUiInfo} />
-              <Container maxWidth={this.state.uiInfo.containerWidth} sx={{ mt: 1, overflowX: 'hidden' }}>
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <ThemeProvider theme={customTheme}>
+                {this.state.isLoggedIn && <AppBar />}
+                <MediaQueryHelper desktopWidth="lg" uiInfo={this.state.uiInfo} updateUiInfo={this.state.updateUiInfo} />
+                <Container maxWidth={this.state.uiInfo.containerWidth} sx={{ mt: 1, overflowX: 'hidden' }}>
 
-                {!this.state.isLoggedIn && <Welcome />}
+                  {!this.state.isLoggedIn && <Welcome />}
 
-                {this.state.isLoggedIn &&
-                  <Routes>
-                    <Route path="/" element={<ListingGallery />} />
-                    <Route path="/profile/me" element={<MyProfile />} />
-                    <Route path="/profile/renters/:id" element={<RenterProfile />} />
-                    <Route path="/profile/lessors/:id" element={<LessorProfile />} />
-                    <Route path="/messages" element={<Messages />} />
-                    <Route path="/messages/:id" element={<MessageThread />} />
-                    <Route path="/listings" element={<ListingGallery />} />
-                    <Route path="/listings/mine/renting" element={< MyRenterListings />} />
-                    <Route path="/listings/mine/leasing" element={< MyLessorListings />} />
-                    <Route path="/listings/:id" element={<Listing />} />
-                  </Routes>}
-              </Container>
-            </ThemeProvider>
+                  {this.state.isLoggedIn &&
+                    <Routes>
+                      <Route path="/" element={<ListingGallery />} />
+                      <Route path="/profile/me" element={<MyProfile />} />
+                      <Route path="/profile/renters/:id" element={<RenterProfile />} />
+                      <Route path="/profile/lessors/:id" element={<LessorProfile />} />
+                      <Route path="/messages" element={<Messages />} />
+                      <Route path="/messages/:id" element={<MessageThread />} />
+                      <Route path="/listings" element={<ListingGallery />} />
+                      <Route path="/listings/mine/renting" element={< MyRenterListings />} />
+                      <Route path="/listings/mine/leasing" element={< MyLessorListings />} />
+                      <Route path="/listings/:id" element={<Listing />} />
+                    </Routes>}
+                </Container>
+              </ThemeProvider>
+            </LocalizationProvider>
           </GlobalContext.Provider>
         </div>
       </>
