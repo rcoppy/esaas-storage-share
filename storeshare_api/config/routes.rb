@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   resources :renters
   resources :listings
 
+  resources :contracts
+
   resources :subletters do
     resources :listings
   end
