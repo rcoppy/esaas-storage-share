@@ -22,6 +22,7 @@ class Contract < ApplicationRecord
 
   def renter_subletter_cannot_be_same
     # compare user_id of the renter and subletter
+    return unless renter_id.present? && subletter_id.present?
     return unless Renter.find(renter_id).user_id == Subletter.find(subletter_id).user_id
 
     errors.add(:renter_id, 'cannot belong to the same user as the subletter')

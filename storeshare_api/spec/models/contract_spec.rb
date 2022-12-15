@@ -22,6 +22,15 @@ RSpec.describe Contract, type: :model do
       contract.valid?
       expect(contract.errors[:end_date]).to include("must be after or equal to #{contract.start_date}")
     end
+
+    it 'should validate that the renter and subletter are not the same user' do
+      user = FactoryBot.create(:user)
+      renter = FactoryBot.create(:renter, user:)
+      subletter = FactoryBot.create(:subletter, user:)
+      contract = Contract.new(renter:, subletter:)
+      contract.valid?
+      expect(contract.errors[:renter_id]).to include('cannot belong to the same user as the subletter')
+    end
   end
 
   describe 'associations' do
