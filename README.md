@@ -2,6 +2,15 @@
 Semester project for CS4152 (AirBnB for storage). 
 
 ## Acceptance tests 
+_running Rspec test suite in the backend_
+```
+$ cd storeshare-api
+$ bundle exec rspec
+```
+The code coverage report will be generated in `coverage/index.html` after the test suite finishes running.
+We use the `simplecov` gem to generate the report.
+
+## Acceptance tests 
 _running Cucumber against the frontend_
 ```
 $ cd storeshare-frontend
