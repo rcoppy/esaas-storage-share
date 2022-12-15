@@ -1,7 +1,7 @@
 # esaas-storage-share
 Semester project for CS4152 (AirBnB for storage). 
 
-## Acceptance tests 
+## Unit tests 
 _running Rspec test suite in the backend_
 ```
 $ cd storeshare-api
