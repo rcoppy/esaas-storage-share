@@ -24,6 +24,6 @@ class Contract < ApplicationRecord
     # compare user_id of the renter and subletter
     return unless Renter.find(renter_id).user_id == Subletter.find(subletter_id).user_id
 
-    errors.add(:renter_id, 'cannot be the same as subletter_id')
+    errors.add(:renter_id, 'cannot belong to the same user as the subletter')
   end
 end
