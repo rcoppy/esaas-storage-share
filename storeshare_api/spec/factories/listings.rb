@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :listing do
     address { Faker::Address.street_address }
@@ -7,7 +9,7 @@ FactoryBot.define do
     city { Faker::Address.city }
     state { Faker::Address.state }
     zip_code { Faker::Address.zip_code }
-    square_feet { Faker::Number.number(digits: 3) }
+    square_feet { Faker::Number.decimal(l_digits: 3) }
 
     subletter
   end

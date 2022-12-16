@@ -10,7 +10,7 @@ class CreateListings < ActiveRecord::Migration[7.0]
       t.string :city
       t.string :state
       t.string :zip_code
-      t.string :square_feet
+      t.decimal :square_feet
 
       t.timestamps
     end
