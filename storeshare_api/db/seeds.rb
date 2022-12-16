@@ -94,7 +94,7 @@ Listing.destroy_all
     description: Faker::Lorem.paragraph(sentence_count: 2),
     title: Faker::Lorem.sentence(word_count: 3),
     # image: Faker::LoremFlickr.image(size: '300x300', search_terms: ['apartment']),
-    square_feet: Faker::Number.decimal(l_digits: 3),
+    square_feet: Faker::Number.number(digits: 3),
     city: Faker::Address.city,
     state: Faker::Address.state,
     zip_code: Faker::Address.zip_code
