@@ -7,7 +7,7 @@ class Listing < ApplicationRecord
   has_one_attached :image, dependent: :destroy
 
   scope :filter_by_city, ->(city) { where city: city }
-  scope :filter_by_state, ->(state) { where state: }
+  scope :filter_by_state, ->(state) { where state: state }
   scope :filter_by_zip_code, ->(zip_code) { where zip_code: zip_code }
 
   # filter by price where the listing's price <= target_price
