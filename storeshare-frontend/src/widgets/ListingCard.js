@@ -2,6 +2,7 @@ import { useTheme } from "@emotion/react";
 import { Card, CardActionArea, CardMedia, CardContent, Typography, useMediaQuery } from "@mui/material";
 import { Link } from "react-router-dom";
 import Photo from '../static/placeholders/storage_locker.webp';
+import * as React from 'react';
 
 export default function ListingCard({ listing }) {
 

@@ -21,6 +21,11 @@ When('I click the {string} button', function (buttonLabel) {
   this.click(button);
 });
 
+When('I wait for {int} seconds', async function (seconds) {
+  const milliseconds = seconds * 1000; 
+  await new Promise(resolve => setTimeout(resolve, milliseconds));
+}); 
+
 When('I fill in my email with {string}', function (email) {
   const field = this.getButtonByAria("email field").querySelector('input');
   this.setValue(field, email);
@@ -34,6 +39,7 @@ When('I fill in my password with {string}', function (password) {
 Then('I should see the {string} view.', function (expected) {
 
   if (expected === "listing gallery") {
+    // listing gallery currently lives at root
     expected = '';
   }
 
