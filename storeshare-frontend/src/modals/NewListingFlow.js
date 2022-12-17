@@ -270,6 +270,7 @@ export default function NewListingFlow({ open, handleClose }) {
                 city: address["city"],
                 state: address["state"],
                 zip_code: address["zip"],
+                square_feet: footage, 
             },
                 (data) => handleSubmitSuccess(data, store, updateStore),
                 (status) => handleSubmitError(),
