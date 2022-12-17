@@ -57,7 +57,7 @@ function Listing() {
                                 <Paper elevation={4} sx={{ px: 2, pb: 5, pt: 3, width: imageParams.width, maxHeight: imageParams.height, alignSelf: isMobile ? 'flex-end' : 'center' }}>
                                     <Stack direction="row" gap={2} sx={{ justifyContent: "space-evenly" }}>
                                         <Typography variant="h5" fontSize='1.2rem' alignSelf='center'><strong>${monthlyCost}</strong> / <SquareFeetText /></Typography>
-                                        <Button onClick={handleContractOpen} variant="contained" color="primary" size="large">Reserve now</Button>
+                                        <Button aria-label="listing-reserve-button" onClick={handleContractOpen} variant="contained" color="primary" size="large">Reserve now</Button>
                                     </Stack>
                                     <Typography sx={{ pt: 2 }} variant="h6" fontSize='1rem'><strong>{listing.squareFeet} <SquareFeetText /></strong> immediately available</Typography>
                                     <Typography variant='p' fontSize='0.8rem'><em>{listing.description} Located within {listing.zipCode}.</em></Typography>

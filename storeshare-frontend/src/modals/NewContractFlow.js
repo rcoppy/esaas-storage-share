@@ -395,8 +395,8 @@ export default function NewContractFlow({ open, handleClose, listing }) {
                     </Switch>
 
                     {!showPending && <Stack direction="row" sx={{ display: 'flex', justifyContent: 'end', gap: 1, mt: 2 }}>
-                        <Button variant="outlined" onClick={handleBack}>Back</Button>
-                        <Button variant="contained" onClick={() => handleNext(tokenContext, myProfile, store, updateStore)}>{currentStep === step.SUMMARY ? 'Reserve space' : 'Next'}</Button>
+                        <Button aria-label="contract-back-button" variant="outlined" onClick={handleBack}>Back</Button>
+                        <Button aria-label="contract-next-button" variant="contained" onClick={() => handleNext(tokenContext, myProfile, store, updateStore)}>{currentStep === step.SUMMARY ? 'Reserve space' : 'Next'}</Button>
                     </Stack>}
 
                     {showPending && <CircularProgress sx={{ alignSelf: 'center' }} />}

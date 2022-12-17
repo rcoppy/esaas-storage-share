@@ -68,12 +68,12 @@ function MyLessorListings() {
                     <Container maxWidth="md" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         {myProfile.subletterData &&
                             <><Typography variant="h4">Manage my listings</Typography>
-                                <Button onClick={handleListingOpen} size="large" sx={{ mt: 2 }} variant="contained">Create a new listing</Button>
+                                <Button aria-label="subletter-newlisting-button" onClick={handleListingOpen} size="large" sx={{ mt: 2 }} variant="contained">Create a new listing</Button>
                             </>}
                         {!myProfile.subletterData && <>
                             <Typography variant="h4">Register as a lessor today!</Typography>
 
-                            {!showPending && <Button variant="contained" onClick={() => {
+                            {!showPending && <Button aria-label="subletter-optin-button" variant="contained" onClick={() => {
                                 tokenContext.doSublettingOptIn(myProfile.id, (data) => handleOptInSuccess(data, myProfile, updateProfile), (status) => handleOptInError());
                                 setShowPending(true);
                             }}>

@@ -74,7 +74,7 @@ function AppBar() {
                                         </IconButton>
                                     </Link> */}
                                     {/* <Link to="/messages"> */}
-                                        <IconButton aria-label="see messages" component={Link} to="/messages">
+                                        <IconButton aria-label="appbar-messages-button" component={Link} to="/messages">
                                             <Badge badgeContent={14} color="warning">
                                                 <MailIcon htmlColor={theme.palette.primary.dark} />
                                             </Badge>
@@ -159,6 +159,7 @@ function AppBar() {
                                             onClick={handleClick}
                                             size="small"
                                             sx={{ mr: 2 }}
+                                            aria-label="account-settings-button"
                                             aria-controls={open ? 'account-menu' : undefined}
                                             aria-haspopup="true"
                                             aria-expanded={open ? 'true' : undefined}

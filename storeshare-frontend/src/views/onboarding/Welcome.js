@@ -102,7 +102,7 @@ function Welcome() {
                                     onChange={(event) => setPassword(event.target.value)}
                                 />
 
-                                {!showPending && <Button variant="contained" onClick={() => {
+                                {!showPending && <Button aria-label="login-submit-button" variant="contained" onClick={() => {
                                     if (!registerMode) {
                                         callSignIn(tokenContext, updateIsLoggedIn);
                                     } else {
