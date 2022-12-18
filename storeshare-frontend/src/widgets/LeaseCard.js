@@ -3,6 +3,7 @@ import { Card, CardActionArea, CardMedia, CardContent, Typography, useMediaQuery
 import { Link } from "react-router-dom";
 import Photo from '../static/placeholders/storage_locker.webp';
 import { dateToMonthDayYear, formattedMoneyStylized } from "../utils/Formatters";
+import * as React from 'react'; 
 
 export default function LeaseCard({ listing, contract }) {
 
@@ -15,7 +16,7 @@ export default function LeaseCard({ listing, contract }) {
 
 
     return <>
-        <Card sx={{ width: maxWidth }}>
+        <Card sx={{ width: maxWidth, minWidth: 300 }}>
             <CardActionArea component={Link} to={`/listings/${listing.id}`}>
                 <CardMedia
                     component="img"

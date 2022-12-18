@@ -52,6 +52,7 @@ function DateForm({ startDate, endDate, setStartDate, setEndDate, months, setMon
             <Stack sx={{ width: '100%', display: "flex", gap: 1 }}>
                 <DatePicker
                     label="Lease start date"
+                    aria-label="start date"
                     value={startDate}
                     onChange={(newValue) => {
                         // console.log(new Date(newValue.valueOf()));
@@ -68,6 +69,7 @@ function DateForm({ startDate, endDate, setStartDate, setEndDate, months, setMon
                         onChange={handleEndDateChange}
                         label="How many months?"
                         type="number"
+                        aria-label="lease length"
                     />
                 </FormControl>
 
@@ -90,6 +92,7 @@ function SquareFeetForm({ footage, setFootage, monthlyPrice, months }) {
                 <Typography variant="p"><TextField
                     type="number"
                     label="Square footage"
+                    aria-label="square feet"
                     id="outlined-size-small"
                     defaultValue={footage}
                     size="small"
