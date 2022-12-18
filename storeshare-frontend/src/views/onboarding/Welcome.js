@@ -63,8 +63,13 @@ function Welcome() {
     const callSignUp = (tokenContext, updateIsLoggedIn) => {
         registerAccount(email, password, name, () => {
             callSignIn(tokenContext, updateIsLoggedIn);
+        }, (status) => {
+            setIsErrorOpen(true);
+            setShowPending(false);
+            setErrorStatus(status + ', try a stronger password'); 
+            timer = setTimeout(() => setIsErrorOpen(false), 3000);
         });
-    }
+    };
 
 
     return (

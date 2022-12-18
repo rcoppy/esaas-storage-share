@@ -139,7 +139,7 @@ export function fetchBearerToken(email, password, successCallback = (body) => { 
         });
 }
 
-export function registerAccount(email, password, name, successCallback = () => { }, host = defaultHost) {
+export function registerAccount(email, password, name, successCallback = () => {}, errorCallback = () => {}, host = defaultHost) {
     axios.post(host + '/users', {
         user: {
             email: email,
@@ -163,6 +163,7 @@ export function registerAccount(email, password, name, successCallback = () => {
         })
         .catch(function (error) {
             console.log(error);
+            errorCallback(error.response.status);
         });
 }
 
