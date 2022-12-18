@@ -3,6 +3,44 @@ import { When, Then, Given } from '@cucumber/cucumber';
 import UserProfileModel from '../../src/lib/UserProfileModel.mjs';
 import exp from 'constants';
 
+Given('I am logged in', async function () {
+  this.setRoute('/'); 
+  if (!this.getByText("Let's store your stuff.")) {
+    return;
+  }
+
+  const email = "cucumber@alex.com";
+  const name = "Cucumber Client";
+  const password = "alexander";
+
+  const emailField = this.getButtonByAria("email field").querySelector('input');
+  this.setValue(emailField, email);
+
+  const passwordField = this.getButtonByAria("password field").querySelector('input');
+  this.setValue(passwordField, password);
+
+  const loginButton = this.getButtonByText('Login');
+  this.click(loginButton); 
+
+  await new Promise(resolve => setTimeout(resolve, 5000));  
+
+  // check if logged in 
+  if (!this.getByText("Let's store your stuff.")) {
+    return;
+  }
+
+  // otherwise try signup 
+  const toggle = this.getButtonByAria("toggle register mode"); 
+  this.click(toggle); 
+
+  const nameField = this.getButtonByAria("name field");
+  this.setValue(nameField, name);
+
+  // try signup 
+  this.click(loginButton); 
+  await new Promise(resolve => setTimeout(resolve, 5000));
+});
+
 Given('I am on the {string}', function (page) {
   switch (page) {
     case "homepage":
@@ -21,10 +59,20 @@ When('I click the {string} button', function (buttonLabel) {
   this.click(button);
 });
 
+When('I click the {string} link', function (linkText) {
+  const link = this.getByText(linkText); 
+  this.click(link);
+});
+
 When('I wait for {int} seconds', async function (seconds) {
   const milliseconds = seconds * 1000; 
   await new Promise(resolve => setTimeout(resolve, milliseconds));
 }); 
+
+When('I fill in the {string} field with {string}', function (label, value) {
+  const field = this.getButtonByAria(label).querySelector('input'); 
+  this.setValue(field, value); 
+});
 
 When('I fill in my email with {string}', function (email) {
   const field = this.getButtonByAria("email field").querySelector('input');
@@ -58,5 +106,9 @@ When('I make a new profile with the name {string}', function (input) {
 });
 
 Then('the profile name should be {string}', function (expectedResponse) {
-  assert.equal(this.profile.firstName, expectedResponse)
+  assert.equal(this.profile.firstName, expectedResponse);
+});
+
+Then('I should see {string}', function (text) {
+  assert.ok(this.getByText(text));
 });

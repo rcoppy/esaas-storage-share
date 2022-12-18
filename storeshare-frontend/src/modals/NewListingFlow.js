@@ -37,6 +37,7 @@ function AddressForm({ address, setAddressField }) {
             <Stack sx={{ width: '100%', display: "flex", gap: 1 }}>
                 <TextField
                     label="Street address"
+                    aria-label='street address'
                     id="outlined-size-small"
                     defaultValue={address["street"]}
                     size="small"
@@ -45,6 +46,7 @@ function AddressForm({ address, setAddressField }) {
                 />
                 <TextField
                     label="City"
+                    aria-label='city name'
                     id="outlined-size-small"
                     defaultValue={address["city"]}
                     size="small"
@@ -53,6 +55,7 @@ function AddressForm({ address, setAddressField }) {
                 />
                 <TextField
                     label="State"
+                    aria-label='state name'
                     id="outlined-size-small"
                     defaultValue={address["state"]}
                     size="small"
@@ -61,6 +64,7 @@ function AddressForm({ address, setAddressField }) {
                 />
                 <TextField
                     label="ZIP"
+                    aria-label='zipcode'
                     id="outlined-size-small"
                     defaultValue={address["zip"]}
                     size="small"
@@ -80,6 +84,7 @@ function SquareFeetForm({ footage, setFootage, height, setHeight }) {
             <Stack sx={{ width: '100%', display: "flex", gap: 1 }}>
                 <Typography variant="p"><TextField
                     label="Square footage"
+                    aria-label='square feet'
                     id="outlined-size-small"
                     defaultValue={footage}
                     size="small"
@@ -89,6 +94,7 @@ function SquareFeetForm({ footage, setFootage, height, setHeight }) {
 
                 <Typography variant="p"><TextField
                     label="Ceiling height"
+                    aria-label='ceiling height'
                     id="outlined-size-small"
                     defaultValue={height}
                     size="small"
@@ -108,6 +114,7 @@ function MonthlyRateForm({ cost, setCost, footage }) {
             <Stack sx={{ width: '100%', display: "flex", gap: 1 }}>
                 <Typography variant="p"><TextField
                     label="Cost per square foot"
+                    aria-label='square foot cost'
                     id="outlined-size-small"
                     defaultValue={cost}
                     size="small"
@@ -132,6 +139,7 @@ function DescriptionForm({ description, setDescription }) {
                     minRows={2}
                     maxRows={4}
                     label="Space description"
+                    aria-label='description text'
                     id="outlined-size-small"
                     defaultValue={description}
                     size="small"

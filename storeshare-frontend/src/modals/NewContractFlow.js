@@ -32,7 +32,7 @@ const style = {
 function DateForm({ startDate, endDate, setStartDate, setEndDate, months, setMonths }) {
 
     const handleStartDateChange = (event) => {
-        console.log(event.target.value);
+        // console.log(event.target.value);
         setStartDate(event.target.value);
     };
 
@@ -54,7 +54,7 @@ function DateForm({ startDate, endDate, setStartDate, setEndDate, months, setMon
                     label="Lease start date"
                     value={startDate}
                     onChange={(newValue) => {
-                        console.log(new Date(newValue.valueOf()));
+                        // console.log(new Date(newValue.valueOf()));
                         setStartDate(new Date(newValue.valueOf()));
                     }}
                     renderInput={(params) => <TextField {...params} />}

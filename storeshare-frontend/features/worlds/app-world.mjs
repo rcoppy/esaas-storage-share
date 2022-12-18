@@ -16,6 +16,7 @@ import { useLocation } from 'react-router-dom';
 // import useReactRouter from 'use-react-router';
 
 import App from '../../src/App.js';
+import { setDefaultHost } from '../../src/utils/ApiCaller.js';
 
 // interface WorldParams {
 //     attach(
@@ -53,6 +54,8 @@ export class AppWorld {
         this.setRoute = this.setRoute.bind(this);
         this.attach = attach;
         this.parameters = parameters;
+
+        setDefaultHost('http://localhost:8080'); 
     }
 
     _RouterSpy({

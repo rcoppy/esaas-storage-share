@@ -21,8 +21,8 @@ export default class TokenContext {
             this.signInMetaData = body; 
             successCallback();
             this.loginCallback(this.signInMetaData); 
-            console.log(this.bearer);
-            console.log(this.signInMetaData);
+            // console.log(this.bearer);
+            // console.log(this.signInMetaData);
         }, (message) => errorCallback(message)); 
     }
 

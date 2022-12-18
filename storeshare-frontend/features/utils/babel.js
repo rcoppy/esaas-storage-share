@@ -34,3 +34,25 @@ require('../worlds/index.js');
 require('../support/steps.mjs');
 
 // cucumber won't run otherwise.
+
+
+// starting up the backend server
+// const { exec } = require("child_process");
+// exec("cd ../storeshare_api && rails s", (error, stdout, stderr) => {}); 
+// setTimeout(() => {}, 3000);
+
+// killing the backend server once tests are done
+// const nodeCleanup = require('node-cleanup');
+// const fs = require('fs'); 
+// const path = require('path');
+
+// nodeCleanup(function (exitCode, signal) {
+//     try {
+//         const pid = fs.readFileSync(path.resolve('../storeshare_api/tmp/pids/server.pid'));
+
+//         console.log('killing pid ' + pid);
+//         process.kill(pid,'SIGINT');
+//     } catch (e) {
+//         console.log('no backend running');
+//     }
+// });
