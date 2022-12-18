@@ -22,23 +22,29 @@ Given('I am logged in', async function () {
   const loginButton = this.getButtonByText('Login');
   this.click(loginButton); 
 
-  await new Promise(resolve => setTimeout(resolve, 5000));  
+  await new Promise(resolve => setTimeout(resolve, 1500));  
 
   // check if logged in 
-  if (!this.getByText("Let's store your stuff.")) {
+  try {
+    this.getByText("Let's store your stuff."); 
+  } catch {
     return;
   }
 
   // otherwise try signup 
-  const toggle = this.getButtonByAria("toggle register mode"); 
+  console.log("trying to sign up");
+  const toggle = this.getButtonByAria("toggle register mode").querySelector('input');; 
   this.click(toggle); 
 
-  const nameField = this.getButtonByAria("name field");
+  await new Promise(resolve => setTimeout(resolve, 1500));  
+
+  const nameField = this.getButtonByAria("name field").querySelector('input');
   this.setValue(nameField, name);
 
   // try signup 
-  this.click(loginButton); 
-  await new Promise(resolve => setTimeout(resolve, 5000));
+  const signupButton = this.getButtonByText("Sign up");
+  this.click(signupButton); 
+  await new Promise(resolve => setTimeout(resolve, 1000));
 });
 
 Given('I am on the {string}', function (page) {
@@ -47,6 +53,17 @@ Given('I am on the {string}', function (page) {
     default:
       this.setRoute('/');
   }
+});
+
+When('I try to click the "Create a new listing" button', async function () {
+  try {
+    const optIn = this.getButtonByText("Opt-in to leasing");
+    this.click(optIn); 
+    await new Promise(resolve => setTimeout(resolve, 1000));
+  } catch {}
+
+  const create = this.getButtonByText("Create a new listing"); 
+  this.click(create); 
 });
 
 When('I click the {string} icon', function (iconLabel) {
@@ -70,7 +87,12 @@ When('I wait for {int} seconds', async function (seconds) {
 }); 
 
 When('I fill in the {string} field with {string}', function (label, value) {
-  const field = this.getButtonByAria(label).querySelector('input'); 
+  let field = this.getByAria(label).querySelector('input')
+  
+  if (!field) {
+    field = this.getByAria(label).querySelector('textarea'); 
+  }
+
   this.setValue(field, value); 
 });
 
@@ -110,5 +132,5 @@ Then('the profile name should be {string}', function (expectedResponse) {
 });
 
 Then('I should see {string}', function (text) {
-  assert.ok(this.getByText(text));
+  assert.ok(this.getByTextContent(text));
 });

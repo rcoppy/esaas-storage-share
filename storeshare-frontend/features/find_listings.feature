@@ -5,6 +5,7 @@ Feature: see all listings advertised on the site
 
 Background: listings in database
 
+    Given I am logged in
     Given the following listings exist:
     | name      | description | price | description | address           | city     | postcode | square_feet | user_id |
     | My garage | My garage   | 100   | My garage   | 123 Main St       | New York | 10027    | 500         | 1       |

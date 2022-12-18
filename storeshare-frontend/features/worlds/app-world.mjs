@@ -49,6 +49,7 @@ export class AppWorld {
         this.getButtonByText = this.getButtonByText.bind(this);
         this.getButtonByAria = this.getButtonByAria.bind(this);
         this.getByText = this.getByText.bind(this);
+        this.getByTextContent = this.getByTextContent.bind(this); 
         this.setValue = this.setValue.bind(this);
         this.render = this.render.bind(this);
         this.setRoute = this.setRoute.bind(this);
@@ -102,6 +103,17 @@ export class AppWorld {
         options,
     ) {
         return this.result.getByText(text, options);
+    }
+
+    // https://stackoverflow.com/questions/68209510/how-to-access-text-broken-by-multiple-elements-in-testing-library
+    getByTextContent = (text) => {
+        // Passing function to `getByText`
+        return this.result.getAllByText((content, element) => {
+            const hasText = element => element.textContent === text
+            const elementHasText = hasText(element)
+            const childrenDontHaveText = Array.from(element?.children || []).every(child => !hasText(child))
+            return elementHasText && childrenDontHaveText
+      })
     }
 
     getByAria(

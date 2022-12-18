@@ -11,7 +11,7 @@ Scenario: create a new listing
     Given I am on the "homepage"
     When I click the "account avatar" icon
     And I click the "Manage listings" link
-    And I click the "Create a new listing" button
+    And I try to click the "Create a new listing" button
     And I fill in the "street address" field with "321 Opening View Dr"
     And I fill in the "state name" field with "CT"
     And I fill in the "city name" field with "Derby"
@@ -25,11 +25,11 @@ Scenario: create a new listing
     And I fill in the "description text" field with "A cozy storage unit"
     And I click the "Next" button
     Then I should see "100 square feet ($700 per month)"
-    And I should see "321 Opening View Dr\nDerby, CT 06342"
+    And I should see "321 Opening View DrDerby, CT 06342"
     And I should see "A cozy storage unit"
 
     When I click the "Create listing" button
-    And I wait for 2 seconds
+    And I wait for 1 seconds
 
     Then I should see "My existing listings"
-    And I should see "Derby, CT"
+    And I should see "A cozy storage unit"
