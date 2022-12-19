@@ -54,7 +54,7 @@ class SublettersController < ApplicationController
 
   def my_listings
     @listings = Listing.where(subletter_id: params[:id])
-    render json @listings
+    render json: @listings
   end
 
   private
