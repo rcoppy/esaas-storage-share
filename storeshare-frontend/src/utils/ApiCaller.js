@@ -110,7 +110,7 @@ export function fetchUserDataFromEmail(token, email, successCallback = (body) =>
 
 export function login(email, password, successCallback = (tokenSetter, bodySetter) => { }, errorCallback = (status) => { }) {
     fetchBearerToken(email, password,
-        (body) => successCallback(getAuthData().token, body),
+        (response) => successCallback(getAuthData().token, response.data),
         errorCallback
     );
 }
@@ -131,11 +131,16 @@ export function fetchBearerToken(email, password, successCallback = (body) => { 
             console.log("success; raw auth token: " + response.headers.authorization);
 
             saveAuthData(response.headers.authorization, email, null);
-            successCallback(response.data);
+            successCallback(response);
         })
         .catch(function (error) {
-            console.log(error.response.status);
-            errorCallback(error.response.status);
+            try {
+                // console.error(JSON.stringify(error)); 
+                console.log(error.status);
+                errorCallback(error.status);
+            } catch {
+                console.error('something went wrong in the error handler for fetching the bearer token'); 
+            }
         });
 }
 
@@ -163,7 +168,7 @@ export function registerAccount(email, password, name, successCallback = () => {
         })
         .catch(function (error) {
             console.log(error);
-            errorCallback(error.response.status);
+            errorCallback(error.status);
         });
 }
 

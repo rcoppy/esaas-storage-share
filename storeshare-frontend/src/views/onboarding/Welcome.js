@@ -55,7 +55,7 @@ function Welcome() {
         }, (status) => {
             setIsErrorOpen(true);
             setShowPending(false);
-            setErrorStatus(status)
+            setErrorStatus(status + ', invalid credentials')
             timer = setTimeout(() => setIsErrorOpen(false), 3000);
         });
     };

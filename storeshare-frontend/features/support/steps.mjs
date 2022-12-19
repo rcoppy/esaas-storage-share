@@ -2,6 +2,8 @@ import { strict as assert } from 'assert';
 import { When, Then, Given, setDefaultTimeout } from '@cucumber/cucumber';
 import UserProfileModel from '../../src/lib/UserProfileModel.mjs';
 import exp from 'constants';
+import * as Api from '../../src/utils/ApiCaller.js'; 
+import * as axios from 'axios'; 
 
 setDefaultTimeout(10 * 1000); 
 
@@ -119,6 +121,56 @@ Given('a specific listing described as {string} exists', async function (descrip
 
   await signInUser.bind(this)("Cucumber Client", "cucumber@alex.com", "alexander"); 
 }); 
+
+const SpawnListings = (token, data) => {
+  // console.log("hello " + token); 
+  Api.fetchUserDataFromEmail(token, 'cucumber.alternate@alex.com', 
+    (response) => {
+      
+      console.log(response); 
+
+      const userId = response.user.id; 
+      let subletterId = -1; 
+      
+      if (response.subletter_data) {
+        subletterId = response.subletter_data.id; 
+      }else {
+        Api.registerNewSubletter(token, userId, (data) => subletterId = data.subletter_data.id); 
+      }
+
+      if (!response.renter_data) {
+        Api.registerNewRenter(token, userId); 
+      }
+      
+      console.log("trying to post test listings");
+      data.hashes().forEach(async function(listing) {
+        const payload = {...listing, subletter_id: subletterId }; 
+        Api.postListing(token, payload); 
+        // await new Promise((resolve) => setTimeout(resolve, 800)); 
+        console.log(payload);
+      });
+  }, error => {});
+};
+
+Given('the following listings exist:', function (data) {
+  
+  console.log("Trying to spawn listings"); 
+
+  Api.setDefaultHost('http://localhost:8080'); 
+
+  Api.fetchBearerToken('cucumber.alternate@alex.com', 'alexander', (response) => {
+    console.log("succeeded in fetching bearer for listings"); 
+    console.log(response);
+    SpawnListings(response.headers.authorization, data); 
+  }, (error) => {
+    console.error("the initial login didn't work");
+    Api.registerAccount('cucumber.alternate@alex.com', 'alexander', 'Cucumber Alternate',
+      (res) => Api.fetchBearerToken('cucumber.alternate@alex.com', 'alexander', (response) => {
+        console.log("account registration for listings succeeded"); 
+        SpawnListings(response.headers.authorization, data); 
+      }, (error) => {}));
+  });
+});
 
 When('I try to click the "Create a new listing" button', async function () {
   try {
