@@ -9,9 +9,14 @@ setDefaultTimeout(10 * 1000);
 
 async function signInUser(name, email, password) {
   this.setRoute('/'); 
-  if (!this.getByText("Let's store your stuff.")) {
+  try {
+    this.getByText("Let's store your stuff."); 
+  } catch {
+    console.log('signed in already'); 
     return;
   }
+
+  Api.logout();
 
   // const email = "cucumber@alex.com";
   // const name = "Cucumber Client";
@@ -23,8 +28,18 @@ async function signInUser(name, email, password) {
   const passwordField = this.getButtonByAria("password field").querySelector('input');
   this.setValue(passwordField, password);
 
-  const loginButton = this.getButtonByText('Login');
-  this.click(loginButton); 
+  try {
+    const loginButton = this.getButtonByText('Login');
+    this.click(loginButton); 
+  } catch {
+    const toggle = this.getButtonByAria("toggle register mode").querySelector('input');; 
+    this.click(toggle); 
+
+    try {
+      const loginButton = this.getButtonByText('Login');
+      this.click(loginButton); 
+    } catch {}
+  }
 
   await new Promise(resolve => setTimeout(resolve, 1500));  
 
@@ -48,7 +63,10 @@ async function signInUser(name, email, password) {
   // try signup 
   const signupButton = this.getButtonByText("Sign up");
   this.click(signupButton); 
-  await new Promise(resolve => setTimeout(resolve, 1000));
+  await new Promise(resolve => setTimeout(resolve, 4000));
+
+  // hack for dealing with concurrent signup attempts for same account--run login one more time
+  await signInUser.bind(this)('Cucumber Client', 'cucumber@alex.com', 'alexander'); 
 }
 
 Given('I am logged in', async function () {
@@ -132,16 +150,17 @@ const SpawnListings = (token, data) => {
       const userId = response.user.id; 
       let subletterId = -1; 
       
-      if (response.subletter_data) {
-        subletterId = response.subletter_data.id; 
-      }else {
-        Api.registerNewSubletter(token, userId, (data) => subletterId = data.subletter_data.id); 
-      }
-
       if (!response.renter_data) {
         Api.registerNewRenter(token, userId); 
       }
-      
+
+      if (response.subletter_data) {
+        subletterId = response.subletter_data.id; 
+      }else {
+        Api.registerNewSubletter(token, userId, (result) => SpawnListings(token, data)); 
+        return; 
+      }
+
       console.log("trying to post test listings");
       data.hashes().forEach(async function(listing) {
         const payload = {...listing, subletter_id: subletterId }; 

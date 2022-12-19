@@ -26,7 +26,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "pretest": "cd ../storeshare_api && screen -S server -d -m rails s && sleep 3",
+    "pretest": "cd ../storeshare_api && rake db:drop && rake db:create && rake db:migrate && screen -S server -d -m rails s && sleep 5",
     "test": "cucumber-js --profile default || :",
     "posttest": "echo shutting down server && kill -INT $(cat ../storeshare_api/tmp/pids/server.pid)",
     "eject": "react-scripts eject"
