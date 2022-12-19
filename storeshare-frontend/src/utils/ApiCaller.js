@@ -2,8 +2,12 @@ import axios from 'axios';
 
 // const defaultHost = 'http://localhost:8080';
 
-const defaultHost = window.location.hostname === 'localhost' ?
+let defaultHost = window.location.hostname === 'localhost' ?
     'http://localhost:8080' : 'https://floating-plateau-15656.herokuapp.com:443'; // 'http://localhost:8080';
+
+export const setDefaultHost = (host) => {
+    defaultHost = host; 
+}
 
 
 // a really primitive psuedo-dependency injection
@@ -93,7 +97,7 @@ export function fetchUserDataFromEmail(token, email, successCallback = (body) =>
         }
     })
         .then(function (response) {
-            console.log(response);
+            // console.log(response);
 
             successCallback(response.data);
         })
@@ -106,7 +110,7 @@ export function fetchUserDataFromEmail(token, email, successCallback = (body) =>
 
 export function login(email, password, successCallback = (tokenSetter, bodySetter) => { }, errorCallback = (status) => { }) {
     fetchBearerToken(email, password,
-        (body) => successCallback(getAuthData().token, body),
+        (response) => successCallback(getAuthData().token, response.data),
         errorCallback
     );
 }
@@ -123,19 +127,24 @@ export function fetchBearerToken(email, password, successCallback = (body) => { 
         }
     })
         .then(function (response) {
-            console.log(response);
+            // console.log(response);
             console.log("success; raw auth token: " + response.headers.authorization);
 
             saveAuthData(response.headers.authorization, email, null);
-            successCallback(response.data);
+            successCallback(response);
         })
         .catch(function (error) {
-            console.log(error.response.status);
-            errorCallback(error.response.status);
+            try {
+                // console.error(JSON.stringify(error)); 
+                console.log(error.status);
+                errorCallback(error.status);
+            } catch {
+                console.error('something went wrong in the error handler for fetching the bearer token'); 
+            }
         });
 }
 
-export function registerAccount(email, password, name, successCallback = () => { }, host = defaultHost) {
+export function registerAccount(email, password, name, successCallback = () => {}, errorCallback = () => {}, host = defaultHost) {
     axios.post(host + '/users', {
         user: {
             email: email,
@@ -148,7 +157,7 @@ export function registerAccount(email, password, name, successCallback = () => {
         }
     })
         .then(function (response) {
-            console.log(response);
+            // console.log(response);
 
             const userId = response.data.id; 
             const token = response.headers.authorization;
@@ -159,6 +168,7 @@ export function registerAccount(email, password, name, successCallback = () => {
         })
         .catch(function (error) {
             console.log(error);
+            errorCallback(error.status);
         });
 }
 
@@ -174,7 +184,7 @@ export function registerNewRenter(token, userId, successCallback = (body) => { }
         }
     })
         .then(function (response) {
-            console.log(response);
+            // console.log(response);
 
             successCallback(response.data);
         })
@@ -198,7 +208,7 @@ export function registerNewSubletter(token, userId, successCallback = (body) => 
         }
     })
         .then(function (response) {
-            console.log(response);
+            // console.log(response);
 
             successCallback(response.data);
         })
@@ -217,7 +227,7 @@ export function getAllListings(token, successCallback = (body) => { }, errorCall
         }
     })
         .then(function (response) {
-            console.log(response);
+            // console.log(response);
 
             successCallback(response.data);
         })
@@ -236,7 +246,7 @@ export function getAllContracts(token, successCallback = (body) => { }, errorCal
         }
     })
         .then(function (response) {
-            console.log(response);
+            // console.log(response);
 
             successCallback(response.data);
         })
@@ -255,7 +265,7 @@ export function getUserById(id, token, successCallback = (body) => { }, errorCal
         }
     })
         .then(function (response) {
-            console.log(response);
+            // console.log(response);
 
             successCallback(response.data);
         })
@@ -274,7 +284,7 @@ export function getSubletterById(id, token, successCallback = (body) => { }, err
         }
     })
         .then(function (response) {
-            console.log(response);
+            // console.log(response);
 
             successCallback(response.data);
         })
@@ -293,7 +303,7 @@ export function getListingById(id, token, successCallback = (body) => { }, error
         }
     })
         .then(function (response) {
-            console.log(response);
+            // console.log(response);
 
             successCallback(response.data);
         })
@@ -314,7 +324,7 @@ export function postListing(token, listingData, successCallback = (body) => { },
         }
     })
         .then(function (response) {
-            console.log(response);
+            // console.log(response);
 
             successCallback(response.data);
         })
@@ -335,7 +345,7 @@ export function postContract(token, contractData, successCallback = (body) => { 
         }
     })
         .then(function (response) {
-            console.log(response);
+            // console.log(response);
 
             successCallback(response.data);
         })

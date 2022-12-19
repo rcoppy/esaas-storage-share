@@ -1,4 +1,5 @@
 import { Snackbar, Alert } from "@mui/material";
+import * as React from 'react'; 
 
 export default function ErrorMessage({ open, handleClose, error }) {
     return (

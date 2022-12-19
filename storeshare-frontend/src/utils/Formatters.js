@@ -1,4 +1,5 @@
 import moment from 'moment'; 
+import * as React from 'react'; 
 
 export function formattedMoneyStylized(cost) {
     return cost.toLocaleString('en-US', { style: 'currency', currency: 'USD' })

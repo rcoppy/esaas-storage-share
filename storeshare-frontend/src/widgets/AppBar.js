@@ -159,6 +159,7 @@ function AppBar() {
                                             onClick={handleClick}
                                             size="small"
                                             sx={{ mr: 2 }}
+                                            aria-label="account avatar"
                                             aria-controls={open ? 'account-menu' : undefined}
                                             aria-haspopup="true"
                                             aria-expanded={open ? 'true' : undefined}

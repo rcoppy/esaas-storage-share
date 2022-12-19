@@ -55,7 +55,7 @@ function Welcome() {
         }, (status) => {
             setIsErrorOpen(true);
             setShowPending(false);
-            setErrorStatus(status)
+            setErrorStatus(status + ', invalid credentials')
             timer = setTimeout(() => setIsErrorOpen(false), 3000);
         });
     };
@@ -63,8 +63,13 @@ function Welcome() {
     const callSignUp = (tokenContext, updateIsLoggedIn) => {
         registerAccount(email, password, name, () => {
             callSignIn(tokenContext, updateIsLoggedIn);
+        }, (status) => {
+            setIsErrorOpen(true);
+            setShowPending(false);
+            setErrorStatus(status + ', try a stronger password'); 
+            timer = setTimeout(() => setIsErrorOpen(false), 3000);
         });
-    }
+    };
 
 
     return (
@@ -102,7 +107,7 @@ function Welcome() {
                                     onChange={(event) => setPassword(event.target.value)}
                                 />
 
-                                {!showPending && <Button variant="contained" onClick={() => {
+                                {!showPending && <Button aria-label="login-submit-button" variant="contained" onClick={() => {
                                     if (!registerMode) {
                                         callSignIn(tokenContext, updateIsLoggedIn);
                                     } else {

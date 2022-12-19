@@ -32,7 +32,7 @@ const style = {
 function DateForm({ startDate, endDate, setStartDate, setEndDate, months, setMonths }) {
 
     const handleStartDateChange = (event) => {
-        console.log(event.target.value);
+        // console.log(event.target.value);
         setStartDate(event.target.value);
     };
 
@@ -52,9 +52,10 @@ function DateForm({ startDate, endDate, setStartDate, setEndDate, months, setMon
             <Stack sx={{ width: '100%', display: "flex", gap: 1 }}>
                 <DatePicker
                     label="Lease start date"
+                    aria-label="start date"
                     value={startDate}
                     onChange={(newValue) => {
-                        console.log(new Date(newValue.valueOf()));
+                        // console.log(new Date(newValue.valueOf()));
                         setStartDate(new Date(newValue.valueOf()));
                     }}
                     renderInput={(params) => <TextField {...params} />}
@@ -68,6 +69,7 @@ function DateForm({ startDate, endDate, setStartDate, setEndDate, months, setMon
                         onChange={handleEndDateChange}
                         label="How many months?"
                         type="number"
+                        aria-label="lease length"
                     />
                 </FormControl>
 
@@ -90,6 +92,7 @@ function SquareFeetForm({ footage, setFootage, monthlyPrice, months }) {
                 <Typography variant="p"><TextField
                     type="number"
                     label="Square footage"
+                    aria-label="square feet"
                     id="outlined-size-small"
                     defaultValue={footage}
                     size="small"
@@ -395,8 +398,8 @@ export default function NewContractFlow({ open, handleClose, listing }) {
                     </Switch>
 
                     {!showPending && <Stack direction="row" sx={{ display: 'flex', justifyContent: 'end', gap: 1, mt: 2 }}>
-                        <Button variant="outlined" onClick={handleBack}>Back</Button>
-                        <Button variant="contained" onClick={() => handleNext(tokenContext, myProfile, store, updateStore)}>{currentStep === step.SUMMARY ? 'Reserve space' : 'Next'}</Button>
+                        <Button aria-label="contract-back-button" variant="outlined" onClick={handleBack}>Back</Button>
+                        <Button aria-label="contract-next-button" variant="contained" onClick={() => handleNext(tokenContext, myProfile, store, updateStore)}>{currentStep === step.SUMMARY ? 'Reserve space' : 'Next'}</Button>
                     </Stack>}
 
                     {showPending && <CircularProgress sx={{ alignSelf: 'center' }} />}
