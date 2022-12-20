@@ -1,3 +1,5 @@
+
+require 'pry'
 class MessagesController < ApplicationController
   before_action do
     @conversation = Conversation.find(params[:conversation_id])
@@ -32,6 +34,7 @@ class MessagesController < ApplicationController
   end
   private
   def message_params
-    params.require(:message).permit(:body, :user_id)
+    #binding.pry
+    params.require(:message).permit(:conversation_id, :body, :user_id)
   end
 end

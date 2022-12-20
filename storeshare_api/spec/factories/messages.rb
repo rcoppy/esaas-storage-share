@@ -4,8 +4,8 @@ FactoryBot.define do
     read { 'f' }
     conversation
     user
-    association :user
-    association :conversation
+    # association :user
+    # association :conversation
   end
 
 end
